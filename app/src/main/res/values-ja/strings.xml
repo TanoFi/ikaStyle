@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ikaStyle</string>
+    <string name="menuItem_New">新規作成</string>
+    <string name="menuItem_Store">既存</string>
+</resources>
