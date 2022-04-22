@@ -3,10 +3,23 @@ package com.example.ikastyle;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.room.Room;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+
+import com.example.ikastyle.Database.MainCategoryDatabase;
+import com.example.ikastyle.Singleton.MainCategorySingleton;
+import com.example.ikastyle.Util.Util;
+
+import java.util.List;
+
+import io.reactivex.Completable;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,5 +73,28 @@ public class StoreFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_store, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState){
+        super.onViewCreated(view, savedInstanceState);
+
+        // Spinnerに項目設定
+        MainCategoryDatabase db = Room.databaseBuilder(getContext(), MainCategoryDatabase.class, "MastMainCategory.db").build();
+
+//        Handler handler = new Handler(Looper.getMainLooper());
+//
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//            }
+//        })
+//        Completable.fromAction( db.mainCategoryDao().mainCategoryNames(Util.getLanguageCode()))
+//        .sub
+        List<String> weaponList = db.mainCategoryDao().mainCategoryNames(Util.getLanguageCode());
+
+//        Spinner weaponSpinner = (Spinner) view.findViewById(R.id.spinner_Weapon);
+//        ArrayAdapter<CharSequence> apapter = ArrayAdapter.createFromResource(getContext(), weaponList, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
     }
 }
