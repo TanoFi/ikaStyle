@@ -1,5 +1,6 @@
 package com.example.ikastyle;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,10 +14,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.example.ikastyle.Common.Const.DatabaseName;
+import com.example.ikastyle.Common.Util;
+import com.example.ikastyle.Dao.MainCategoryDao;
 import com.example.ikastyle.Database.MainCategoryDatabase;
-import com.example.ikastyle.Singleton.MainCategorySingleton;
-import com.example.ikastyle.Util.Util;
 
+import java.nio.channels.AsynchronousChannelGroup;
 import java.util.List;
 
 import io.reactivex.Completable;
@@ -80,21 +83,29 @@ public class StoreFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // Spinnerに項目設定
-        MainCategoryDatabase db = Room.databaseBuilder(getContext(), MainCategoryDatabase.class, "MastMainCategory.db").build();
+        MainCategoryDatabase db = MainCategoryDatabase.getDatabase(getContext(), DatabaseName.MAST_MAIN_CATEGORY);
+        new DataStoreAsyncTask(db).execute();
+    }
 
-//        Handler handler = new Handler(Looper.getMainLooper());
-//
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//
-//            }
-//        })
-//        Completable.fromAction( db.mainCategoryDao().mainCategoryNames(Util.getLanguageCode()))
-//        .sub
-        List<String> weaponList = db.mainCategoryDao().mainCategoryNames(Util.getLanguageCode());
+    private static class DataStoreAsyncTask extends AsyncTask<Void, Void, Integer> {
+        private MainCategoryDatabase db;
+        List<String> weaponList;
 
-//        Spinner weaponSpinner = (Spinner) view.findViewById(R.id.spinner_Weapon);
-//        ArrayAdapter<CharSequence> apapter = ArrayAdapter.createFromResource(getContext(), weaponList, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+        public DataStoreAsyncTask(MainCategoryDatabase db) {
+            this.db = db;
+        }
+
+        @Override
+        protected Integer doInBackground(Void... params) {
+            MainCategoryDao dao = db.mainCategoryDao();
+            List<String> weaponNameList = dao.mainCategoryNames(Util.getLanguageCode());
+
+            return 0;
+        }
+
+//        @Override
+//        protected void onPostExecute(Integer code) {
+//
+//        }
     }
 }
