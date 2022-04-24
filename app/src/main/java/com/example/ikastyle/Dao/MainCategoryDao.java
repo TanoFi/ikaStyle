@@ -13,6 +13,6 @@ public interface MainCategoryDao {
     @Insert
     void insertAll(MainCategory... mainCategoryEntities);
 
-    @Query("SELECT name FROM MAST_MAIN_CATEGORY WHERE language_code = :languageCode")
+    @Query("SELECT name FROM MAST_MAIN_CATEGORY WHERE language_code = :languageCode ORDER BY id")
     public  List<String> mainCategoryNames(int languageCode);
 }

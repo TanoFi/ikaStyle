@@ -1,5 +1,6 @@
 package com.example.ikastyle;
 
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -8,6 +9,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import com.example.ikastyle.Common.Const.DatabaseName;
 import com.example.ikastyle.Common.Util;
@@ -74,30 +77,41 @@ public class StoreFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
 
-        // Spinnerに項目設定
+        // Spinnerの項目に設定するためのDBを取得
         AppDatabase db = AppDatabase.getDatabase(getContext(), DatabaseName.MAST_MAIN_CATEGORY, DatabaseName.MAST_MAIN_CATEGORY_FILE);
-        new DataStoreAsyncTask(db).execute();
+        // SpinnerDataGetAsyncTaskクラス内でContextを取得できなかったためにonPostExecute()だけインスタンス作成時に記述
+        GetWeaponNameAsyncTask task = new GetWeaponNameAsyncTask(db){
+            @Override
+            protected void onPostExecute(Integer code){
+                ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, weaponList);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                //spinnerにadapterを設定
+                Spinner weaponSpinner = view.findViewById(R.id.spinner_Weapon);
+                weaponSpinner.setAdapter(adapter);
+            }
+        };
+        task.execute();
     }
 
-    private static class DataStoreAsyncTask extends AsyncTask<Void, Void, Integer> {
+    /*
+     * DB非同期処理を実行するクラス
+     */
+    private static class GetWeaponNameAsyncTask extends AsyncTask<Void, Void, Integer> {
         private AppDatabase db;
         List<String> weaponList;
 
-        public DataStoreAsyncTask(AppDatabase db) {
+        public GetWeaponNameAsyncTask(AppDatabase db) {
             this.db = db;
         }
 
         @Override
         protected Integer doInBackground(Void... params) {
+            //実際にDBにアクセスし結果を取得
             MainCategoryDao dao = db.mainCategoryDao();
-            List<String> weaponNameList = dao.mainCategoryNames(Util.getLanguageCode());
+            weaponList = dao.mainCategoryNames(Util.getLanguageCode());
 
             return 0;
         }
-
-//        @Override
-//        protected void onPostExecute(Integer code) {
-//
-//        }
     }
 }
