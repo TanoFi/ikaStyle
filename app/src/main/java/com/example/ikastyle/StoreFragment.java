@@ -4,25 +4,17 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.room.Room;
 
-import android.os.Handler;
-import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 
 import com.example.ikastyle.Common.Const.DatabaseName;
 import com.example.ikastyle.Common.Util;
 import com.example.ikastyle.Dao.MainCategoryDao;
-import com.example.ikastyle.Database.MainCategoryDatabase;
+import com.example.ikastyle.Database.AppDatabase;
 
-import java.nio.channels.AsynchronousChannelGroup;
 import java.util.List;
-
-import io.reactivex.Completable;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -83,15 +75,15 @@ public class StoreFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // Spinnerに項目設定
-        MainCategoryDatabase db = MainCategoryDatabase.getDatabase(getContext(), DatabaseName.MAST_MAIN_CATEGORY);
+        AppDatabase db = AppDatabase.getDatabase(getContext(), DatabaseName.MAST_MAIN_CATEGORY, DatabaseName.MAST_MAIN_CATEGORY_FILE);
         new DataStoreAsyncTask(db).execute();
     }
 
     private static class DataStoreAsyncTask extends AsyncTask<Void, Void, Integer> {
-        private MainCategoryDatabase db;
+        private AppDatabase db;
         List<String> weaponList;
 
-        public DataStoreAsyncTask(MainCategoryDatabase db) {
+        public DataStoreAsyncTask(AppDatabase db) {
             this.db = db;
         }
 

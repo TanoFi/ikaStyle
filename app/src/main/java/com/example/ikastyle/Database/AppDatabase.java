@@ -5,27 +5,23 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.ikastyle.Dao.MainCategoryDao;
 import com.example.ikastyle.Entity.MainCategory;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Database(entities = {MainCategory.class}, version = 1)
-public abstract class MainCategoryDatabase extends RoomDatabase {
+public abstract class AppDatabase extends RoomDatabase {
     public abstract MainCategoryDao mainCategoryDao();
 
-    private static MainCategoryDatabase instance = null;
+    private static AppDatabase instance;
 
-    public static MainCategoryDatabase getDatabase(Context context, String databaseName){
+    public static AppDatabase getDatabase(Context context, String databaseName, String databaseFileName){
         if(instance != null)
         {
             return  instance;
         }
-        instance = Room.databaseBuilder(context, MainCategoryDatabase.class, databaseName)
-                .createFromAsset("database/MastMainCategory.db")
+        instance = Room.databaseBuilder(context, AppDatabase.class, databaseName)
+                .createFromAsset(databaseFileName)
                 .build();
 
         return instance;
