@@ -1,4 +1,4 @@
-package com.example.ikastyle.Util;
+package com.example.ikastyle.Common;
 
 import java.util.Locale;
 
