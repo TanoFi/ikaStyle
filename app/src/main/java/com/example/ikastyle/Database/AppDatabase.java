@@ -7,11 +7,16 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.example.ikastyle.Dao.MainCategoryDao;
+import com.example.ikastyle.Dao.WeaponMainCategoryDao;
+import com.example.ikastyle.DatabaseView.WeaponMainCategory;
 import com.example.ikastyle.Entity.MainCategory;
+import com.example.ikastyle.Entity.MainName;
+import com.example.ikastyle.Entity.WeaponName;
 
-@Database(entities = {MainCategory.class}, version = 1)
+@Database(entities = {MainCategory.class, MainName.class, WeaponName.class}, views = {WeaponMainCategory.class},version = 1)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract MainCategoryDao mainCategoryDao();
+    public abstract WeaponMainCategoryDao weaponMainCategoryDao();
 
     private static AppDatabase instance;
 
