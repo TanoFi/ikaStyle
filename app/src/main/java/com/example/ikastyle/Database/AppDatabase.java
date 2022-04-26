@@ -6,6 +6,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import com.example.ikastyle.Common.Const.DatabaseName;
 import com.example.ikastyle.Dao.MainCategoryDao;
 import com.example.ikastyle.Dao.WeaponMainCategoryDao;
 import com.example.ikastyle.DatabaseView.WeaponMainCategory;
@@ -18,15 +19,15 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract MainCategoryDao mainCategoryDao();
     public abstract WeaponMainCategoryDao weaponMainCategoryDao();
 
-    private static AppDatabase instance;
+    private static AppDatabase instance = null;
 
-    public static AppDatabase getDatabase(Context context, String databaseName, String databaseFileName){
+    public static AppDatabase getDatabase(Context context){
         if(instance != null)
         {
             return  instance;
         }
-        instance = Room.databaseBuilder(context, AppDatabase.class, databaseName)
-                .createFromAsset(databaseFileName)
+        instance = Room.databaseBuilder(context, AppDatabase.class, DatabaseName.DATABASE_NAME)
+                .createFromAsset(DatabaseName.DATABASE_FILE_NAME)
                 .build();
 
         return instance;

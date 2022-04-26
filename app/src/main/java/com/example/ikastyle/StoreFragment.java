@@ -78,16 +78,17 @@ public class StoreFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // Spinnerの項目に設定するためのDBを取得
-        AppDatabase db = AppDatabase.getDatabase(getContext(), DatabaseName.MAST_MAIN_CATEGORY, DatabaseName.MAST_MAIN_CATEGORY_FILE);
+        AppDatabase db = AppDatabase.getDatabase(getContext());
         // SpinnerDataGetAsyncTaskクラス内でContextを取得できなかったためにonPostExecute()だけインスタンス作成時に記述
         GetWeaponNameAsyncTask task = new GetWeaponNameAsyncTask(db){
             @Override
             protected void onPostExecute(Integer code){
+                Integer[] numbers = new Integer[]{1,3,5,7};
                 ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, weaponList);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
                 //spinnerにadapterを設定
-                Spinner weaponSpinner = view.findViewById(R.id.spinner_Weapon);
+                Spinner weaponSpinner = view.findViewById(R.id.spinner_weapon);
                 weaponSpinner.setAdapter(adapter);
             }
         };
