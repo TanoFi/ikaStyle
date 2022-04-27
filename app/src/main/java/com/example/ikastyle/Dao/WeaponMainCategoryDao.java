@@ -10,6 +10,7 @@ import java.util.List;
 @Dao
 public interface WeaponMainCategoryDao {
 
-    @Query("SELECT * FROM MAST_MAIN_CATEGORY WHERE language_code = :languageCode ORDER BY ")
+    // なぜかビュー名やカラム名が赤字になってしまうがデータ取得はできる
+    @Query("SELECT * FROM WEAPON_MAIN_CATEGORY_NAME WHERE language_code = :languageCode ORDER BY category_id, main_id, weapon_id")
     public List<WeaponMainCategory> mainWeaponNameList(int languageCode);
 }

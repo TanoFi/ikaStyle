@@ -5,11 +5,9 @@ import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
 
-@Entity(tableName = "MAST_WEAPON_NAME", primaryKeys = {"id", "main_id", "category_id", "language_code"},
-        foreignKeys = {@ForeignKey(entity = MainName.class, parentColumns = "id", childColumns = "main_id"),
-                       @ForeignKey(entity = MainCategory.class, parentColumns = "id", childColumns = "category_id")}
-)
+@Entity(tableName = "MAST_WEAPON_NAME", primaryKeys = {"id", "main_id", "category_id", "language_code"})
 public class WeaponName {
     @ColumnInfo(name = "id")
     @NonNull

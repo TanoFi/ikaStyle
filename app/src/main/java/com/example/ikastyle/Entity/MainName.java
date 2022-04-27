@@ -5,11 +5,11 @@ import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.Relation;
 
-@Entity(tableName = "MAST_MAIN_NAME", primaryKeys = {"id", "category_id", "language_code"},
-        foreignKeys = @ForeignKey(entity = MainCategory.class, parentColumns = "id", childColumns = "category_id")
-)
+
+@Entity(tableName = "MAST_MAIN_NAME", primaryKeys = {"id", "category_id", "language_code"})
 public class MainName {
     @ColumnInfo(name = "id")
     @NonNull
