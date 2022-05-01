@@ -8,6 +8,8 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.Relation;
 
+import com.example.ikastyle.Common.Const.NumberPlace;
+
 
 @Entity(tableName = "MAST_MAIN_NAME", primaryKeys = {"id", "category_id", "language_code"})
 public class MainName {
@@ -26,4 +28,12 @@ public class MainName {
     @ColumnInfo(name = "name")
     @NonNull
     public String name;
+
+    public String getName(){
+        return name;
+    }
+
+    public int getAbsoluteId(){
+        return categoryId * NumberPlace.CATEGORY_PLACE + id * NumberPlace.MAIN_PLACE;
+    }
 }
