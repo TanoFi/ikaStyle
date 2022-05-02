@@ -3,6 +3,8 @@ package com.example.ikastyle.DatabaseView;
 import androidx.room.ColumnInfo;
 import androidx.room.DatabaseView;
 
+import com.example.ikastyle.Common.Const.NumberPlace;
+
 /*
  * MAST_MAIN_NAMEとMAST_WEAPON_NAMEの結合テーブルを取得するView
  */
@@ -40,4 +42,16 @@ public class WeaponMain {
 
     @ColumnInfo(name = "weapon_name")
     public String weaponName;
+
+    public String getMainName(){
+        return "【" + mainName + "】";
+    }
+
+    public int getAbsoluteId(){
+        return  categoryId * NumberPlace.CATEGORY_PLACE + mainId * NumberPlace.MAIN_PLACE + weaponId;
+    }
+
+    public String getWeaponName(){
+        return weaponName;
+    }
 }

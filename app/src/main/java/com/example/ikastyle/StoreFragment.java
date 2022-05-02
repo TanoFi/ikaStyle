@@ -6,18 +6,39 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.example.ikastyle.Common.Const.DatabaseName;
+import com.example.ikastyle.Common.Const.NumberPlace;
 import com.example.ikastyle.Common.Util;
 import com.example.ikastyle.Dao.MainCategoryDao;
+import com.example.ikastyle.Dao.MainNameDao;
+import com.example.ikastyle.Dao.WeaponMainCategoryDao;
+import com.example.ikastyle.Dao.WeaponMainDao;
+import com.example.ikastyle.Dao.WeaponNameDao;
 import com.example.ikastyle.Database.AppDatabase;
+import com.example.ikastyle.DatabaseView.WeaponMain;
+import com.example.ikastyle.DatabaseView.WeaponMainCategory;
+import com.example.ikastyle.Entity.MainCategory;
+import com.example.ikastyle.Entity.MainName;
+import com.example.ikastyle.Entity.WeaponName;
+import com.example.ikastyle.UI.KeyValueArrayAdapter;
+import com.example.ikastyle.UI.WeaponSpinnerSelectedListener;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -83,13 +104,52 @@ public class StoreFragment extends Fragment {
         GetWeaponNameAsyncTask task = new GetWeaponNameAsyncTask(db){
             @Override
             protected void onPostExecute(Integer code){
-                Integer[] numbers = new Integer[]{1,3,5,7};
-                ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, weaponList);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                // ひとつのメインウェポン : そのメインウェポンを持つブキセットのリスト でMapを作成
+                // 昇順でソートしたいのでTreeMap
+                TreeMap<Integer, List<WeaponMain>> weaponMainMap = new TreeMap<>(weaponMainList.stream().collect(
+                        Collectors.groupingBy(x -> x.categoryId * NumberPlace.CATEGORY_PLACE + x.mainId * NumberPlace.MAIN_PLACE)
+                ));
 
-                //spinnerにadapterを設定
+                // Spinnerに渡す用のリストを作成
+                ArrayList<Pair<Integer, String>> categoryKeyValueList = new ArrayList<>();
+                ArrayList<Pair<Integer, String>> mainWeaponKeyValueList = new ArrayList<>();
+
+                // それぞれのリストの一番上に未選択時の項目を追加
+                Pair<Integer,String> initialItem = new Pair<>(0,getString(R.string.spinnerItem_unselected));
+                categoryKeyValueList.add(initialItem);
+                mainWeaponKeyValueList.add(initialItem);
+
+                //それぞれのリストにデータ(IDと名前のペア)を入れる
+                categoryList.forEach(x -> categoryKeyValueList.add(new Pair<>(x.getAbsoluteId(), x.getName())));
+                for (Map.Entry<Integer, List<WeaponMain>> data :weaponMainMap.entrySet()) {
+                    int key = data.getKey();
+                    List<WeaponMain> value = data.getValue();
+                    mainWeaponKeyValueList.add(new Pair<>(key, value.get(0).getMainName())); //メインウェポンのデータをAdd
+
+                    value.forEach(x -> mainWeaponKeyValueList.add(new Pair<>(x.getAbsoluteId(), x.getWeaponName()))); //ブキセットのデータをAdd
+                }
+
+                //スピナー取得
+                Spinner categorySpinner = view.findViewById(R.id.spinner_category);
                 Spinner weaponSpinner = view.findViewById(R.id.spinner_weapon);
-                weaponSpinner.setAdapter(adapter);
+
+                //アダプター作成
+                KeyValueArrayAdapter categoryAdapter = new KeyValueArrayAdapter(getContext(), android.R.layout.simple_spinner_item, categoryKeyValueList);
+                KeyValueArrayAdapter weaponAdapter = new KeyValueArrayAdapter(getContext(), android.R.layout.simple_spinner_item, mainWeaponKeyValueList);
+
+                //レイアウトを付与
+                categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                weaponAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                //スピナーにアダプターを設定
+                categorySpinner.setAdapter(categoryAdapter);
+                weaponSpinner.setAdapter(weaponAdapter);
+
+                //リスナーを作成
+                WeaponSpinnerSelectedListener categoryListener = new WeaponSpinnerSelectedListener(getContext() , weaponSpinner, mainWeaponKeyValueList);
+
+                //リスナーを設定
+                categorySpinner.setOnItemSelectedListener(categoryListener);
             }
         };
         task.execute();
@@ -100,7 +160,13 @@ public class StoreFragment extends Fragment {
      */
     private static class GetWeaponNameAsyncTask extends AsyncTask<Void, Void, Integer> {
         private AppDatabase db;
-        List<String> weaponList;
+        List<MainCategory> categoryList;
+        List<MainName> mainNameList;
+        List<WeaponName> weaponNameList;
+        List<WeaponMain> weaponMainList;
+        //List<WeaponMainCategory> weaponList;
+
+        static int languageCode = Util.getLanguageCode();
 
         public GetWeaponNameAsyncTask(AppDatabase db) {
             this.db = db;
@@ -108,9 +174,20 @@ public class StoreFragment extends Fragment {
 
         @Override
         protected Integer doInBackground(Void... params) {
+            //端末の言語設定を取得
+            int languageCode = Util.getLanguageCode();
+
             //実際にDBにアクセスし結果を取得
-            MainCategoryDao dao = db.mainCategoryDao();
-            weaponList = dao.mainCategoryNames(Util.getLanguageCode());
+            //WeaponMainCategoryDao dao = db.weaponMainCategoryDao();
+            MainCategoryDao categoryDao = db.mainCategoryDao();
+            MainNameDao mainNameDao = db.mainNameDao();
+            WeaponNameDao weaponNameDao = db.weaponNameDao();
+            WeaponMainDao weaponMainDao = db.weaponMainDao();
+            categoryList = categoryDao.getMainCategoryList(languageCode); //ブキカテゴリー名を取得
+            mainNameList = mainNameDao.getMainNameList(languageCode); //ブキ種名を取得
+            weaponNameList = weaponNameDao.getWeaponNameList(languageCode); //ブキ名を取得
+            weaponMainList = weaponMainDao.getWeaponMainList(languageCode);
+            //weaponList = dao.mainWeaponNameList(Util.getLanguageCode());
 
             return 0;
         }
