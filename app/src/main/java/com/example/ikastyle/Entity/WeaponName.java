@@ -7,6 +7,8 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Index;
 
+import com.example.ikastyle.Common.Const.NumberPlace;
+
 @Entity(tableName = "MAST_WEAPON_NAME", primaryKeys = {"id", "main_id", "category_id", "language_code"})
 public class WeaponName {
     @ColumnInfo(name = "id")
@@ -28,4 +30,12 @@ public class WeaponName {
     @ColumnInfo(name = "name")
     @NonNull
     public String name;
+
+    public String getName(){
+        return name;
+    }
+
+    public int getAbsoluteId(){
+        return categoryId * NumberPlace.CATEGORY_PLACE + mainId * NumberPlace.MAIN_PLACE + id;
+    }
 }

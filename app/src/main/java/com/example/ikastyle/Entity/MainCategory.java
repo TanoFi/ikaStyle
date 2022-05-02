@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
@@ -20,4 +21,12 @@ public class MainCategory {
     @ColumnInfo(name = "name")
     @NonNull
     public String name;
+
+    public int getAbsoluteId(){
+        return id * 1000;
+    }
+
+    public String getName(){
+        return name;
+    }
 }

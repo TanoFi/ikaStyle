@@ -10,9 +10,6 @@ import java.util.List;
 
 @Dao
 public interface MainCategoryDao {
-    @Insert
-    void insertAll(MainCategory... mainCategoryEntities);
-
-    @Query("SELECT name FROM MAST_MAIN_CATEGORY WHERE language_code = :languageCode ORDER BY id")
-    public  List<String> mainCategoryNames(int languageCode);
+    @Query("SELECT * FROM MAST_MAIN_CATEGORY WHERE language_code = :languageCode ORDER BY id")
+    public List<MainCategory> getMainCategoryList(int languageCode);
 }
