@@ -1,6 +1,5 @@
 package com.example.ikastyle;
 
-import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -10,21 +9,16 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-import com.example.ikastyle.Common.Const.DatabaseName;
 import com.example.ikastyle.Common.Const.NumberPlace;
 import com.example.ikastyle.Common.Util;
 import com.example.ikastyle.Dao.MainCategoryDao;
 import com.example.ikastyle.Dao.MainNameDao;
-import com.example.ikastyle.Dao.WeaponMainCategoryDao;
 import com.example.ikastyle.Dao.WeaponMainDao;
 import com.example.ikastyle.Dao.WeaponNameDao;
 import com.example.ikastyle.Database.AppDatabase;
 import com.example.ikastyle.DatabaseView.WeaponMain;
-import com.example.ikastyle.DatabaseView.WeaponMainCategory;
 import com.example.ikastyle.Entity.MainCategory;
 import com.example.ikastyle.Entity.MainName;
 import com.example.ikastyle.Entity.WeaponName;
@@ -32,12 +26,9 @@ import com.example.ikastyle.UI.KeyValueArrayAdapter;
 import com.example.ikastyle.UI.WeaponSpinnerSelectedListener;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -115,9 +106,8 @@ public class StoreFragment extends Fragment {
                 ArrayList<Pair<Integer, String>> mainWeaponKeyValueList = new ArrayList<>();
 
                 // それぞれのリストの一番上に未選択時の項目を追加
-                Pair<Integer,String> initialItem = new Pair<>(0,getString(R.string.spinnerItem_unselected));
-                categoryKeyValueList.add(initialItem);
-                mainWeaponKeyValueList.add(initialItem);
+                categoryKeyValueList.add(new Pair<>(0, getString(R.string.spinnerItem_categoryUnselected)));
+                mainWeaponKeyValueList.add(new Pair<>(0, getString(R.string.spinnerItem_weaponUnselected)));
 
                 //それぞれのリストにデータ(IDと名前のペア)を入れる
                 categoryList.forEach(x -> categoryKeyValueList.add(new Pair<>(x.getAbsoluteId(), x.getName())));

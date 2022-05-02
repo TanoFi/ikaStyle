@@ -3,5 +3,6 @@
     <string name="app_name">ikaStyle</string>
     <string name="menuItem_New">新規作成</string>
     <string name="menuItem_Store">既存</string>
-    <string name="spinnerItem_unselected">-- 未選択 --</string>
+    <string name="spinnerItem_categoryUnselected">-- カテゴリー選択 --</string>
+    <string name="spinnerItem_weaponUnselected">-- ブキ選択 --</string>
 </resources>
