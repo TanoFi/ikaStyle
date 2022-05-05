@@ -32,13 +32,6 @@ public class GearPowerImageView extends AppCompatImageView implements View.OnTou
         return gearPowerKind;
     }
 
-    public void setGearPowerKind(int gearPowerKind){
-        this.gearPowerKind = gearPowerKind;
-
-        // セットされたGearPowerKindの画像に差し替え
-        this.setImageResource(GearPowerResourceId.gearPowerResourceIdMap.get(gearPowerKind));
-    }
-
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent){
         if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){

@@ -20,7 +20,7 @@ import com.example.ikastyle.UI.GearPowerImageView;
  * Use the {@link NewFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class NewFragment extends Fragment implements View.OnTouchListener, View.OnDragListener{
+public class NewFragment extends Fragment{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -67,55 +67,5 @@ public class NewFragment extends Fragment implements View.OnTouchListener, View.
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_new, container, false);
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle bundle){
-        super.onViewCreated(view, bundle);
-
-        // ギアパワーのGridLayoutを取得
-        GridLayout gearPowerGrid = view.findViewById(R.id.gridLayout_gearPower);
-
-        // セルのGearPowerImageViewすべてにOnTouchリスナーをセット
-        for(int i = 0; i < gearPowerGrid.getChildCount(); i++){
-            GearPowerImageView gearPowerImageView = (GearPowerImageView) gearPowerGrid.getChildAt(i);
-            gearPowerImageView.setOnTouchListener(this);
-        }
-
-        // ギアセットのGridLayoutを取得
-        CardView cardView = view.findViewById(R.id.cardView_gearSet);
-
-        for (int i = 0; i < cardView.getChildCount(); i++){
-            GridLayout gearGrid = (GridLayout) cardView.getChildAt(i);
-
-            for (int j = 0; j < gearGrid.getChildCount(); j++){
-                View childView = gearGrid.getChildAt(j);
-                if(childView instanceof GearPowerImageView){
-                    childView.setOnDragListener(this);
-                }
-            }
-        }
-
-    }
-
-    @Override
-    public boolean onTouch(View view, MotionEvent motionEvent){
-        if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
-            view.startDragAndDrop(null, new View.DragShadowBuilder(view), view, 0);
-        }
-
-        return true;
-    }
-
-    @Override
-    public boolean onDrag(View view, DragEvent dragEvent){
-        if(dragEvent.getAction() == DragEvent.ACTION_DROP){
-            GearPowerImageView dragView = (GearPowerImageView) dragEvent.getLocalState();
-
-            int gearPowerKind = dragView.getGearPowerKind();
-            // フィールド変数gearPowerKindをセットしながら、セットしたKindのギア画像に差し替え
-            ((GearPowerImageView)view).setGearPowerKind(gearPowerKind);
-        }
-        return true;
     }
 }
