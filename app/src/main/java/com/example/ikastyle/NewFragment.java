@@ -2,18 +2,25 @@ package com.example.ikastyle;
 
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.gridlayout.widget.GridLayout;
 
+import android.view.DragEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.ikastyle.Common.Const.GearPowerResourceId;
+import com.example.ikastyle.UI.GearPowerImageView;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link NewFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class NewFragment extends Fragment {
+public class NewFragment extends Fragment{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
