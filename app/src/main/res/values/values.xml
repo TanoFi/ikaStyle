@@ -3,4 +3,7 @@
     <declare-styleable name="GearPowerImageView">
         <attr name="gearPowerKind" format="integer"/>
     </declare-styleable>
+    <declare-styleable name="GearPowerReceptorImageView">
+        <attr name="receptorKind" format="integer"/>
+    </declare-styleable>
 </resources>
