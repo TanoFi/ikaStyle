@@ -25,9 +25,10 @@ public class GearPowerResourceId {
                     put(8, R.drawable.special_power_up); //スペ強
                     put(9, R.drawable.quick_respawn); //復活短縮
                     put(10, R.drawable.quick_super_jump); //ジャンプ短縮
-                    put(11, R.drawable.ink_resistance_up); //安全靴
-                    put(12, R.drawable.bomb_defence_up_dx); //爆風軽減
-                    put(13, R.drawable.main_power_up); //メイン性能
+                    put(11, R.drawable.sub_power_up); //サブ性能
+                    put(12, R.drawable.ink_resistance_up); //安全靴
+                    put(13, R.drawable.bomb_defence_up_dx); //爆風軽減
+                    put(14, R.drawable.main_power_up); //メイン性能
                     put(100, R.drawable.opening_gambit); //スタートダッシュ
                     put(101, R.drawable.last_ditch_effort); //ラストスパート
                     put(102, R.drawable.tenacity); //逆境
