@@ -19,6 +19,9 @@ public class GearPowerReceptorImageView extends AppCompatImageView implements Vi
     public GearPowerReceptorImageView(Context context, AttributeSet attrs){
         super(context, attrs);
 
+        //未設定時のgearPowerKindをセット
+        gearPowerKind = 0;
+
         // カスタム属性receptorKindの値を取得しフィールド変数gearPowerKindに入れる
         TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.GearPowerReceptorImageView, 0, 0);
         receptorKind = typedArray.getInt(R.styleable.GearPowerReceptorImageView_receptorKind, receptorKind);
