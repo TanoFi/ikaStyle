@@ -5,4 +5,6 @@
     <string name="menuItem_Store">既存</string>
     <string name="spinnerItem_categoryUnselected">-- カテゴリー選択 --</string>
     <string name="spinnerItem_weaponUnselected">-- ブキ選択 --</string>
+    <string name="textView_headgear">Headgear</string>
+    <string name="plainText_loadoutsName">ギア構成名</string>
 </resources>

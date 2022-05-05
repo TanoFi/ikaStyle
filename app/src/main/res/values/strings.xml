@@ -6,4 +6,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="spinnerItem_categoryUnselected">-- Select a Category --</string>
     <string name="spinnerItem_weaponUnselected">-- Select a Weapon --</string>
+    <string name="textView_headgear">Headgear</string>
+    <string name="plainText_loadoutsName">Loadouts Name</string>
 </resources>
