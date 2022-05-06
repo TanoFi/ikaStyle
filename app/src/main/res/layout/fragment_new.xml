@@ -130,7 +130,7 @@
                 app:layout_columnWeight="3"
                 app:layout_row="0" />
 
-            <com.example.ikastyle.UI.GearPowerImageView
+            <ImageView
                 android:id="@+id/imageView.shoes"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
