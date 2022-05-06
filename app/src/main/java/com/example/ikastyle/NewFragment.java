@@ -1,19 +1,43 @@
 package com.example.ikastyle;
 
+import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.gridlayout.widget.GridLayout;
 
+import android.util.Pair;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Spinner;
 
 import com.example.ikastyle.Common.Const.GearPowerResourceId;
+import com.example.ikastyle.Common.Const.NumberPlace;
+import com.example.ikastyle.Common.Util;
+import com.example.ikastyle.Dao.MainCategoryDao;
+import com.example.ikastyle.Dao.MainNameDao;
+import com.example.ikastyle.Dao.WeaponMainDao;
+import com.example.ikastyle.Dao.WeaponNameDao;
+import com.example.ikastyle.Database.AppDatabase;
+import com.example.ikastyle.DatabaseView.WeaponMain;
+import com.example.ikastyle.Entity.MainCategory;
+import com.example.ikastyle.Entity.MainName;
+import com.example.ikastyle.Entity.WeaponName;
 import com.example.ikastyle.UI.GearPowerImageView;
+import com.example.ikastyle.UI.GetDataAndSetSpinnerAsyncTask;
+import com.example.ikastyle.UI.KeyValueArrayAdapter;
+import com.example.ikastyle.UI.WeaponSpinnerSelectedListener;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -67,5 +91,20 @@ public class NewFragment extends Fragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_new, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState){
+        super.onViewCreated(view, savedInstanceState);
+
+        //スピナーを取得
+        Spinner categorySpinner = view.findViewById(R.id.spinner_category);
+        Spinner weaponSpinner = view.findViewById(R.id.spinner_weapon);
+
+        // Spinnerの項目に設定するためのDBを取得
+        AppDatabase db = AppDatabase.getDatabase(getContext());
+        // DBからデータを取得しスピナーにセット
+        GetDataAndSetSpinnerAsyncTask task = new GetDataAndSetSpinnerAsyncTask(db, getContext(), categorySpinner, weaponSpinner);
+        task.execute();
     }
 }
