@@ -42,21 +42,21 @@
         app:layout_constraintTop_toBottomOf="@+id/spinner.weapon" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/textView.gearSetName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/plainText_loadoutName"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        app:layout_constraintBottom_toBottomOf="@+id/floatingActionButton"
-        app:layout_constraintEnd_toStartOf="@+id/floatingActionButton"
+        app:layout_constraintBottom_toBottomOf="@+id/floatingActionButton.save"
+        app:layout_constraintEnd_toStartOf="@+id/floatingActionButton.save"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/floatingActionButton"
+        app:layout_constraintTop_toTopOf="@+id/floatingActionButton.save"
         tools:text="@string/plainText_loadoutName" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/floatingActionButton.save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -79,7 +79,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/floatingActionButton">
+        app:layout_constraintTop_toBottomOf="@+id/floatingActionButton.save">
 
         <androidx.gridlayout.widget.GridLayout
             android:id="@+id/gridLayout.shoes"
@@ -269,7 +269,7 @@
     <androidx.gridlayout.widget.GridLayout
         android:id="@+id/gridLayout.gearPower"
         android:layout_width="0dp"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         app:columnCount="9"
         app:layout_constraintEnd_toEndOf="parent"
