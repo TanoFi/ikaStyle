@@ -16,6 +16,10 @@ public class GearPowerReceptorImageView extends AppCompatImageView implements Vi
     //サブギアなら0, アタマのメインギア1, フクのメインギア2, クツのメインギア3が入る
     private int receptorKind;
 
+    public GearPowerReceptorImageView(Context context){
+        super(context);
+    }
+
     public GearPowerReceptorImageView(Context context, AttributeSet attrs){
         super(context, attrs);
 
