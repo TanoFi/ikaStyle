@@ -1,5 +1,7 @@
 package com.example.ikastyle.Common;
 
+import com.example.ikastyle.Common.Const.NumberPlace;
+
 import java.util.Locale;
 
 public class Util {
@@ -15,5 +17,26 @@ public class Util {
         else {
             return 1;
         }
+    }
+
+    /*
+     * ブキの絶対IDを受け取ってカテゴリーIDを返す
+     */
+    public static int getCategoryId(int absoluteId){
+        return absoluteId / NumberPlace.CATEGORY_PLACE;
+    }
+
+    /*
+     * ブキの絶対IDを受け取ってメインIDを返す
+     */
+    public static int getMainId(int absoluteId){
+        return (absoluteId % NumberPlace.CATEGORY_PLACE) / NumberPlace.MAIN_PLACE;
+    }
+
+    /*
+     * ブキの絶対IDを受け取ってカスタマイズIDを返す
+     */
+    public static int getCustomizationId(int absoluteId){
+        return (absoluteId % NumberPlace.CATEGORY_PLACE) % NumberPlace.MAIN_PLACE;
     }
 }

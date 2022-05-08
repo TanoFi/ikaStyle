@@ -17,7 +17,7 @@ public class GearPowerResourceId {
                     put(0, R.drawable.not_set); //未設定
                     put(1, R.drawable.ink_saver_main); //メイン効率
                     put(2, R.drawable.ink_saver_sub); //サブ効率
-                    put(3, R.drawable.ink_recorvery_up); //インク回復
+                    put(3, R.drawable.ink_recovery_up); //インク回復
                     put(4, R.drawable.run_speed_up); //ヒト速
                     put(5, R.drawable.swim_speed_up); //イカ速
                     put(6, R.drawable.special_charge_up); //スペ増

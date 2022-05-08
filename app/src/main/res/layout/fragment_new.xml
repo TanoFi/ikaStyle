@@ -42,26 +42,27 @@
         app:layout_constraintTop_toBottomOf="@+id/spinner.weapon" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/textView.gearSetName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="@string/plainText_loadoutsName"
+        android:hint="@string/plainText_loadoutName"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        app:layout_constraintBottom_toBottomOf="@+id/floatingActionButton"
-        app:layout_constraintEnd_toStartOf="@+id/floatingActionButton"
+        app:layout_constraintBottom_toBottomOf="@+id/floatingActionButton.save"
+        app:layout_constraintEnd_toStartOf="@+id/floatingActionButton.save"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/floatingActionButton"
-        tools:text="@string/plainText_loadoutsName" />
+        app:layout_constraintTop_toTopOf="@+id/floatingActionButton.save"
+        tools:text="@string/plainText_loadoutName" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/floatingActionButton.save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:clickable="true"
+        android:focusable="true"
         android:src="@drawable/ic_baseline_add_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider2"
@@ -78,7 +79,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/floatingActionButton">
+        app:layout_constraintTop_toBottomOf="@+id/floatingActionButton.save">
 
         <androidx.gridlayout.widget.GridLayout
             android:id="@+id/gridLayout.shoes"
@@ -268,7 +269,7 @@
     <androidx.gridlayout.widget.GridLayout
         android:id="@+id/gridLayout.gearPower"
         android:layout_width="0dp"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         app:columnCount="9"
         app:layout_constraintEnd_toEndOf="parent"
@@ -542,11 +543,11 @@
             app:layout_row="0" />
 
         <com.example.ikastyle.UI.GearPowerImageView
-            android:id="@+id/imageView.inkRecorveryUp"
+            android:id="@+id/imageView.inkRecoveryUp"
             android:layout_width="0dp"
             android:layout_height="@dimen/gear_size"
             android:padding="1dp"
-            android:src="@drawable/ink_recorvery_up"
+            android:src="@drawable/ink_recovery_up"
             app:gearPowerKind="3"
             app:layout_column="2"
             app:layout_columnWeight="1"
