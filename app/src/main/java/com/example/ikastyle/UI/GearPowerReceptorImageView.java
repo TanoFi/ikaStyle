@@ -34,6 +34,10 @@ public class GearPowerReceptorImageView extends AppCompatImageView implements Vi
         this.setOnDragListener(this::onDrag);
     }
 
+    public int getGearPowerKind(){
+        return gearPowerKind;
+    }
+
     public void setGearPowerKind(int gearPowerKind){
         this.gearPowerKind = gearPowerKind;
 

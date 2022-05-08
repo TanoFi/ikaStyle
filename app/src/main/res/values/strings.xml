@@ -8,4 +8,7 @@
     <string name="spinnerItem_weaponUnselected">-- Select a Weapon --</string>
     <string name="textView_headgear">Headgear</string>
     <string name="plainText_loadoutName">Loadout Name</string>
+    <string name="toastMessage_spinnerNotSelected">A weapon must be selected.</string>
+    <string name="toastMessage_mainGearPowerNotSet">All main ability must be equipped.</string>
+    <string name="toastMessage_insertCompleted">Gear-set registration have been completed.</string>
 </resources>
