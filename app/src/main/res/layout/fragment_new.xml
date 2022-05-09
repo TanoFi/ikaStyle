@@ -199,7 +199,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="#B3000000"
-                android:src="@drawable/ic_clothing"
+                android:src="@drawable/clothing_gear0"
                 app:layout_column="0"
                 app:layout_columnWeight="6"
                 app:layout_row="0" />
