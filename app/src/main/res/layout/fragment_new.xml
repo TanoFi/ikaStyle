@@ -136,7 +136,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="#B3000000"
-                android:src="@drawable/ic_shoes"
+                android:src="@drawable/shoes_gear0"
                 app:gearPowerKind="0"
                 app:layout_column="0"
                 app:layout_columnWeight="6"
