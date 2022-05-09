@@ -8,7 +8,6 @@ import android.view.View;
 
 import androidx.appcompat.widget.AppCompatImageView;
 
-import com.example.ikastyle.Common.Const.GearPowerResourceId;
 import com.example.ikastyle.R;
 
 /*

@@ -1,51 +1,25 @@
 package com.example.ikastyle;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.gridlayout.widget.GridLayout;
 
 import android.util.Pair;
-import android.view.DragEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.ikastyle.Common.Const.GearPowerResourceId;
-import com.example.ikastyle.Common.Const.NumberPlace;
 import com.example.ikastyle.Common.Util;
 import com.example.ikastyle.Dao.GearSetDao;
-import com.example.ikastyle.Dao.MainCategoryDao;
-import com.example.ikastyle.Dao.MainNameDao;
-import com.example.ikastyle.Dao.WeaponMainDao;
-import com.example.ikastyle.Dao.WeaponNameDao;
 import com.example.ikastyle.Database.AppDatabase;
-import com.example.ikastyle.DatabaseView.WeaponMain;
 import com.example.ikastyle.Entity.GearSet;
-import com.example.ikastyle.Entity.MainCategory;
-import com.example.ikastyle.Entity.MainName;
-import com.example.ikastyle.Entity.WeaponName;
-import com.example.ikastyle.UI.GearPowerImageView;
 import com.example.ikastyle.UI.GearPowerReceptorImageView;
 import com.example.ikastyle.UI.GetDataAndSetSpinnerAsyncTask;
-import com.example.ikastyle.UI.KeyValueArrayAdapter;
-import com.example.ikastyle.UI.WeaponSpinnerSelectedListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.stream.Collectors;
 
 /**
  * A simple {@link Fragment} subclass.

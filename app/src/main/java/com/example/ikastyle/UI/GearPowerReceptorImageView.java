@@ -8,7 +8,7 @@ import android.view.View;
 
 import androidx.appcompat.widget.AppCompatImageView;
 
-import com.example.ikastyle.Common.Const.GearPowerResourceId;
+import com.example.ikastyle.Common.Const.ResourceIdMap;
 import com.example.ikastyle.R;
 
 public class GearPowerReceptorImageView extends AppCompatImageView implements View.OnDragListener {
@@ -42,7 +42,7 @@ public class GearPowerReceptorImageView extends AppCompatImageView implements Vi
         this.gearPowerKind = gearPowerKind;
 
         // セットされたGearPowerKindの画像に差し替え
-        this.setImageResource(GearPowerResourceId.gearPowerResourceIdMap.get(gearPowerKind));
+        this.setImageResource(ResourceIdMap.gearPowerResourceIdMap.get(gearPowerKind));
     }
 
     @Override
