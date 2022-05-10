@@ -9,6 +9,7 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +30,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class NewFragment extends Fragment{
     private Spinner categorySpinner;
     private Spinner weaponSpinner;
-    private TextView gearSetName;
+    private EditText gearSetName;
     private GearPowerReceptorImageView headMain;
     private GearPowerReceptorImageView headSub1;
     private GearPowerReceptorImageView headSub2;
@@ -99,21 +100,21 @@ public class NewFragment extends Fragment{
         weaponSpinner = view.findViewById(R.id.spinner_weapon);
 
         // textViewの画面要素を取得
-        gearSetName = view.findViewById(R.id.textView_gearSetName);
+        gearSetName = view.findViewById(R.id.editText_gearSetName);
 
         // GearPowerReceptorImageViewの画面要素を取得
-        headMain = view.findViewById(R.id.imageView_head_main);
-        headSub1 = view.findViewById(R.id.imageView_head_sub1);
-        headSub2 = view.findViewById(R.id.imageView_head_sub2);
-        headSub3 = view.findViewById(R.id.imageView_head_sub3);
-        clothingMain = view.findViewById(R.id.imageView_clothing_main);
-        clothingSub1 = view.findViewById(R.id.imageView_clothing_sub1);
-        clothingSub2 = view.findViewById(R.id.imageView_clothing_sub2);
-        clothingSub3 = view.findViewById(R.id.imageView_clothing_sub3);
-        shoesMain = view.findViewById(R.id.imageView_shoes_main);
-        shoesSub1 = view.findViewById(R.id.imageView_shoes_sub1);
-        shoesSub2 = view.findViewById(R.id.imageView_shoes_sub2);
-        shoesSub3 = view.findViewById(R.id.imageView_shoes_sub3);
+        headMain = view.findViewById(R.id.receptorImageView_clothing_sub3);
+        headSub1 = view.findViewById(R.id.receptorImageView_head_sub1);
+        headSub2 = view.findViewById(R.id.receptorImageView_head_sub2);
+        headSub3 = view.findViewById(R.id.receptorImageView_head_sub3);
+        clothingMain = view.findViewById(R.id.receptorImageView_clothing_main);
+        clothingSub1 = view.findViewById(R.id.receptorImageView_clothing_sub1);
+        clothingSub2 = view.findViewById(R.id.receptorImageView_clothing_sub2);
+        clothingSub3 = view.findViewById(R.id.receptorImageView_clothing_sub3);
+        shoesMain = view.findViewById(R.id.receptorImageView_shoes_main);
+        shoesSub1 = view.findViewById(R.id.receptorImageView_shoes_sub1);
+        shoesSub2 = view.findViewById(R.id.receptorImageView_shoes_sub2);
+        shoesSub3 = view.findViewById(R.id.receptorImageView_shoes_sub3);
 
         // Spinnerの項目に設定するためのDBを取得
         AppDatabase db = AppDatabase.getDatabase(getContext());
