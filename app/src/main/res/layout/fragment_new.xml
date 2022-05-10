@@ -42,7 +42,7 @@
         app:layout_constraintTop_toBottomOf="@+id/spinner.weapon" />
 
     <EditText
-        android:id="@+id/textView.gearSetName"
+        android:id="@+id/editText.gearSetName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -89,7 +89,7 @@
             android:background="@drawable/background_stripe_shoes">
 
             <com.example.ikastyle.UI.GearPowerReceptorImageView
-                android:id="@+id/imageView.shoes_sub3"
+                android:id="@+id/receptorImageView.shoes_sub3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -100,7 +100,7 @@
                 app:layout_row="0" />
 
             <com.example.ikastyle.UI.GearPowerReceptorImageView
-                android:id="@+id/imageView.shoes_sub2"
+                android:id="@+id/receptorImageView.shoes_sub2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -111,7 +111,7 @@
                 app:layout_row="0" />
 
             <com.example.ikastyle.UI.GearPowerReceptorImageView
-                android:id="@+id/imageView.shoes_sub1"
+                android:id="@+id/receptorImageView.shoes_sub1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -122,7 +122,7 @@
                 app:layout_row="0" />
 
             <com.example.ikastyle.UI.GearPowerReceptorImageView
-                android:id="@+id/imageView.shoes_main"
+                android:id="@+id/receptorImageView.shoes_main"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:src="@drawable/not_set"
@@ -151,7 +151,7 @@
             android:background="@drawable/background_stripe_clothing">
 
             <com.example.ikastyle.UI.GearPowerReceptorImageView
-                android:id="@+id/imageView.clothing_sub3"
+                android:id="@+id/receptorImageView.clothing_sub3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -162,7 +162,7 @@
                 app:layout_row="0" />
 
             <com.example.ikastyle.UI.GearPowerReceptorImageView
-                android:id="@+id/imageView.clothing_sub2"
+                android:id="@+id/receptorImageView.clothing_sub2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -173,7 +173,7 @@
                 app:layout_row="0" />
 
             <com.example.ikastyle.UI.GearPowerReceptorImageView
-                android:id="@+id/imageView.clothing_sub1"
+                android:id="@+id/receptorImageView.clothing_sub1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -185,7 +185,7 @@
                 app:layout_row="0" />
 
             <com.example.ikastyle.UI.GearPowerReceptorImageView
-                android:id="@+id/imageView.clothing_main"
+                android:id="@+id/receptorImageView.clothing_main"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:src="@drawable/not_set"
@@ -212,7 +212,7 @@
             android:background="@drawable/background_stripe_head">
 
             <com.example.ikastyle.UI.GearPowerReceptorImageView
-                android:id="@+id/imageView.head_sub3"
+                android:id="@+id/receptorImageView.head_sub3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -223,7 +223,7 @@
                 app:layout_row="0" />
 
             <com.example.ikastyle.UI.GearPowerReceptorImageView
-                android:id="@+id/imageView.head_sub2"
+                android:id="@+id/receptorImageView.head_sub2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -234,7 +234,7 @@
                 app:layout_row="0" />
 
             <com.example.ikastyle.UI.GearPowerReceptorImageView
-                android:id="@+id/imageView.head_sub1"
+                android:id="@+id/receptorImageView.head_sub1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -245,7 +245,7 @@
                 app:layout_row="0" />
 
             <com.example.ikastyle.UI.GearPowerReceptorImageView
-                android:id="@+id/imageView.head_main"
+                android:id="@+id/receptorImageView.head_main"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:src="@drawable/not_set"
