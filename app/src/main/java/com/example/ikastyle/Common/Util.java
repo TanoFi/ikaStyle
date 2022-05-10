@@ -1,8 +1,10 @@
 package com.example.ikastyle.Common;
 
 import com.example.ikastyle.Common.Const.NumberPlace;
+import com.example.ikastyle.Common.Const.ResourceIdMap;
 
 import java.util.Locale;
+import java.util.Optional;
 
 public class Util {
     /*
@@ -38,5 +40,34 @@ public class Util {
      */
     public static int getCustomizationId(int absoluteId){
         return (absoluteId % NumberPlace.CATEGORY_PLACE) % NumberPlace.MAIN_PLACE;
+    }
+
+    /*
+     * ギアパワーのIDを受け取って対応する画像のResourceIdを返す
+     */
+    public static int getGearPowerResourceId(int gearPowerId){
+        return ResourceIdMap.gearPowerResourceIdMap.get(gearPowerId);
+    }
+
+    /*
+     * アタマのギアIDを受け取って対応する画像のResourceIdを返す
+     */
+    public static int getHeadGearResourceId(int gearId){
+        return ResourceIdMap.headGearResourceIdMap.get(gearId);
+    }
+
+    /*
+     * フクのギアIDを受け取って対応する画像のResourceIdを返す
+     */
+    public static int getClothingResourceId(int gearId){
+        return ResourceIdMap.clothingGearResourceIdMap.get(gearId);
+    }
+
+    /*
+     * クツのギアIDを受け取って対応する画像のResourceIdを返す
+     */
+
+    public static int gerShoesResourceId(int gearId){
+        return ResourceIdMap.shoesGearResourceIdMap.get(gearId);
     }
 }
