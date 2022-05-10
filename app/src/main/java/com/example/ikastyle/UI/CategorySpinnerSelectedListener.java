@@ -12,13 +12,13 @@ import com.example.ikastyle.R;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class WeaponSpinnerSelectedListener implements AdapterView.OnItemSelectedListener {
+public class CategorySpinnerSelectedListener implements AdapterView.OnItemSelectedListener {
 
     private Context context;
     private Spinner spinner;
     private ArrayList<Pair<Integer,String>> keyValueList;
 
-    public WeaponSpinnerSelectedListener(Context context, Spinner spinner, ArrayList<Pair<Integer,String>> keyValueList){
+    public CategorySpinnerSelectedListener(Context context, Spinner spinner, ArrayList<Pair<Integer,String>> keyValueList){
         this.context = context;
         this.spinner = spinner;
         this.keyValueList = keyValueList;

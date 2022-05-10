@@ -92,7 +92,7 @@ public class GetDataAndSetSpinnerAsyncTask extends AsyncTask<Void, Void, Integer
         weaponSpinner.setAdapter(weaponAdapter);
 
         //リスナーを作成
-        WeaponSpinnerSelectedListener categoryListener = new WeaponSpinnerSelectedListener(context , weaponSpinner, mainWeaponKeyValueList);
+        CategorySpinnerSelectedListener categoryListener = new CategorySpinnerSelectedListener(context , weaponSpinner, mainWeaponKeyValueList);
 
         //リスナーを設定
         categorySpinner.setOnItemSelectedListener(categoryListener);
