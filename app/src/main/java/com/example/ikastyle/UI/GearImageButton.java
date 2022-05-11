@@ -57,6 +57,10 @@ public class GearImageButton extends AppCompatImageButton {
         }
     }
 
+    public int getGearKind(){
+        return gearKind;
+    }
+
 //    @Override
 //    public abstract void onClick(View view);
 }
