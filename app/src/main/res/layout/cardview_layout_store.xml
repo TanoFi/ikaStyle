@@ -1,242 +1,251 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/white"
+    app:cardUseCompatPadding="true">
 
-    <androidx.gridlayout.widget.GridLayout
-        android:id="@+id/gridLayout.shoes"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:background="@drawable/background_stripe_shoes"
-        app:layout_constraintEnd_toEndOf="@+id/gridLayout.clothing"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gridLayout.clothing">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/imageView.shoes_sub3"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="0dp"
+            android:layout_height="180dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
+            app:cardCornerRadius="10dp"
+            app:layout_constraintEnd_toStartOf="@+id/floatingActionButton.analyse"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView.loadoutName">
+
+            <androidx.gridlayout.widget.GridLayout
+                android:id="@+id/gridLayout.head"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="0dp"
+                android:background="@drawable/background_stripe_head">
+
+                <ImageView
+                    android:id="@+id/imageView.head_sub3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/not_set"
+                    app:layout_column="4"
+                    app:layout_columnWeight="2"
+                    app:layout_row="0" />
+
+                <ImageView
+                    android:id="@+id/imageView.head_sub2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/not_set"
+                    app:layout_column="3"
+                    app:layout_columnWeight="2"
+                    app:layout_row="0" />
+
+                <ImageView
+                    android:id="@+id/imageView.head_sub1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/not_set"
+                    app:layout_column="2"
+                    app:layout_columnWeight="2"
+                    app:layout_row="0" />
+
+                <ImageView
+                    android:id="@+id/imageView.head_main"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/not_set"
+                    app:layout_column="1"
+                    app:layout_columnWeight="3"
+                    app:layout_row="0" />
+
+                <ImageView
+                    android:id="@+id/imageView.headgear"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:background="#B3000000"
+                    android:src="@drawable/headgear0"
+                    app:layout_column="0"
+                    app:layout_columnWeight="6"
+                    app:layout_row="0" />
+            </androidx.gridlayout.widget.GridLayout>
+
+            <androidx.gridlayout.widget.GridLayout
+                android:id="@+id/gridLayout.clothing"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="60dp"
+                android:background="@drawable/background_stripe_clothing">
+
+                <ImageView
+                    android:id="@+id/imageView.clothing_sub3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/not_set"
+                    app:layout_column="4"
+                    app:layout_columnWeight="2"
+                    app:layout_row="0" />
+
+                <ImageView
+                    android:id="@+id/imageView.clothing_sub2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/not_set"
+                    app:layout_column="3"
+                    app:layout_columnWeight="2"
+                    app:layout_row="0" />
+
+                <ImageView
+                    android:id="@+id/imageView.clothing_sub1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/not_set"
+                    app:layout_column="2"
+                    app:layout_columnWeight="2"
+                    app:layout_gravity="bottom"
+                    app:layout_row="0" />
+
+                <ImageView
+                    android:id="@+id/imageView.clothing_main"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/not_set"
+                    app:layout_column="1"
+                    app:layout_columnWeight="3"
+                    app:layout_row="0" />
+
+                <ImageView
+                    android:id="@+id/imageView.clothing"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="#B3000000"
+                    android:src="@drawable/clothing_gear0"
+                    app:layout_column="0"
+                    app:layout_columnWeight="6"
+                    app:layout_row="0" />
+            </androidx.gridlayout.widget.GridLayout>
+
+            <androidx.gridlayout.widget.GridLayout
+                android:id="@+id/gridLayout.shoes"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="120dp"
+                android:background="@drawable/background_stripe_shoes">
+
+                <ImageView
+                    android:id="@+id/imageView.shoes_sub3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/not_set"
+                    app:layout_column="4"
+                    app:layout_columnWeight="2"
+                    app:layout_row="0" />
+
+                <ImageView
+                    android:id="@+id/imageView.shoes_sub2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/not_set"
+                    app:layout_column="3"
+                    app:layout_columnWeight="2"
+                    app:layout_row="0" />
+
+                <ImageView
+                    android:id="@+id/imageView.shoes_sub1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/not_set"
+                    app:layout_column="2"
+                    app:layout_columnWeight="2"
+                    app:layout_row="0" />
+
+                <ImageView
+                    android:id="@+id/imageView.shoes_main"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/not_set"
+                    app:layout_column="1"
+                    app:layout_columnWeight="3"
+                    app:layout_row="0" />
+
+                <ImageView
+                    android:id="@+id/imageView.shoes"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="#B3000000"
+                    android:src="@drawable/shoes_gear0"
+                    app:gearPowerKind="0"
+                    app:layout_column="0"
+                    app:layout_columnWeight="6"
+                    app:layout_row="0" />
+            </androidx.gridlayout.widget.GridLayout>
+        </androidx.cardview.widget.CardView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButton.delete"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/not_set"
-            app:layout_column="4"
-            app:layout_columnWeight="2"
-            app:layout_row="0" />
+            android:layout_marginEnd="4dp"
+            android:clickable="true"
+            app:layout_constraintBottom_toBottomOf="@+id/cardView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/floatingActionButton.analyse"
+            app:maxImageSize="45dp"
+            app:srcCompat="@drawable/ic_baseline_delete_24"
+            tools:ignore="SpeakableTextPresentCheck" />
 
-        <ImageView
-            android:id="@+id/imageView.shoes_sub2"
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButton.edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:clickable="true"
+            app:layout_constraintBottom_toTopOf="@+id/floatingActionButton.delete"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/floatingActionButton.analyse"
+            app:layout_constraintTop_toBottomOf="@+id/floatingActionButton.analyse"
+            app:maxImageSize="45dp"
+            app:srcCompat="@drawable/ic_baseline_edit_24"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButton.analyse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:clickable="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/cardView"
+            app:maxImageSize="45dp"
+            app:srcCompat="@drawable/ic_baseline_analytics_24"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <TextView
+            android:id="@+id/textView.loadoutName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/not_set"
-            app:layout_column="3"
-            app:layout_columnWeight="2"
-            app:layout_row="0" />
+            android:textAlignment="center"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/imageView.shoes_sub1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/not_set"
-            app:layout_column="2"
-            app:layout_columnWeight="2"
-            app:layout_row="0" />
-
-        <ImageView
-            android:id="@+id/imageView.shoes_main"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/not_set"
-            app:layout_column="1"
-            app:layout_columnWeight="3"
-            app:layout_row="0" />
-
-        <ImageView
-            android:id="@+id/imageView.shoes"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="#B3000000"
-            android:src="@drawable/shoes_gear0"
-            app:gearPowerKind="0"
-            app:layout_column="0"
-            app:layout_columnWeight="6"
-            app:layout_row="0" />
-    </androidx.gridlayout.widget.GridLayout>
-
-    <androidx.gridlayout.widget.GridLayout
-        android:id="@+id/gridLayout.clothing"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:background="@drawable/background_stripe_clothing"
-        app:layout_constraintEnd_toEndOf="@+id/gridLayout.head"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gridLayout.head">
-
-        <ImageView
-            android:id="@+id/imageView.clothing_sub3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/not_set"
-            app:layout_column="4"
-            app:layout_columnWeight="2"
-            app:layout_row="0" />
-
-        <ImageView
-            android:id="@+id/imageView.clothing_sub2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/not_set"
-            app:layout_column="3"
-            app:layout_columnWeight="2"
-            app:layout_row="0" />
-
-        <ImageView
-            android:id="@+id/imageView.clothing_sub1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/not_set"
-            app:layout_column="2"
-            app:layout_columnWeight="2"
-            app:layout_gravity="bottom"
-            app:layout_row="0" />
-
-        <ImageView
-            android:id="@+id/imageView.clothing_main"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/not_set"
-            app:layout_column="1"
-            app:layout_columnWeight="3"
-            app:layout_row="0" />
-
-        <ImageView
-            android:id="@+id/imageView.clothing"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="#B3000000"
-            android:src="@drawable/clothing_gear0"
-            app:layout_column="0"
-            app:layout_columnWeight="6"
-            app:layout_row="0" />
-    </androidx.gridlayout.widget.GridLayout>
-
-    <androidx.gridlayout.widget.GridLayout
-        android:id="@+id/gridLayout.head"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="4dp"
-        android:background="@drawable/background_stripe_head"
-        app:layout_constraintEnd_toStartOf="@+id/floatingActionButton.analyse"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView.loadoutName">
-
-        <ImageView
-            android:id="@+id/imageView.head_sub3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/not_set"
-            app:layout_column="4"
-            app:layout_columnWeight="2"
-            app:layout_row="0" />
-
-        <ImageView
-            android:id="@+id/imageView.head_sub2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/not_set"
-            app:layout_column="3"
-            app:layout_columnWeight="2"
-            app:layout_row="0" />
-
-        <ImageView
-            android:id="@+id/imageView.head_sub1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/not_set"
-            app:layout_column="2"
-            app:layout_columnWeight="2"
-            app:layout_row="0" />
-
-        <ImageView
-            android:id="@+id/imageView.head_main"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/not_set"
-            app:layout_column="1"
-            app:layout_columnWeight="3"
-            app:layout_row="0" />
-
-        <ImageView
-            android:id="@+id/imageView.headgear"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:background="#B3000000"
-            android:src="@drawable/headgear0"
-            app:layout_column="0"
-            app:layout_columnWeight="6"
-            app:layout_row="0" />
-    </androidx.gridlayout.widget.GridLayout>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton.delete"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="4dp"
-        android:clickable="true"
-        app:layout_constraintBottom_toBottomOf="@+id/gridLayout.shoes"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gridLayout.clothing"
-        app:maxImageSize="45dp"
-        app:srcCompat="@drawable/ic_baseline_delete_24" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton.edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="4dp"
-        android:clickable="true"
-        app:layout_constraintBottom_toTopOf="@+id/floatingActionButton.delete"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/floatingActionButton.analyse"
-        app:maxImageSize="45dp"
-        app:srcCompat="@drawable/ic_baseline_edit_24" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton.analyse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="4dp"
-        android:clickable="true"
-        app:layout_constraintBottom_toTopOf="@+id/gridLayout.clothing"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/gridLayout.head"
-        app:maxImageSize="45dp"
-        app:srcCompat="@drawable/ic_baseline_analytics_24" />
-
-    <TextView
-        android:id="@+id/textView.loadoutName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
