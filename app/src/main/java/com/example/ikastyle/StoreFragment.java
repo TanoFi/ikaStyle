@@ -1,16 +1,36 @@
 package com.example.ikastyle;
 
+import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Spinner;
 
+import com.example.ikastyle.Common.Const.NumberPlace;
+import com.example.ikastyle.Common.Util;
+import com.example.ikastyle.Dao.MainCategoryDao;
+import com.example.ikastyle.Dao.WeaponMainDao;
 import com.example.ikastyle.Database.AppDatabase;
+import com.example.ikastyle.DatabaseView.WeaponMain;
+import com.example.ikastyle.Entity.MainCategory;
+import com.example.ikastyle.UI.CategorySpinnerSelectedListener;
+import com.example.ikastyle.UI.CustomizationSpinnerSelectedListener;
 import com.example.ikastyle.UI.GetDataAndSetSpinnerAsyncTask;
+import com.example.ikastyle.UI.KeyValueArrayAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,6 +38,9 @@ import com.example.ikastyle.UI.GetDataAndSetSpinnerAsyncTask;
  * create an instance of this fragment.
  */
 public class StoreFragment extends Fragment {
+    private Spinner categorySpinner;
+    private Spinner customizationSpinner;
+    private RecyclerView recyclerView;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -71,13 +94,19 @@ public class StoreFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // スピナーを取得
-        Spinner categorySpinner = view.findViewById(R.id.spinner_category);
-        Spinner weaponSpinner = view.findViewById(R.id.spinner_weapon);
+        categorySpinner = view.findViewById(R.id.spinner_category);
+        customizationSpinner = view.findViewById(R.id.spinner_weapon);
+
+        // RecyclerViewを取得
+        recyclerView = view.findViewById(R.id.recyclerView_loadouts);
+        recyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(view.getContext());
+        recyclerView.setLayoutManager(layoutManager);
 
         // Spinnerの項目に設定するためのDBを取得
         AppDatabase db = AppDatabase.getDatabase(getContext());
         // SpinnerDataGetAsyncTaskクラス内でContextを取得できなかったためにonPostExecute()だけインスタンス作成時に記述
-        GetDataAndSetSpinnerAsyncTask task = new GetDataAndSetSpinnerAsyncTask(db, getContext(), categorySpinner, weaponSpinner);
+        GetDataAndSetSpinnerAsyncTask task = new GetDataAndSetSpinnerAsyncTask(db, getContext());
         task.execute();
     }
 }
