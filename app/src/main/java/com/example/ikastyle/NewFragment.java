@@ -225,8 +225,7 @@ public class NewFragment extends Fragment{
         gearView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                GearDialogFragment gearDialogFragment = new GearDialogFragment();
-                //gearDialogFragment.setTargetFragment(NewFragment.this, 0);
+                GearDialogFragment gearDialogFragment = new GearDialogFragment(((GearImageButton)view).getGearKind());
                 gearDialogFragment.show(getActivity().getSupportFragmentManager(), "gear_dialog");
             }
         });
