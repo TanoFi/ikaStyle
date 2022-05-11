@@ -8,11 +8,11 @@ import androidx.fragment.app.Fragment;
 
 import android.util.Pair;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ikastyle.Common.Const.NumberPlace;
@@ -25,6 +25,8 @@ import com.example.ikastyle.DatabaseView.WeaponMain;
 import com.example.ikastyle.Entity.GearSet;
 import com.example.ikastyle.Entity.MainCategory;
 import com.example.ikastyle.UI.CategorySpinnerSelectedListener;
+import com.example.ikastyle.UI.GearDialogFragment;
+import com.example.ikastyle.UI.GearImageButton;
 import com.example.ikastyle.UI.GearPowerReceptorImageView;
 import com.example.ikastyle.UI.KeyValueArrayAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -44,14 +46,17 @@ public class NewFragment extends Fragment{
     private Spinner categorySpinner;
     private Spinner weaponSpinner;
     private EditText gearSetName;
+    private GearImageButton headGear;
     private GearPowerReceptorImageView headMain;
     private GearPowerReceptorImageView headSub1;
     private GearPowerReceptorImageView headSub2;
     private GearPowerReceptorImageView headSub3;
+    private GearImageButton clothingGear;
     private GearPowerReceptorImageView clothingMain;
     private GearPowerReceptorImageView clothingSub1;
     private GearPowerReceptorImageView clothingSub2;
     private GearPowerReceptorImageView clothingSub3;
+    private GearImageButton shoesGear;
     private GearPowerReceptorImageView shoesMain;
     private GearPowerReceptorImageView shoesSub1;
     private GearPowerReceptorImageView shoesSub2;
@@ -145,6 +150,15 @@ public class NewFragment extends Fragment{
                 }
             }
         });
+
+        // GearImageViewの画面要素を取得
+        headGear = view.findViewById(R.id.gearImageButton_head);
+        clothingGear = view.findViewById(R.id.gearImageButton_clothing);
+        shoesGear = view.findViewById(R.id.gearImageButton_shoes);
+
+        setOnClickListener(headGear);
+        setOnClickListener(clothingGear);
+        setOnClickListener(shoesGear);
     }
 
     /*
@@ -205,6 +219,17 @@ public class NewFragment extends Fragment{
         AppDatabase db = AppDatabase.getDatabase(getContext());
         InsertGearSetAsyncTask task = new InsertGearSetAsyncTask(db, gearSet);
         task.execute();
+    }
+
+    private void setOnClickListener(GearImageButton gearView){
+        gearView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GearDialogFragment gearDialogFragment = new GearDialogFragment();
+                //gearDialogFragment.setTargetFragment(NewFragment.this, 0);
+                gearDialogFragment.show(getActivity().getSupportFragmentManager(), "gear_dialog");
+            }
+        });
     }
 
     /*
