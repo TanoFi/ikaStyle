@@ -103,7 +103,7 @@ public class NewFragment extends Fragment{
         gearSetName = view.findViewById(R.id.editText_gearSetName);
 
         // GearPowerReceptorImageViewの画面要素を取得
-        headMain = view.findViewById(R.id.receptorImageView_clothing_sub3);
+        headMain = view.findViewById(R.id.receptorImageView_head_main);
         headSub1 = view.findViewById(R.id.receptorImageView_head_sub1);
         headSub2 = view.findViewById(R.id.receptorImageView_head_sub2);
         headSub3 = view.findViewById(R.id.receptorImageView_head_sub3);
