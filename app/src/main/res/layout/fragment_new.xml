@@ -2,9 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout2"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:id="@+id/constraintLayout.fragmentNew"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:layout_row="1"
     android:layout_column="7"
     tools:context=".NewFragment">
@@ -94,10 +94,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:src="@drawable/not_set"
-                app:receptorKind="0"
                 app:layout_column="4"
                 app:layout_columnWeight="2"
-                app:layout_row="0" />
+                app:layout_row="0"
+                app:receptorKind="0" />
 
             <com.example.ikastyle.UI.GearPowerReceptorImageView
                 android:id="@+id/receptorImageView.shoes_sub2"
@@ -105,10 +105,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:src="@drawable/not_set"
-                app:receptorKind="0"
                 app:layout_column="3"
                 app:layout_columnWeight="2"
-                app:layout_row="0" />
+                app:layout_row="0"
+                app:receptorKind="0" />
 
             <com.example.ikastyle.UI.GearPowerReceptorImageView
                 android:id="@+id/receptorImageView.shoes_sub1"
@@ -116,20 +116,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:src="@drawable/not_set"
-                app:receptorKind="0"
                 app:layout_column="2"
                 app:layout_columnWeight="2"
-                app:layout_row="0" />
+                app:layout_row="0"
+                app:receptorKind="0" />
 
             <com.example.ikastyle.UI.GearPowerReceptorImageView
                 android:id="@+id/receptorImageView.shoes_main"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:src="@drawable/not_set"
-                app:receptorKind="3"
                 app:layout_column="1"
                 app:layout_columnWeight="3"
-                app:layout_row="0" />
+                app:layout_row="0"
+                app:receptorKind="3" />
 
             <ImageView
                 android:id="@+id/imageView.shoes"
@@ -156,10 +156,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:src="@drawable/not_set"
-                app:receptorKind="0"
                 app:layout_column="4"
                 app:layout_columnWeight="2"
-                app:layout_row="0" />
+                app:layout_row="0"
+                app:receptorKind="0" />
 
             <com.example.ikastyle.UI.GearPowerReceptorImageView
                 android:id="@+id/receptorImageView.clothing_sub2"
@@ -167,10 +167,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:src="@drawable/not_set"
-                app:receptorKind="0"
                 app:layout_column="3"
                 app:layout_columnWeight="2"
-                app:layout_row="0" />
+                app:layout_row="0"
+                app:receptorKind="0" />
 
             <com.example.ikastyle.UI.GearPowerReceptorImageView
                 android:id="@+id/receptorImageView.clothing_sub1"
@@ -178,21 +178,21 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:src="@drawable/not_set"
-                app:receptorKind="0"
                 app:layout_column="2"
                 app:layout_columnWeight="2"
                 app:layout_gravity="bottom"
-                app:layout_row="0" />
+                app:layout_row="0"
+                app:receptorKind="0" />
 
             <com.example.ikastyle.UI.GearPowerReceptorImageView
                 android:id="@+id/receptorImageView.clothing_main"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:src="@drawable/not_set"
-                app:receptorKind="2"
                 app:layout_column="1"
                 app:layout_columnWeight="3"
-                app:layout_row="0" />
+                app:layout_row="0"
+                app:receptorKind="2" />
 
             <ImageView
                 android:id="@+id/imageView.clothing"
@@ -217,10 +217,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:src="@drawable/not_set"
-                app:receptorKind="0"
                 app:layout_column="4"
                 app:layout_columnWeight="2"
-                app:layout_row="0" />
+                app:layout_row="0"
+                app:receptorKind="0" />
 
             <com.example.ikastyle.UI.GearPowerReceptorImageView
                 android:id="@+id/receptorImageView.head_sub2"
@@ -228,10 +228,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:src="@drawable/not_set"
-                app:receptorKind="0"
                 app:layout_column="3"
                 app:layout_columnWeight="2"
-                app:layout_row="0" />
+                app:layout_row="0"
+                app:receptorKind="0" />
 
             <com.example.ikastyle.UI.GearPowerReceptorImageView
                 android:id="@+id/receptorImageView.head_sub1"
@@ -239,20 +239,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:src="@drawable/not_set"
-                app:receptorKind="0"
                 app:layout_column="2"
                 app:layout_columnWeight="2"
-                app:layout_row="0" />
+                app:layout_row="0"
+                app:receptorKind="0" />
 
             <com.example.ikastyle.UI.GearPowerReceptorImageView
                 android:id="@+id/receptorImageView.head_main"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:src="@drawable/not_set"
-                app:receptorKind="1"
                 app:layout_column="1"
                 app:layout_columnWeight="3"
-                app:layout_row="0" />
+                app:layout_row="0"
+                app:receptorKind="1" />
 
             <ImageView
                 android:id="@+id/imageView.headgear"
@@ -269,9 +269,10 @@
     <androidx.gridlayout.widget.GridLayout
         android:id="@+id/gridLayout.gearPower"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="4dp"
         app:columnCount="9"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
