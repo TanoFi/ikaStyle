@@ -110,7 +110,8 @@ public class ResourceIdMap {
                     put(58, R.drawable.headgear58_hockey_mask);
                     put(59, R.drawable.headgear59_hothouse_hat);
                     put(60, R.drawable.headgear60_house_tag_denim_cap);
-                    put(61, R.drawable.headgear62_jellyvader_cap);
+                    put(61, R.drawable.headgear61_ink_guard_goggles);
+                    put(62, R.drawable.headgear62_jellyvader_cap);
                     put(63, R.drawable.headgear63_jet_cap);
                     put(64, R.drawable.headgear64_jetflame_crest);
                     put(65, R.drawable.headgear65_jogging_headband);
