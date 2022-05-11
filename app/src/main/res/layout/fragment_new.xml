@@ -131,13 +131,13 @@
                 app:layout_row="0"
                 app:receptorKind="3" />
 
-            <ImageView
-                android:id="@+id/imageView.shoes"
+            <com.example.ikastyle.UI.GearImageButton
+                android:id="@+id/gearImageButton.shoes"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="#B3000000"
                 android:src="@drawable/shoes_gear0"
-                app:gearPowerKind="0"
+                app:gearKind="3"
                 app:layout_column="0"
                 app:layout_columnWeight="6"
                 app:layout_row="0" />
@@ -194,12 +194,13 @@
                 app:layout_row="0"
                 app:receptorKind="2" />
 
-            <ImageView
-                android:id="@+id/imageView.clothing"
+            <com.example.ikastyle.UI.GearImageButton
+                android:id="@+id/gearImageButton.clothing"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="#B3000000"
                 android:src="@drawable/clothing_gear0"
+                app:gearKind="2"
                 app:layout_column="0"
                 app:layout_columnWeight="6"
                 app:layout_row="0" />
@@ -254,12 +255,13 @@
                 app:layout_row="0"
                 app:receptorKind="1" />
 
-            <ImageView
-                android:id="@+id/imageView.headgear"
+            <com.example.ikastyle.UI.GearImageButton
+                android:id="@+id/gearImageButton.head"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:background="#B3000000"
                 android:src="@drawable/headgear0"
+                app:gearKind="1"
                 app:layout_column="0"
                 app:layout_columnWeight="6"
                 app:layout_row="0" />

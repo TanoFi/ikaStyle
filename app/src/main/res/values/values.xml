@@ -6,4 +6,7 @@
     <declare-styleable name="GearPowerReceptorImageView">
         <attr name="receptorKind" format="integer"/>
     </declare-styleable>
+    <declare-styleable name="GearImageButton">
+        <attr name="gearKind" format="integer"/>
+    </declare-styleable>
 </resources>
