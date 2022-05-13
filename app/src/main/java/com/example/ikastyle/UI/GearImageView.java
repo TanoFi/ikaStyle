@@ -9,32 +9,27 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Switch;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
+import com.example.ikastyle.Common.Const.GearKind;
 import com.example.ikastyle.Common.Const.ResourceIdMap;
 import com.example.ikastyle.NewFragment;
 import com.example.ikastyle.R;
 
-public class GearImageButton extends AppCompatImageButton {
-    private int gearId;
-    //アタマなら1,フクなら2,クツなら3
-    private int gearKind;
+public class GearImageView extends AppCompatImageView{
+    private int gearId  = 0;
+    private final GearKind gearKind;
 
-    public GearImageButton(Context context, AttributeSet attrs){
+    public GearImageView(Context context, AttributeSet attrs){
         super(context, attrs);
 
-        //未設定時のgearIdを設定
-        gearId = 0;
-
         // カスタム属性gearKindの値を取得しフィールド変数gearKindに入れる
-        TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.GearImageButton, 0, 0);
-        gearKind = typedArray.getInt(R.styleable.GearImageButton_gearKind, gearKind);
-
-        //this.setOnClickListener(this::onClick);
-
+        TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.GearImageView, 0, 0);
+        gearKind = GearKind.getGearKind(typedArray.getInt(R.styleable.GearImageView_gearKind, 0));
     }
 
     public int getGearId(){
@@ -44,23 +39,21 @@ public class GearImageButton extends AppCompatImageButton {
     public void setGearId(int gearId){
         this.gearId = gearId;
 
+        // gearIdのブキの画像をセット
         switch(gearKind){
-            case 1:
+            case HEAD:
                 this.setImageResource(ResourceIdMap.headGearResourceIdMap.get(gearId));
                 break;
-            case 2:
+            case CLOTHING:
                 this.setImageResource(ResourceIdMap.clothingGearResourceIdMap.get(gearId));
                 break;
-            case 3:
+            case SHOES:
                 this.setImageResource(ResourceIdMap.shoesGearResourceIdMap.get(gearId));
                 break;
         }
     }
 
-    public int getGearKind(){
+    public GearKind getGearKind(){
         return gearKind;
     }
-
-//    @Override
-//    public abstract void onClick(View view);
 }

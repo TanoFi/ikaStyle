@@ -8,13 +8,13 @@ import android.view.View;
 
 import androidx.appcompat.widget.AppCompatImageView;
 
+import com.example.ikastyle.Common.Const.GearKind;
 import com.example.ikastyle.Common.Const.ResourceIdMap;
 import com.example.ikastyle.R;
 
 public class GearPowerReceptorImageView extends AppCompatImageView implements View.OnDragListener {
-    private int gearPowerKind;
-    //サブギアなら0, アタマのメインギア1, フクのメインギア2, クツのメインギア3が入る
-    private int receptorKind;
+    private int gearPowerKind = 0;
+    private GearKind receptorKind;
 
     public GearPowerReceptorImageView(Context context){
         super(context);
@@ -23,12 +23,9 @@ public class GearPowerReceptorImageView extends AppCompatImageView implements Vi
     public GearPowerReceptorImageView(Context context, AttributeSet attrs){
         super(context, attrs);
 
-        //未設定時のgearPowerKindをセット
-        gearPowerKind = 0;
-
         // カスタム属性receptorKindの値を取得しフィールド変数gearPowerKindに入れる
         TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.GearPowerReceptorImageView, 0, 0);
-        receptorKind = typedArray.getInt(R.styleable.GearPowerReceptorImageView_receptorKind, receptorKind);
+        receptorKind = GearKind.getGearKind(typedArray.getInt(R.styleable.GearPowerReceptorImageView_receptorKind, 0));
 
         // onDragリスナーをセット
         this.setOnDragListener(this::onDrag);
@@ -52,7 +49,7 @@ public class GearPowerReceptorImageView extends AppCompatImageView implements Vi
 
             int gearPowerKind = dragView.getGearPowerKind();
             // 一部のギアパワーは特定のギアのメインギアにしか付けられないためこのようなif条件を入れている(e.g.ラストスパートはアタマのメインギアにしか付けられない)
-            if(gearPowerKind / 100 == 0 || gearPowerKind / 100 == receptorKind){
+            if(gearPowerKind / 100 == 0 || gearPowerKind / 100 == receptorKind.getId()){
                 // フィールド変数gearPowerKindをセットしながら、セットしたKindのギア画像に差し替え
                 ((GearPowerReceptorImageView)view).setGearPowerKind(gearPowerKind);
             }

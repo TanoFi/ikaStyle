@@ -131,10 +131,10 @@
                 app:layout_row="0"
                 app:receptorKind="3" />
 
-            <com.example.ikastyle.UI.GearImageButton
-                android:id="@+id/gearImageButton.shoes"
+            <com.example.ikastyle.UI.GearImageView
+                android:id="@+id/gearImageView.shoes"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="#B3000000"
                 android:src="@drawable/shoes_gear0"
                 app:gearKind="3"
@@ -194,10 +194,10 @@
                 app:layout_row="0"
                 app:receptorKind="2" />
 
-            <com.example.ikastyle.UI.GearImageButton
-                android:id="@+id/gearImageButton.clothing"
+            <com.example.ikastyle.UI.GearImageView
+                android:id="@+id/gearImageView.clothing"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="#B3000000"
                 android:src="@drawable/clothing_gear0"
                 app:gearKind="2"
@@ -255,8 +255,8 @@
                 app:layout_row="0"
                 app:receptorKind="1" />
 
-            <com.example.ikastyle.UI.GearImageButton
-                android:id="@+id/gearImageButton.head"
+            <com.example.ikastyle.UI.GearImageView
+                android:id="@+id/gearImageView.head"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:background="#B3000000"

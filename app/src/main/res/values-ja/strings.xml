@@ -10,4 +10,5 @@
     <string name="toastMessage_spinnerNotSelected">ブキを選択してください</string>
     <string name="toastMessage_mainGearPowerNotSet">メインギアパワーを設定してください</string>
     <string name="toastMessage_insertCompleted">登録が完了しました</string>
+    <string name="buttonNavigation_cancel">キャンセル</string>
 </resources>
