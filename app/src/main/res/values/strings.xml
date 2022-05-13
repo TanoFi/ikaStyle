@@ -11,4 +11,5 @@
     <string name="toastMessage_spinnerNotSelected">A weapon must be selected.</string>
     <string name="toastMessage_mainGearPowerNotSet">All main ability must be equipped.</string>
     <string name="toastMessage_insertCompleted">Gear-set registration have been completed.</string>
+    <string name="buttonNavigation_cancel">Cancel</string>
 </resources>

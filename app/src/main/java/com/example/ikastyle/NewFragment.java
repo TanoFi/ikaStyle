@@ -12,9 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ikastyle.Common.Const.GearKind;
 import com.example.ikastyle.Common.Const.NumberPlace;
 import com.example.ikastyle.Common.Util;
 import com.example.ikastyle.Dao.GearSetDao;
@@ -25,6 +25,8 @@ import com.example.ikastyle.DatabaseView.WeaponMain;
 import com.example.ikastyle.Entity.GearSet;
 import com.example.ikastyle.Entity.MainCategory;
 import com.example.ikastyle.UI.CategorySpinnerSelectedListener;
+import com.example.ikastyle.UI.GearDialogFragment;
+import com.example.ikastyle.UI.GearImageView;
 import com.example.ikastyle.UI.GearPowerReceptorImageView;
 import com.example.ikastyle.UI.KeyValueArrayAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -40,22 +42,28 @@ import java.util.stream.Collectors;
  * Use the {@link NewFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class NewFragment extends Fragment{
+public class NewFragment extends Fragment implements GearDialogFragment.GearDialogListener{
     private Spinner categorySpinner;
     private Spinner weaponSpinner;
     private EditText gearSetName;
+    private GearImageView headGear;
     private GearPowerReceptorImageView headMain;
     private GearPowerReceptorImageView headSub1;
     private GearPowerReceptorImageView headSub2;
     private GearPowerReceptorImageView headSub3;
+    private GearImageView clothingGear;
     private GearPowerReceptorImageView clothingMain;
     private GearPowerReceptorImageView clothingSub1;
     private GearPowerReceptorImageView clothingSub2;
     private GearPowerReceptorImageView clothingSub3;
+    private GearImageView shoesGear;
     private GearPowerReceptorImageView shoesMain;
     private GearPowerReceptorImageView shoesSub1;
     private GearPowerReceptorImageView shoesSub2;
     private GearPowerReceptorImageView shoesSub3;
+
+    // GearImageViewをクリックしたときの処理
+    private static View.OnClickListener onClickGearImageView;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -95,6 +103,15 @@ public class NewFragment extends Fragment{
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        // GearImageViewをクリックした時の処理を定義
+        onClickGearImageView = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GearDialogFragment gearDialogFragment = new GearDialogFragment(((GearImageView)view).getGearKind());
+                gearDialogFragment.show(getChildFragmentManager(), "gear_dialog");
+            }
+        };
     }
 
     @Override
@@ -145,6 +162,29 @@ public class NewFragment extends Fragment{
                 }
             }
         });
+
+        // GearImageViewの画面要素を取得
+        headGear = view.findViewById(R.id.gearImageView_head);
+        clothingGear = view.findViewById(R.id.gearImageView_clothing);
+        shoesGear = view.findViewById(R.id.gearImageView_shoes);
+
+        // GearImageViewにonClickListenerをまとめてセット
+        setOnClickListener(headGear, clothingGear, shoesGear);
+    }
+
+    @Override
+    public void onListItemClick(GearDialogFragment dialogFragment, GearKind gearKind, int gearId){
+        switch (gearKind){
+            case HEAD:
+                headGear.setGearId(gearId);
+                break;
+            case CLOTHING:
+                clothingGear.setGearId(gearId);
+                break;
+            case SHOES:
+                shoesGear.setGearId(gearId);
+                break;
+        }
     }
 
     /*
@@ -184,17 +224,17 @@ public class NewFragment extends Fragment{
                 Util.getCategoryId(absoluteId),
                 Util.getMainId(absoluteId),
                 Util.getCustomizationId(absoluteId),
-                0, // ギアを選択する機能がないのでひとまず0
+                headGear.getGearId(),
                 headMain.getGearPowerKind(),
                 headSub1.getGearPowerKind(),
                 headSub2.getGearPowerKind(),
                 headSub3.getGearPowerKind(),
-                0, // ギアを選択する機能がないのでひとまず0
+                clothingGear.getGearId(),
                 clothingMain.getGearPowerKind(),
                 clothingSub1.getGearPowerKind(),
                 clothingSub2.getGearPowerKind(),
                 clothingSub3.getGearPowerKind(),
-                0, // ギアを選択する機能がないのでひとまず0
+                shoesGear.getGearId(),
                 shoesMain.getGearPowerKind(),
                 shoesSub1.getGearPowerKind(),
                 shoesSub2.getGearPowerKind(),
@@ -205,6 +245,15 @@ public class NewFragment extends Fragment{
         AppDatabase db = AppDatabase.getDatabase(getContext());
         InsertGearSetAsyncTask task = new InsertGearSetAsyncTask(db, gearSet);
         task.execute();
+    }
+
+    /*
+     * GearImageViewにonClickListenerをまとめてセットする
+     */
+    private void setOnClickListener(GearImageView... gearImageViews){
+        for (GearImageView gearImageView: gearImageViews) {
+            gearImageView.setOnClickListener(onClickGearImageView);
+        }
     }
 
     /*
