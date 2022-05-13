@@ -197,7 +197,7 @@
             </androidx.gridlayout.widget.GridLayout>
         </androidx.cardview.widget.CardView>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <com.example.ikastyle.UI.LoadoutDeleteButton
             android:id="@+id/floatingActionButton.delete"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
