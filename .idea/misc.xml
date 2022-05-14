@@ -19,6 +19,8 @@
         <entry key="app/src/main/res/layout/gear_list_item.xml" value="0.1064102564102564" />
         <entry key="app/src/main/res/layout/grid_loadout.xml" value="0.12735042735042734" />
         <entry key="app/src/main/res/layout/spinner_item_parent.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/spinner_list_dropdown_item.xml" value="0.1311965811965812" />
+        <entry key="app/src/main/res/layout/spinner_list_item.xml" value="0.1311965811965812" />
         <entry key="app/src/main/res/menu/bottom_navi_menu.xml" value="0.335" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1455" />
       </map>
