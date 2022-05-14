@@ -1,5 +1,7 @@
 package com.example.ikastyle.Common;
 
+import android.util.Log;
+
 import com.example.ikastyle.Common.Const.NumberPlace;
 import com.example.ikastyle.Common.Const.ResourceIdMap;
 
@@ -69,5 +71,12 @@ public class Util {
 
     public static int gerShoesResourceId(int gearId){
         return ResourceIdMap.shoesGearResourceIdMap.get(gearId);
+    }
+
+    /*
+     * ブキの絶対IDを受け取って対応する画像のResourceIdを返す
+     */
+    public static int getWeaponResourceId(int absoluteId){
+        return  ResourceIdMap.weaponResourceIdMap.get(absoluteId);
     }
 }

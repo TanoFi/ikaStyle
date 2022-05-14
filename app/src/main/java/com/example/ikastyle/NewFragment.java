@@ -25,10 +25,10 @@ import com.example.ikastyle.DatabaseView.WeaponMain;
 import com.example.ikastyle.Entity.GearSet;
 import com.example.ikastyle.Entity.MainCategory;
 import com.example.ikastyle.UI.CategorySpinnerSelectedListener;
+import com.example.ikastyle.UI.KeyValueArrayAdapter;
 import com.example.ikastyle.UI.GearDialogFragment;
 import com.example.ikastyle.UI.GearImageView;
 import com.example.ikastyle.UI.GearPowerReceptorImageView;
-import com.example.ikastyle.UI.KeyValueArrayAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -345,12 +345,12 @@ public class NewFragment extends Fragment implements GearDialogFragment.GearDial
             }
 
             //アダプター作成
-            KeyValueArrayAdapter categoryAdapter = new KeyValueArrayAdapter(context, android.R.layout.simple_spinner_item, categoryKeyValueList);
-            KeyValueArrayAdapter weaponAdapter = new KeyValueArrayAdapter(context, android.R.layout.simple_spinner_item, mainWeaponKeyValueList);
+            KeyValueArrayAdapter categoryAdapter = new KeyValueArrayAdapter(context, R.layout.spinner_list_item, categoryKeyValueList);
+            KeyValueArrayAdapter weaponAdapter = new KeyValueArrayAdapter(context, R.layout.spinner_list_item, mainWeaponKeyValueList);
 
             //レイアウトを付与
-            categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            weaponAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            categoryAdapter.setDropDownViewResource(R.layout.spinner_list_dropdown_item);
+            weaponAdapter.setDropDownViewResource(R.layout.spinner_list_dropdown_item);
 
             //スピナーにアダプターを設定
             categorySpinner.setAdapter(categoryAdapter);

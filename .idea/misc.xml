@@ -5,8 +5,13 @@
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.12239583333333333" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1455" />
+        <entry key="app/src/main/res/drawable/round_corner.xml" value="0.178" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/cardview_layout_store.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/custom_spinner.xml" value="0.12426900584795321" />
+        <entry key="app/src/main/res/layout/customization_k.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/customization_list_dropdown_item.xml" value="0.11639492753623189" />
+        <entry key="app/src/main/res/layout/customization_list_item.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_gear_dialog.xml" value="0.1064102564102564" />
         <entry key="app/src/main/res/layout/fragment_new.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_store.xml" value="0.1" />
