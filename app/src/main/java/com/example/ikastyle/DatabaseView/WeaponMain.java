@@ -21,8 +21,7 @@ import com.example.ikastyle.Common.Const.NumberPlace;
                 "INNER JOIN MAST_WEAPON_NAME WN\n" +
                 "ON WN.category_id = MN.category_id\n" +
                 "AND WN.main_id = MN.id \n" +
-                "AND WN.language_code = MN.language_code\n" +
-                "WHERE MN.language_code = 2"
+                "AND WN.language_code = MN.language_code"
 )
 public class WeaponMain {
     @ColumnInfo(name = "category_id")
