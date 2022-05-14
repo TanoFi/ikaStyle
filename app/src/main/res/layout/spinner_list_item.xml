@@ -13,6 +13,7 @@
         app:srcCompat="@drawable/weapon1011_sploosh_o_matic" />
 
     <TextView
+        style="?attr/spinnerDropDownItemStyle"
         android:id="@+id/textView.weaponName"
         android:layout_width="0dp"
         android:layout_height="35dp"
@@ -23,5 +24,8 @@
         android:singleLine="true"
         android:text="TextView"
         android:textColor="@color/black"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:background="@drawable/abc_spinner_mtrl_am_alpha"
+        android:backgroundTint="@color/black"/>
+
 </LinearLayout>
