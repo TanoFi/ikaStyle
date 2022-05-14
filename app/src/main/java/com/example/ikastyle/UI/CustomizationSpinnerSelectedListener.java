@@ -34,7 +34,7 @@ public class CustomizationSpinnerSelectedListener implements AdapterView.OnItemS
         // Spinnerで選択したブキの絶対ID
         int absoluteId = ((Pair<Integer, String>) spinner.getSelectedItem()).first;
 
-        AppDatabase db = AppDatabase.getDatabase(view.getContext());
+        AppDatabase db = AppDatabase.getDatabase(spinner.getContext());
         GetGearSetListAsyncTask task = new GetGearSetListAsyncTask(db, absoluteId);
         task.execute();
     }
