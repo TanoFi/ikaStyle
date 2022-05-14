@@ -22,8 +22,8 @@ import com.example.ikastyle.Database.AppDatabase;
 import com.example.ikastyle.DatabaseView.WeaponMain;
 import com.example.ikastyle.Entity.MainCategory;
 import com.example.ikastyle.UI.CategorySpinnerSelectedListener;
-import com.example.ikastyle.UI.CustomizationSpinnerSelectedListener;
 import com.example.ikastyle.UI.KeyValueArrayAdapter;
+import com.example.ikastyle.UI.CustomizationSpinnerSelectedListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -165,12 +165,12 @@ public class StoreFragment extends Fragment {
             }
 
             //アダプター作成
-            KeyValueArrayAdapter categoryAdapter = new KeyValueArrayAdapter(context, android.R.layout.simple_spinner_item, categoryKeyValueList);
-            KeyValueArrayAdapter weaponAdapter = new KeyValueArrayAdapter(context, android.R.layout.simple_spinner_item, mainWeaponKeyValueList);
+            KeyValueArrayAdapter categoryAdapter = new KeyValueArrayAdapter(context, R.layout.spinner_list_item, categoryKeyValueList);
+            KeyValueArrayAdapter weaponAdapter = new KeyValueArrayAdapter(context, R.layout.spinner_list_item, mainWeaponKeyValueList);
 
             //レイアウトを付与
-            categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            weaponAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            categoryAdapter.setDropDownViewResource(R.layout.spinner_list_dropdown_item);
+            weaponAdapter.setDropDownViewResource(R.layout.spinner_list_dropdown_item);
 
             //スピナーにアダプターを設定
             categorySpinner.setAdapter(categoryAdapter);

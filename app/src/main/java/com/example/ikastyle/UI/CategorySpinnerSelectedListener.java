@@ -43,7 +43,7 @@ public class CategorySpinnerSelectedListener implements AdapterView.OnItemSelect
                     collect(Collectors.toList());
         }
 
-        KeyValueArrayAdapter newAdapter = new KeyValueArrayAdapter(context, android.R.layout.simple_spinner_item, selectedKeyValueList);
+        KeyValueArrayAdapter newAdapter = new KeyValueArrayAdapter(context, R.layout.spinner_list_item, selectedKeyValueList);
         newAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.spinner.setAdapter(newAdapter);
     }
