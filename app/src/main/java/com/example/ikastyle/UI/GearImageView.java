@@ -56,4 +56,23 @@ public class GearImageView extends AppCompatImageView{
     public GearKind getGearKind(){
         return gearKind;
     }
+
+    // 初期化用メソッド
+    public void init(){
+        // ギアIDを0に設定
+        this.gearId = 0;
+
+        // ギア画像を初期アイコンに設定
+        switch(gearKind){
+            case HEAD:
+                this.setImageResource(ResourceIdMap.headGearResourceIdMap.get(gearId));
+                break;
+            case CLOTHING:
+                this.setImageResource(ResourceIdMap.clothingGearResourceIdMap.get(gearId));
+                break;
+            case SHOES:
+                this.setImageResource(ResourceIdMap.shoesGearResourceIdMap.get(gearId));
+                break;
+        }
+    }
 }

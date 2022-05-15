@@ -56,4 +56,13 @@ public class GearPowerReceptorImageView extends AppCompatImageView implements Vi
         }
         return true;
     }
+
+    // 初期化用メソッド
+    public void init(){
+        // ギアパワーKindを0に設定
+        gearPowerKind = 0;
+
+        // ギアパワー画像を未設定時のものに設定
+        this.setImageResource(ResourceIdMap.gearPowerResourceIdMap.get(gearPowerKind));
+    }
 }
