@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ikaStyle</string>
-    <string name="menuItem_New">新規作成</string>
-    <string name="menuItem_Store">既存</string>
+    <string name="menuItem_New">新規登録</string>
+    <string name="menuItem_Store">登録済み</string>
     <string name="spinnerItem_categoryUnselected">-- カテゴリー選択 --</string>
     <string name="spinnerItem_weaponUnselected">-- ブキ選択 --</string>
     <string name="textView_headgear">Headgear</string>
-    <string name="plainText_loadoutName">ギア構成名</string>
+    <string name="plainText_loadoutName">ギアセット名</string>
     <string name="toastMessage_spinnerNotSelected">ブキを選択してください</string>
     <string name="toastMessage_mainGearPowerNotSet">メインギアパワーを設定してください</string>
     <string name="toastMessage_insertCompleted">登録が完了しました</string>
