@@ -8,7 +8,7 @@ public enum GearKind {
     CLOTHING(2), // フクは2
     SHOES(3); // クツは3
 
-    private int id;
+    private final int id;
 
     GearKind(int id){
         this.id = id;

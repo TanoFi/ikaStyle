@@ -7,6 +7,7 @@ import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -96,7 +97,7 @@ public class StoreFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState){
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
 
         // スピナーを取得
@@ -127,8 +128,8 @@ public class StoreFragment extends Fragment {
      * 非同期でDBからデータ取得しスピナーにセットするクラス
      */
     private class GetDataAndSetSpinnerAsyncTask extends AsyncTask<Void, Void, Integer> {
-        private AppDatabase db;
-        private Context context;
+        private final AppDatabase db;
+        private final Context context;
 
         List<MainCategory> categoryList;
         List<CustomizationName> customizationNameList;
@@ -192,8 +193,8 @@ public class StoreFragment extends Fragment {
      * 非同期でTRAN_GEAR_SETのレコードを削除する
      */
     private class DeleteLoadoutAsyncTask extends AsyncTask<Void, Void, Integer> {
-        private AppDatabase db;
-        private Loadout loadout;
+        private final AppDatabase db;
+        private final Loadout loadout;
 
         private  List<Loadout> newLoadout;
 
@@ -203,6 +204,7 @@ public class StoreFragment extends Fragment {
         }
 
         @Override
+        @SuppressWarnings("unchecked")
         protected Integer doInBackground(Void... params) {
             //実際にDBにアクセスしレコードを削除
             LoadoutDao loadoutDao = db.loadoutDao();

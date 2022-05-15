@@ -1,10 +1,10 @@
 package com.example.ikastyle.Common;
 
 import android.graphics.Color;
-import android.util.Log;
 
 import com.example.ikastyle.Common.Const.NumberPlace;
 import com.example.ikastyle.Common.Const.ResourceIdMap;
+import com.example.ikastyle.R;
 
 import java.util.Locale;
 import java.util.Optional;
@@ -17,7 +17,7 @@ public class Util {
     public static int getLanguageCode()
     {
         Locale local = Locale.getDefault();
-        if(local.equals(Locale.JAPAN) || local.getLanguage().equals(Locale.JAPANESE)){
+        if(local.equals(Locale.JAPAN)){
             return  2;
         }
         else {
@@ -57,36 +57,36 @@ public class Util {
      * ギアパワーのIDを受け取って対応する画像のResourceIdを返す
      */
     public static int getGearPowerResourceId(int gearPowerId){
-        return ResourceIdMap.gearPowerResourceIdMap.get(gearPowerId);
+        return Optional.ofNullable(ResourceIdMap.gearPowerResourceIdMap.get(gearPowerId)).orElse(0);
     }
 
     /*
      * アタマのギアIDを受け取って対応する画像のResourceIdを返す
      */
     public static int getHeadGearResourceId(int gearId){
-        return ResourceIdMap.headGearResourceIdMap.get(gearId);
+        return Optional.ofNullable(ResourceIdMap.headGearResourceIdMap.get(gearId)).orElse(R.drawable.headgear0);
     }
 
     /*
      * フクのギアIDを受け取って対応する画像のResourceIdを返す
      */
     public static int getClothingResourceId(int gearId){
-        return ResourceIdMap.clothingGearResourceIdMap.get(gearId);
+        return Optional.ofNullable(ResourceIdMap.clothingGearResourceIdMap.get(gearId)).orElse(R.drawable.clothing_gear0);
     }
 
     /*
      * クツのギアIDを受け取って対応する画像のResourceIdを返す
      */
 
-    public static int gerShoesResourceId(int gearId){
-        return ResourceIdMap.shoesGearResourceIdMap.get(gearId);
+    public static int getShoesResourceId(int gearId){
+        return Optional.ofNullable(ResourceIdMap.shoesGearResourceIdMap.get(gearId)).orElse(R.drawable.shoes_gear0);
     }
 
     /*
      * ブキの絶対IDを受け取って対応する画像のResourceIdを返す
      */
     public static int getWeaponResourceId(int absoluteId){
-        return  ResourceIdMap.weaponResourceIdMap.get(absoluteId);
+        return  Optional.ofNullable(ResourceIdMap.weaponResourceIdMap.get(absoluteId)).orElse(R.drawable.weapon1011_sploosh_o_matic);
     }
 
     /*

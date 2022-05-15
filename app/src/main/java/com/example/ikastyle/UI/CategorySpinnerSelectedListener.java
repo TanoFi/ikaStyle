@@ -14,9 +14,9 @@ import java.util.stream.Collectors;
 
 public class CategorySpinnerSelectedListener implements AdapterView.OnItemSelectedListener {
 
-    private Context context;
-    private Spinner spinner;
-    private ArrayList<Pair<Integer,String>> keyValueList;
+    private final Context context;
+    private final Spinner spinner;
+    private final ArrayList<Pair<Integer,String>> keyValueList;
 
     public CategorySpinnerSelectedListener(Context context, Spinner spinner, ArrayList<Pair<Integer,String>> keyValueList){
         this.context = context;
@@ -25,6 +25,7 @@ public class CategorySpinnerSelectedListener implements AdapterView.OnItemSelect
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         Spinner spinner = (Spinner)adapterView;
         // 絶対IDからカテゴリーIDを割り出す

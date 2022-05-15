@@ -21,25 +21,25 @@ public class LoadoutRecyclerViewAdapter extends RecyclerView.Adapter<LoadoutRecy
     private final View.OnClickListener onClickDeleteListener;
 
     static class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView loadoutNameView;
-        private ImageView headGearView;
-        private ImageView headMainView;
-        private ImageView headSub1View;
-        private ImageView headSub2View;
-        private ImageView headSub3View;
-        private ImageView clothingGearView;
-        private ImageView clothingMainView;
-        private ImageView clothingSub1View;
-        private ImageView clothingSub2View;
-        private ImageView clothingSub3View;
-        private ImageView shoesGearView;
-        private ImageView shoesMainView;
-        private ImageView shoesSub1View;
-        private ImageView shoesSub2View;
-        private ImageView shoesSub3View;
-        private FloatingActionButton analyseView;
-        private FloatingActionButton editView;
-        private LoadoutDeleteButton deleteView;
+        private final TextView loadoutNameView;
+        private final ImageView headGearView;
+        private final ImageView headMainView;
+        private final ImageView headSub1View;
+        private final ImageView headSub2View;
+        private final ImageView headSub3View;
+        private final ImageView clothingGearView;
+        private final ImageView clothingMainView;
+        private final ImageView clothingSub1View;
+        private final ImageView clothingSub2View;
+        private final ImageView clothingSub3View;
+        private final ImageView shoesGearView;
+        private final ImageView shoesMainView;
+        private final ImageView shoesSub1View;
+        private final ImageView shoesSub2View;
+        private final ImageView shoesSub3View;
+        private final FloatingActionButton analyseView;
+        private final FloatingActionButton editView;
+        private final LoadoutDeleteButton deleteView;
 
         public ViewHolder(View view){
             super(view);
@@ -94,7 +94,7 @@ public class LoadoutRecyclerViewAdapter extends RecyclerView.Adapter<LoadoutRecy
         holder.clothingSub1View.setImageResource(Util.getGearPowerResourceId(loadout.clothingSub1));
         holder.clothingSub2View.setImageResource(Util.getGearPowerResourceId(loadout.clothingSub2));
         holder.clothingSub3View.setImageResource(Util.getGearPowerResourceId(loadout.clothingSub3));
-        holder.shoesGearView.setImageResource(Util.gerShoesResourceId(loadout.shoesGearId));
+        holder.shoesGearView.setImageResource(Util.getShoesResourceId(loadout.shoesGearId));
         holder.shoesMainView.setImageResource(Util.getGearPowerResourceId(loadout.shoesMain));
         holder.shoesSub1View.setImageResource(Util.getGearPowerResourceId(loadout.shoesSub1));
         holder.shoesSub2View.setImageResource(Util.getGearPowerResourceId(loadout.shoesSub2));

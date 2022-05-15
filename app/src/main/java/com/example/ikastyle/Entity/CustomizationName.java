@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 
-import com.example.ikastyle.Common.Const.NumberPlace;
 import com.example.ikastyle.Common.Util;
 
 @Entity(tableName = "MAST_CUSTOMIZATION_NAME", primaryKeys = {"id", "main_id", "category_id", "language_code"})
@@ -25,6 +24,7 @@ public class CustomizationName {
     @NonNull
     public String name;
 
+    @NonNull
     public String getName(){
         return name;
     }

@@ -10,6 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.example.ikastyle.Common.Const.NumberPlace;
 import com.example.ikastyle.Common.Util;
 import com.example.ikastyle.R;
@@ -18,7 +20,6 @@ import java.util.ArrayList;
 
 public class KeyValueArrayAdapter extends ArrayAdapter<Pair<Integer, String>> {
     private final LayoutInflater inflater;
-    private final int layoutResourceId;
 
     private static class ViewHolder{
         ImageView weaponImageView;
@@ -29,7 +30,6 @@ public class KeyValueArrayAdapter extends ArrayAdapter<Pair<Integer, String>> {
         super(context, layoutResourceId, keyValues);
 
         this.inflater = LayoutInflater.from(context);
-        this.layoutResourceId = layoutResourceId;
     }
 
     @Override
@@ -59,7 +59,7 @@ public class KeyValueArrayAdapter extends ArrayAdapter<Pair<Integer, String>> {
     }
 
     @Override
-    public View getDropDownView(int position, View convertView, ViewGroup parent){
+    public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent){
         int absoluteWeaponId = getItem(position).first;
         String weaponName = getItem(position).second;
 

@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 import androidx.appcompat.widget.AppCompatImageView;
 
 import com.example.ikastyle.Common.Const.GearKind;
-import com.example.ikastyle.Common.Const.ResourceIdMap;
+import com.example.ikastyle.Common.Util;
 import com.example.ikastyle.R;
 
 public class GearImageView extends AppCompatImageView{
@@ -32,13 +32,13 @@ public class GearImageView extends AppCompatImageView{
         // gearIdのブキの画像をセット
         switch(gearKind){
             case HEAD:
-                this.setImageResource(ResourceIdMap.headGearResourceIdMap.get(gearId));
+                this.setImageResource(Util.getHeadGearResourceId(gearId));
                 break;
             case CLOTHING:
-                this.setImageResource(ResourceIdMap.clothingGearResourceIdMap.get(gearId));
+                this.setImageResource(Util.getClothingResourceId(gearId));
                 break;
             case SHOES:
-                this.setImageResource(ResourceIdMap.shoesGearResourceIdMap.get(gearId));
+                this.setImageResource(Util.getShoesResourceId(gearId));
                 break;
         }
     }
@@ -55,13 +55,13 @@ public class GearImageView extends AppCompatImageView{
         // ギア画像を初期アイコンに設定
         switch(gearKind){
             case HEAD:
-                this.setImageResource(ResourceIdMap.headGearResourceIdMap.get(gearId));
+                this.setImageResource(Util.getHeadGearResourceId(gearId));
                 break;
             case CLOTHING:
-                this.setImageResource(ResourceIdMap.clothingGearResourceIdMap.get(gearId));
+                this.setImageResource(Util.getClothingResourceId(gearId));
                 break;
             case SHOES:
-                this.setImageResource(ResourceIdMap.shoesGearResourceIdMap.get(gearId));
+                this.setImageResource(Util.getShoesResourceId(gearId));
                 break;
         }
     }

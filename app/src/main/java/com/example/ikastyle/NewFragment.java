@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.util.Pair;
@@ -86,7 +87,7 @@ public class NewFragment extends Fragment implements GearDialogFragment.GearDial
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState){
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
 
         // Spinnerの画面要素を取得
@@ -117,13 +118,10 @@ public class NewFragment extends Fragment implements GearDialogFragment.GearDial
         task.execute();
 
         FloatingActionButton saveButton = view.findViewById(R.id.floatingActionButton_save);
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(checkUserInput()){ //入力チェック
-                    // DBに保存
-                    save();
-                }
+        saveButton.setOnClickListener(x ->{
+            if(checkUserInput()){ //入力チェック
+                // DBに保存
+                save();
             }
         });
 
@@ -155,6 +153,7 @@ public class NewFragment extends Fragment implements GearDialogFragment.GearDial
      * 入力チェック用のメソッド
      * 戻り値 true → 問題なし, false → 問題あり
      */
+    @SuppressWarnings("unchecked")
     private boolean checkUserInput(){
         // ブキSpinnerが未選択状態
         if(((Pair<Integer, String>)weaponSpinner.getSelectedItem()).first == 0){
@@ -178,6 +177,7 @@ public class NewFragment extends Fragment implements GearDialogFragment.GearDial
     /*
      * 入力値をデータベースに保存
      */
+    @SuppressWarnings("unchecked")
     private void save(){
         // 選択したブキの絶対ID
         int absoluteId = ((Pair<Integer, String>)weaponSpinner.getSelectedItem()).first;
@@ -252,9 +252,9 @@ public class NewFragment extends Fragment implements GearDialogFragment.GearDial
     /*
      * 非同期でDBにLoadoutデータをInsert
      */
-    public class InsertLoadoutAsyncTask extends AsyncTask<Void, Void, Integer> {
-        private AppDatabase db;
-        private Loadout loadout;
+    private class InsertLoadoutAsyncTask extends AsyncTask<Void, Void, Integer> {
+        private final AppDatabase db;
+        private final Loadout loadout;
 
         public InsertLoadoutAsyncTask(AppDatabase db, Loadout loadout) {
             this.db = db;
@@ -285,10 +285,10 @@ public class NewFragment extends Fragment implements GearDialogFragment.GearDial
      * 非同期でDBからデータ取得しスピナーにセットするクラス
      */
     private class GetDataAndSetSpinnerAsyncTask extends AsyncTask<Void, Void, Integer> {
-        private AppDatabase db;
-        private Context context;
-        private Spinner categorySpinner;
-        private Spinner weaponSpinner;
+        private final AppDatabase db;
+        private final Context context;
+        private final Spinner categorySpinner;
+        private final Spinner weaponSpinner;
 
         List<MainCategory> categoryList;
         List<CustomizationMain> customizationMainList;

@@ -24,7 +24,7 @@ public class GearPowerImageView extends AppCompatImageView implements View.OnTou
         gearPowerKind = typedArray.getInt(R.styleable.GearPowerImageView_gearPowerKind, gearPowerKind);
 
         // onTouchリスナーをセット
-        this.setOnTouchListener(this::onTouch);
+        this.setOnTouchListener(this);
     }
 
     public int getGearPowerKind(){
@@ -38,5 +38,10 @@ public class GearPowerImageView extends AppCompatImageView implements View.OnTou
         }
 
         return true;
+    }
+
+    @Override
+    public boolean performClick() {
+        return super.performClick();
     }
 }

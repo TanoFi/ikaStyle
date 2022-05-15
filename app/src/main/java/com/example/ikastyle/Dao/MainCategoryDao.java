@@ -1,7 +1,6 @@
 package com.example.ikastyle.Dao;
 
 import androidx.room.Dao;
-import androidx.room.Insert;
 import androidx.room.Query;
 
 import com.example.ikastyle.Entity.MainCategory;

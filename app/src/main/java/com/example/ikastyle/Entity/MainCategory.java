@@ -22,6 +22,7 @@ public class MainCategory {
         return Util.getAbsoluteId(id, 0, 0);
     }
 
+    @NonNull
     public String getName(){
         return name;
     }

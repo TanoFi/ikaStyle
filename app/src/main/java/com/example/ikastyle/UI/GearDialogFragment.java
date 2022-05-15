@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,7 +29,7 @@ import java.util.List;
  */
 public class GearDialogFragment extends DialogFragment {
     private RecyclerView recyclerView;
-    private GearKind gearKind;
+    private final GearKind gearKind;
 
     public GearDialogFragment(GearKind gearKind){
         this.gearKind = gearKind;
@@ -42,19 +43,20 @@ public class GearDialogFragment extends DialogFragment {
     private GearDialogListener listener;
 
     @Override
-    public void onAttach(Context context){
+    public void onAttach(@NonNull Context context){
         super.onAttach(context);
 
-        try {
-            // 親フラグメントに実装されているインターフェースを取得
+        if(getParentFragment() == null){
+            throw new NullPointerException("GearDialogFragmentの親フラグメントが見つかりません");
+        }else if(!(getParentFragment() instanceof  GearDialogListener)){
+            throw new ClassCastException(getParentFragment() + "はGearDialogListenerを実装していません");
+        } else {
             listener = (GearDialogListener) getParentFragment();
-        } catch (ClassCastException e) {
-            // 親フラグメントがインターフェースを実装していない場合は例外を投げる
-            throw new ClassCastException(getParentFragment().toString() + "はインターフェースを実装していません");
         }
     }
 
     @Override
+    @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState){
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
@@ -86,17 +88,16 @@ public class GearDialogFragment extends DialogFragment {
      * ギアリストをDBから非同期で取得
      */
     private class GetGearListAsyncTask extends AsyncTask<Void, Void, Integer> {
-        private AppDatabase db;
-        private GearKind gearKind;
+        private final AppDatabase db;
+        private final GearKind gearKind;
+        private final int languageCode = Util.getLanguageCode();
 
         private List<?> gearList;
 
-        private int languageCode;
 
         public GetGearListAsyncTask(AppDatabase db, GearKind gearKind) {
             this.db = db;
             this.gearKind = gearKind;
-            this.languageCode = Util.getLanguageCode();
         }
 
         @Override

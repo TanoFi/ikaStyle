@@ -23,9 +23,9 @@ public class GearRecyclerViewAdapter extends RecyclerView.Adapter<GearRecyclerVi
     private View.OnClickListener listener;
 
     static class ViewHolder extends RecyclerView.ViewHolder{
-        private GearListItemLinearLayout linearLayout;
-        private ImageView gearView;
-        private TextView gearNameView;
+        private final GearListItemLinearLayout linearLayout;
+        private final ImageView gearView;
+        private final TextView gearNameView;
 
         public ViewHolder(View view){
             super(view);
@@ -69,18 +69,13 @@ public class GearRecyclerViewAdapter extends RecyclerView.Adapter<GearRecyclerVi
         }
         else if(gear instanceof ShoesGear){
             ShoesGear shoesGear = (ShoesGear)gear;
-            holder.gearView.setImageResource(Util.gerShoesResourceId(shoesGear.id));
+            holder.gearView.setImageResource(Util.getShoesResourceId(shoesGear.id));
             holder.gearNameView.setText(shoesGear.name);
             holder.linearLayout.setGearId(shoesGear.id);
             holder.linearLayout.setGearKind(GearKind.SHOES);
         }
 
-        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.onClick(view);
-            }
-        });
+        holder.linearLayout.setOnClickListener(view -> listener.onClick(view));
     }
 
     public void setOnItemClickListener(View.OnClickListener listener){

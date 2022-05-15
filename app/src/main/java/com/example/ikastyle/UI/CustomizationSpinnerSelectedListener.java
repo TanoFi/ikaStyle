@@ -17,9 +17,9 @@ import com.example.ikastyle.Entity.Loadout;
 import java.util.List;
 
 public class CustomizationSpinnerSelectedListener implements AdapterView.OnItemSelectedListener {
-    private RecyclerView recyclerView;
-    private ConstraintLayout emptyView;
-    private View.OnClickListener onClickDeleteListener;
+    private final RecyclerView recyclerView;
+    private final ConstraintLayout emptyView;
+    private final View.OnClickListener onClickDeleteListener;
 
     public CustomizationSpinnerSelectedListener(RecyclerView recyclerView, ConstraintLayout emptyView, View.OnClickListener onClickDeleteListener){
         this.recyclerView = recyclerView;
@@ -28,6 +28,7 @@ public class CustomizationSpinnerSelectedListener implements AdapterView.OnItemS
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         Spinner spinner = (Spinner)adapterView;
         // Spinnerで選択したブキの絶対ID
@@ -46,9 +47,9 @@ public class CustomizationSpinnerSelectedListener implements AdapterView.OnItemS
     /*
      * 選択したブキのギアセットリストをDBから非同期で取得
      */
-    public class GetLoadoutListAsyncTask extends AsyncTask<Void, Void, Integer> {
-        private AppDatabase db;
-        private int absoluteId;
+    private class GetLoadoutListAsyncTask extends AsyncTask<Void, Void, Integer> {
+        private final AppDatabase db;
+        private final int absoluteId;
 
         private List<Loadout> loadoutList;
 
