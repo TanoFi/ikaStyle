@@ -256,6 +256,35 @@ public class NewFragment extends Fragment implements GearDialogFragment.GearDial
         }
     }
 
+    // View初期化用メソッド
+    private void init(){
+        // Spinner選択項目初期化
+        categorySpinner.setSelection(0);
+        weaponSpinner.setSelection(0);
+
+        // TextView文字入力初期化
+        gearSetName.setText("");
+
+        // GearImageView選択項目初期化
+        headGear.init();
+        clothingGear.init();
+        shoesGear.init();
+
+        // ReceptorImageView設定ギア初期化
+        headMain.init();
+        headSub1.init();
+        headSub2.init();
+        headSub3.init();
+        clothingMain.init();
+        clothingSub1.init();
+        clothingSub2.init();
+        clothingSub3.init();
+        shoesMain.init();
+        shoesSub1.init();
+        shoesSub2.init();
+        shoesSub3.init();
+    }
+
     /*
      * 非同期でDBにGearSetデータをInsert
      */
@@ -279,6 +308,9 @@ public class NewFragment extends Fragment implements GearDialogFragment.GearDial
 
         @Override
         protected void onPostExecute(Integer code){
+            // Viewを初期化
+            init();
+
             // ToastでInsert完了のメッセージ表示
             Toast toast = Toast.makeText(getContext(), getString(R.string.toastMessage_insertCompleted), Toast.LENGTH_LONG);
             toast.show();
