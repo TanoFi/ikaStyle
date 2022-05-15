@@ -3,9 +3,11 @@ package com.example.ikastyle;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +16,7 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.example.ikastyle.Common.Const.NumberPlace;
@@ -46,7 +49,9 @@ public class StoreFragment extends Fragment {
     private Spinner categorySpinner;
     private Spinner customizationSpinner;
     private RecyclerView recyclerView;
+    private ConstraintLayout emptyView;
 
+    private final int colorNum = Util.getRandomColor();
     private View.OnClickListener onClickDeleteListener;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -119,6 +124,11 @@ public class StoreFragment extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -139,12 +149,19 @@ public class StoreFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(layoutManager);
 
+        // ギアセット未登録時に表示するViewを設定
+        emptyView = view.findViewById(R.id.constrainLayout_emptyInfo);
+        ImageView inkMarkImageView = view.findViewById(R.id.imageView_ink_mark);
+        inkMarkImageView.setColorFilter(colorNum, PorterDuff.Mode.SRC_ATOP);
+
         // Spinnerの項目に設定するためのDBを取得
         AppDatabase db = AppDatabase.getDatabase(getContext());
         // SpinnerDataGetAsyncTaskクラス内でContextを取得できなかったためにonPostExecute()だけインスタンス作成時に記述
         GetDataAndSetSpinnerAsyncTask task = new GetDataAndSetSpinnerAsyncTask(db, getContext());
         task.execute();
     }
+
+
 
     /*
      * 非同期でDBからデータ取得しスピナーにセットするクラス
@@ -215,7 +232,7 @@ public class StoreFragment extends Fragment {
 
             //リスナーを作成
             CategorySpinnerSelectedListener categoryListener = new CategorySpinnerSelectedListener(context , customizationSpinner, mainWeaponKeyValueList);
-            CustomizationSpinnerSelectedListener customizationListener = new CustomizationSpinnerSelectedListener(recyclerView, onClickDeleteListener);
+            CustomizationSpinnerSelectedListener customizationListener = new CustomizationSpinnerSelectedListener(recyclerView, emptyView,onClickDeleteListener);
 
             //リスナーを設定
             categorySpinner.setOnItemSelectedListener(categoryListener);
@@ -255,6 +272,18 @@ public class StoreFragment extends Fragment {
             // 選択ギアセット削除後のギアセットリストをrecycleViewにセットし直す
             LoadoutRecyclerViewAdapter newAdapter = new LoadoutRecyclerViewAdapter(newGearSet, onClickDeleteListener);
             recyclerView.setAdapter(newAdapter);
+
+            setEmptyViewVisibility(newGearSet.size());
+        }
+
+        // 表示するギアセットがあればEmptyViewは非表示、なければ表示
+        private void setEmptyViewVisibility(int size){
+            if(size == 0){
+                emptyView.setVisibility(View.VISIBLE);
+            }
+            else {
+                emptyView.setVisibility(View.GONE);
+            }
         }
     }
 }

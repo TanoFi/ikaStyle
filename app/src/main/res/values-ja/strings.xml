@@ -14,4 +14,5 @@
     <string name="dialogMessage_confirm">本当に削除しますか?</string>
     <string name="buttonNavigation_no">いいえ</string>
     <string name="buttonNavigation_yes">はい</string>
+    <string name="textView_noLoadoutMessage">ギアセットを登録してください</string>
 </resources>

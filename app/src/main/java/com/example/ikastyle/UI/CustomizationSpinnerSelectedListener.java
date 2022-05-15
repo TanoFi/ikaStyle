@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ikastyle.Common.Const.NumberPlace;
@@ -23,10 +24,12 @@ import java.util.stream.Collectors;
 
 public class CustomizationSpinnerSelectedListener implements AdapterView.OnItemSelectedListener {
     private RecyclerView recyclerView;
+    private ConstraintLayout emptyView;
     private View.OnClickListener onClickDeleteListener;
 
-    public CustomizationSpinnerSelectedListener(RecyclerView recyclerView, View.OnClickListener onClickDeleteListener){
+    public CustomizationSpinnerSelectedListener(RecyclerView recyclerView, ConstraintLayout emptyView, View.OnClickListener onClickDeleteListener){
         this.recyclerView = recyclerView;
+        this.emptyView = emptyView;
         this.onClickDeleteListener = onClickDeleteListener;
     }
 
@@ -73,6 +76,18 @@ public class CustomizationSpinnerSelectedListener implements AdapterView.OnItemS
         protected void onPostExecute(Integer code){
             LoadoutRecyclerViewAdapter adapter = new LoadoutRecyclerViewAdapter(gearSetList, onClickDeleteListener);
             recyclerView.setAdapter(adapter);
+
+            setEmptyViewVisibility(gearSetList.size());
+        }
+
+        // 表示するギアセットがあればEmptyViewは非表示、なければ表示
+        private void setEmptyViewVisibility(int size){
+            if(size == 0){
+                emptyView.setVisibility(View.VISIBLE);
+            }
+            else {
+                emptyView.setVisibility(View.GONE);
+            }
         }
     }
 }

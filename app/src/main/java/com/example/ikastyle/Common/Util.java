@@ -1,5 +1,6 @@
 package com.example.ikastyle.Common;
 
+import android.graphics.Color;
 import android.util.Log;
 
 import com.example.ikastyle.Common.Const.NumberPlace;
@@ -7,6 +8,7 @@ import com.example.ikastyle.Common.Const.ResourceIdMap;
 
 import java.util.Locale;
 import java.util.Optional;
+import java.util.Random;
 
 public class Util {
     /*
@@ -78,5 +80,19 @@ public class Util {
      */
     public static int getWeaponResourceId(int absoluteId){
         return  ResourceIdMap.weaponResourceIdMap.get(absoluteId);
+    }
+
+    /*
+     * ランダムな色を返す
+     */
+    public static int getRandomColor(){
+        final int rgbNum = 256;
+
+        Random random = new Random();
+        int red = random.nextInt(rgbNum);
+        int green = random.nextInt(rgbNum);
+        int blue = random.nextInt(rgbNum);
+
+        return Color.rgb(red, green, blue);
     }
 }
