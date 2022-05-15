@@ -51,7 +51,7 @@
         app:layout_constraintTop_toBottomOf="@+id/spinner.weapon" />
 
     <EditText
-        android:id="@+id/editText.gearSetName"
+        android:id="@+id/editText.loadoutName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -79,7 +79,7 @@
         tools:ignore="SpeakableTextPresentCheck" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView.gearSet"
+        android:id="@+id/cardView.loadout"
         android:layout_width="0dp"
         android:layout_height="180dp"
         android:layout_marginStart="8dp"
@@ -288,7 +288,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView.gearSet"
+        app:layout_constraintTop_toBottomOf="@+id/cardView.loadout"
         app:rowCount="3">
 
         <com.example.ikastyle.UI.GearPowerImageView

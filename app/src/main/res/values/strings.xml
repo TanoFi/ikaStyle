@@ -8,7 +8,7 @@
     <string name="plainText_loadoutName">Loadout Name</string>
     <string name="toastMessage_spinnerNotSelected">A weapon must be selected.</string>
     <string name="toastMessage_mainGearPowerNotSet">All main ability must be equipped.</string>
-    <string name="toastMessage_insertCompleted">Gear-set registration have been completed.</string>
+    <string name="toastMessage_insertCompleted">Loadout registration have been completed.</string>
     <string name="buttonNavigation_cancel">Cancel</string>
     <string name="dialogMessage_confirm">Are you sure you want to delete this loadout?</string>
     <string name="buttonNavigation_yes">Yes</string>

@@ -20,11 +20,11 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.example.ikastyle.Common.Util;
-import com.example.ikastyle.Dao.GearSetDao;
+import com.example.ikastyle.Dao.LoadoutDao;
 import com.example.ikastyle.Dao.MainCategoryDao;
 import com.example.ikastyle.Dao.WeaponNameDao;
 import com.example.ikastyle.Database.AppDatabase;
-import com.example.ikastyle.Entity.GearSet;
+import com.example.ikastyle.Entity.Loadout;
 import com.example.ikastyle.Entity.MainCategory;
 import com.example.ikastyle.Entity.WeaponName;
 import com.example.ikastyle.UI.CategorySpinnerSelectedListener;
@@ -67,8 +67,8 @@ public class StoreFragment extends Fragment {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         AppDatabase db = AppDatabase.getDatabase(getContext());
-                                        GearSet gearSet = ((LoadoutDeleteButton)view).getGearSet();
-                                        DeleteGearSetAsyncTask task = new DeleteGearSetAsyncTask(db, gearSet);
+                                        Loadout loadout = ((LoadoutDeleteButton)view).getLoadout();
+                                        DeleteLoadoutAsyncTask task = new DeleteLoadoutAsyncTask(db, loadout);
                                         task.execute();
                                     }
                                 }
@@ -191,26 +191,26 @@ public class StoreFragment extends Fragment {
     /*
      * 非同期でTRAN_GEAR_SETのレコードを削除する
      */
-    private class DeleteGearSetAsyncTask extends AsyncTask<Void, Void, Integer> {
+    private class DeleteLoadoutAsyncTask extends AsyncTask<Void, Void, Integer> {
         private AppDatabase db;
-        private GearSet gearSet;
+        private Loadout loadout;
 
-        private  List<GearSet> newGearSet;
+        private  List<Loadout> newLoadout;
 
-        public DeleteGearSetAsyncTask(AppDatabase db, GearSet gearSet) {
+        public DeleteLoadoutAsyncTask(AppDatabase db, Loadout loadout) {
             this.db = db;
-            this.gearSet = gearSet;
+            this.loadout = loadout;
         }
 
         @Override
         protected Integer doInBackground(Void... params) {
             //実際にDBにアクセスしレコードを削除
-            GearSetDao gearSetDao = db.gearSetDao();
-            gearSetDao.DeleteGearSet(gearSet);
+            LoadoutDao loadoutDao = db.loadoutDao();
+            loadoutDao.DeleteLoadout(loadout);
 
             // 削除後のギアセットリストを取得し直す
             int selectedWeaponId = ((Pair<Integer, String>)customizationSpinner.getSelectedItem()).first;
-            newGearSet = gearSetDao.getGearSetList(Util.getCategoryId(selectedWeaponId), Util.getMainId(selectedWeaponId), Util.getCustomizationId(selectedWeaponId));
+            newLoadout = loadoutDao.getLoadoutList(Util.getCategoryId(selectedWeaponId), Util.getMainId(selectedWeaponId), Util.getCustomizationId(selectedWeaponId));
 
             return 0;
         }
@@ -218,10 +218,10 @@ public class StoreFragment extends Fragment {
         @Override
         protected void onPostExecute(Integer integer) {
             // 選択ギアセット削除後のギアセットリストをrecycleViewにセットし直す
-            LoadoutRecyclerViewAdapter newAdapter = new LoadoutRecyclerViewAdapter(newGearSet, onClickDeleteListener);
+            LoadoutRecyclerViewAdapter newAdapter = new LoadoutRecyclerViewAdapter(newLoadout, onClickDeleteListener);
             recyclerView.setAdapter(newAdapter);
 
-            setEmptyViewVisibility(newGearSet.size());
+            setEmptyViewVisibility(newLoadout.size());
         }
 
         // 表示するギアセットがあればEmptyViewは非表示、なければ表示

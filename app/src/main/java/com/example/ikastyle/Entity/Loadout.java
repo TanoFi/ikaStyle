@@ -4,8 +4,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "TRAN_GEAR_SET")
-public class GearSet {
+@Entity(tableName = "TRAN_LOADOUT")
+public class Loadout {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     public int id;
@@ -70,7 +70,7 @@ public class GearSet {
     @ColumnInfo(name = "update_date")
     public Long updateDate;
 
-    public GearSet(String name,
+    public Loadout(String name,
                    int categoryId, int mainId, int customizationId,
                    int headGearId, int headMain, int headSub1, int headSub2, int headSub3,
                    int clothingGearId, int clothingMain, int clothingSub1, int clothingSub2, int clothingSub3,

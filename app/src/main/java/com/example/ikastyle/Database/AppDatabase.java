@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase;
 
 import com.example.ikastyle.Common.Const.DatabaseName;
 import com.example.ikastyle.Dao.ClothingGearDao;
-import com.example.ikastyle.Dao.GearSetDao;
+import com.example.ikastyle.Dao.LoadoutDao;
 import com.example.ikastyle.Dao.HeadGearDao;
 import com.example.ikastyle.Dao.MainCategoryDao;
 import com.example.ikastyle.Dao.ShoesGearDao;
@@ -16,14 +16,14 @@ import com.example.ikastyle.Dao.WeaponMainDao;
 import com.example.ikastyle.Dao.WeaponNameDao;
 import com.example.ikastyle.DatabaseView.WeaponMain;
 import com.example.ikastyle.Entity.ClothingGear;
-import com.example.ikastyle.Entity.GearSet;
+import com.example.ikastyle.Entity.Loadout;
 import com.example.ikastyle.Entity.HeadGear;
 import com.example.ikastyle.Entity.MainCategory;
 import com.example.ikastyle.Entity.MainName;
 import com.example.ikastyle.Entity.ShoesGear;
 import com.example.ikastyle.Entity.WeaponName;
 
-@Database(entities = {MainCategory.class, MainName.class, WeaponName.class, GearSet.class, HeadGear.class, ClothingGear.class, ShoesGear.class},
+@Database(entities = {MainCategory.class, MainName.class, WeaponName.class, Loadout.class, HeadGear.class, ClothingGear.class, ShoesGear.class},
           views = {WeaponMain.class},
           version = 1,
           exportSchema = false)
@@ -31,7 +31,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract MainCategoryDao mainCategoryDao();
     public abstract WeaponNameDao weaponNameDao();
     public abstract WeaponMainDao weaponMainDao();
-    public abstract GearSetDao gearSetDao();
+    public abstract LoadoutDao loadoutDao();
     public abstract HeadGearDao headGearDao();
     public abstract ClothingGearDao clothingGearDao();
     public abstract ShoesGearDao shoesGearDao();

@@ -10,14 +10,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ikastyle.Common.Util;
-import com.example.ikastyle.Entity.GearSet;
+import com.example.ikastyle.Entity.Loadout;
 import com.example.ikastyle.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
 public class LoadoutRecyclerViewAdapter extends RecyclerView.Adapter<LoadoutRecyclerViewAdapter.ViewHolder> {
-    private final List<GearSet> gearSetList;
+    private final List<Loadout> loadoutList;
     private final View.OnClickListener onClickDeleteListener;
 
     static class ViewHolder extends RecyclerView.ViewHolder{
@@ -65,8 +65,8 @@ public class LoadoutRecyclerViewAdapter extends RecyclerView.Adapter<LoadoutRecy
         }
     }
 
-    public LoadoutRecyclerViewAdapter(List<GearSet> gearSetList, View.OnClickListener onClickDeleteListener){
-        this.gearSetList = gearSetList;
+    public LoadoutRecyclerViewAdapter(List<Loadout> loadoutList, View.OnClickListener onClickDeleteListener){
+        this.loadoutList = loadoutList;
         this.onClickDeleteListener = onClickDeleteListener;
     }
 
@@ -81,30 +81,30 @@ public class LoadoutRecyclerViewAdapter extends RecyclerView.Adapter<LoadoutRecy
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position){
-        GearSet gearSet = gearSetList.get(position);
+        Loadout loadout = loadoutList.get(position);
 
-        holder.loadoutNameView.setText(gearSet.name);
-        holder.headGearView.setImageResource(Util.getHeadGearResourceId(gearSet.headGearId));
-        holder.headMainView.setImageResource(Util.getGearPowerResourceId(gearSet.headMain));
-        holder.headSub1View.setImageResource(Util.getGearPowerResourceId(gearSet.headSub1));
-        holder.headSub2View.setImageResource(Util.getGearPowerResourceId(gearSet.headSub2));
-        holder.headSub3View.setImageResource(Util.getGearPowerResourceId(gearSet.headSub3));
-        holder.clothingGearView.setImageResource(Util.getClothingResourceId(gearSet.clothingGearId));
-        holder.clothingMainView.setImageResource(Util.getGearPowerResourceId(gearSet.clothingMain));
-        holder.clothingSub1View.setImageResource(Util.getGearPowerResourceId(gearSet.clothingSub1));
-        holder.clothingSub2View.setImageResource(Util.getGearPowerResourceId(gearSet.clothingSub2));
-        holder.clothingSub3View.setImageResource(Util.getGearPowerResourceId(gearSet.clothingSub3));
-        holder.shoesGearView.setImageResource(Util.gerShoesResourceId(gearSet.shoesGearId));
-        holder.shoesMainView.setImageResource(Util.getGearPowerResourceId(gearSet.shoesMain));
-        holder.shoesSub1View.setImageResource(Util.getGearPowerResourceId(gearSet.shoesSub1));
-        holder.shoesSub2View.setImageResource(Util.getGearPowerResourceId(gearSet.shoesSub2));
-        holder.shoesSub3View.setImageResource(Util.getGearPowerResourceId(gearSet.shoesSub3));
-        holder.deleteView.setGearSet(gearSet);
+        holder.loadoutNameView.setText(loadout.name);
+        holder.headGearView.setImageResource(Util.getHeadGearResourceId(loadout.headGearId));
+        holder.headMainView.setImageResource(Util.getGearPowerResourceId(loadout.headMain));
+        holder.headSub1View.setImageResource(Util.getGearPowerResourceId(loadout.headSub1));
+        holder.headSub2View.setImageResource(Util.getGearPowerResourceId(loadout.headSub2));
+        holder.headSub3View.setImageResource(Util.getGearPowerResourceId(loadout.headSub3));
+        holder.clothingGearView.setImageResource(Util.getClothingResourceId(loadout.clothingGearId));
+        holder.clothingMainView.setImageResource(Util.getGearPowerResourceId(loadout.clothingMain));
+        holder.clothingSub1View.setImageResource(Util.getGearPowerResourceId(loadout.clothingSub1));
+        holder.clothingSub2View.setImageResource(Util.getGearPowerResourceId(loadout.clothingSub2));
+        holder.clothingSub3View.setImageResource(Util.getGearPowerResourceId(loadout.clothingSub3));
+        holder.shoesGearView.setImageResource(Util.gerShoesResourceId(loadout.shoesGearId));
+        holder.shoesMainView.setImageResource(Util.getGearPowerResourceId(loadout.shoesMain));
+        holder.shoesSub1View.setImageResource(Util.getGearPowerResourceId(loadout.shoesSub1));
+        holder.shoesSub2View.setImageResource(Util.getGearPowerResourceId(loadout.shoesSub2));
+        holder.shoesSub3View.setImageResource(Util.getGearPowerResourceId(loadout.shoesSub3));
+        holder.deleteView.setLoadout(loadout);
         holder.deleteView.setOnClickListener(onClickDeleteListener);
     }
 
     @Override
     public int getItemCount(){
-        return gearSetList.size();
+        return loadoutList.size();
     }
 }

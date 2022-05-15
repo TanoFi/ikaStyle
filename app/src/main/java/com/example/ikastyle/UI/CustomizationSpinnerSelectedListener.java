@@ -10,9 +10,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ikastyle.Common.Util;
-import com.example.ikastyle.Dao.GearSetDao;
+import com.example.ikastyle.Dao.LoadoutDao;
 import com.example.ikastyle.Database.AppDatabase;
-import com.example.ikastyle.Entity.GearSet;
+import com.example.ikastyle.Entity.Loadout;
 
 import java.util.List;
 
@@ -34,7 +34,7 @@ public class CustomizationSpinnerSelectedListener implements AdapterView.OnItemS
         int absoluteId = ((Pair<Integer, String>) spinner.getSelectedItem()).first;
 
         AppDatabase db = AppDatabase.getDatabase(spinner.getContext());
-        GetGearSetListAsyncTask task = new GetGearSetListAsyncTask(db, absoluteId);
+        GetLoadoutListAsyncTask task = new GetLoadoutListAsyncTask(db, absoluteId);
         task.execute();
     }
 
@@ -46,13 +46,13 @@ public class CustomizationSpinnerSelectedListener implements AdapterView.OnItemS
     /*
      * 選択したブキのギアセットリストをDBから非同期で取得
      */
-    public class GetGearSetListAsyncTask extends AsyncTask<Void, Void, Integer> {
+    public class GetLoadoutListAsyncTask extends AsyncTask<Void, Void, Integer> {
         private AppDatabase db;
         private int absoluteId;
 
-        private List<GearSet> gearSetList;
+        private List<Loadout> loadoutList;
 
-        public GetGearSetListAsyncTask(AppDatabase db, int absoluteId) {
+        public GetLoadoutListAsyncTask(AppDatabase db, int absoluteId) {
             this.db = db;
             this.absoluteId = absoluteId;
         }
@@ -60,18 +60,18 @@ public class CustomizationSpinnerSelectedListener implements AdapterView.OnItemS
         @Override
         protected Integer doInBackground(Void... params) {
             //実際にDBにアクセスし結果を取得
-            GearSetDao gearSetDao = db.gearSetDao();
-            gearSetList = gearSetDao.getGearSetList(Util.getCategoryId(absoluteId), Util.getMainId(absoluteId), Util.getCustomizationId(absoluteId));
+            LoadoutDao loadoutDao = db.loadoutDao();
+            loadoutList = loadoutDao.getLoadoutList(Util.getCategoryId(absoluteId), Util.getMainId(absoluteId), Util.getCustomizationId(absoluteId));
 
             return 0;
         }
 
         @Override
         protected void onPostExecute(Integer code){
-            LoadoutRecyclerViewAdapter adapter = new LoadoutRecyclerViewAdapter(gearSetList, onClickDeleteListener);
+            LoadoutRecyclerViewAdapter adapter = new LoadoutRecyclerViewAdapter(loadoutList, onClickDeleteListener);
             recyclerView.setAdapter(adapter);
 
-            setEmptyViewVisibility(gearSetList.size());
+            setEmptyViewVisibility(loadoutList.size());
         }
 
         // 表示するギアセットがあればEmptyViewは非表示、なければ表示

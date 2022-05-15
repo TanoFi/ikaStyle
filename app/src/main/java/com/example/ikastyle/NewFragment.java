@@ -17,12 +17,12 @@ import android.widget.Toast;
 import com.example.ikastyle.Common.Const.GearKind;
 import com.example.ikastyle.Common.Const.NumberPlace;
 import com.example.ikastyle.Common.Util;
-import com.example.ikastyle.Dao.GearSetDao;
+import com.example.ikastyle.Dao.LoadoutDao;
 import com.example.ikastyle.Dao.MainCategoryDao;
 import com.example.ikastyle.Dao.WeaponMainDao;
 import com.example.ikastyle.Database.AppDatabase;
 import com.example.ikastyle.DatabaseView.WeaponMain;
-import com.example.ikastyle.Entity.GearSet;
+import com.example.ikastyle.Entity.Loadout;
 import com.example.ikastyle.Entity.MainCategory;
 import com.example.ikastyle.UI.CategorySpinnerSelectedListener;
 import com.example.ikastyle.UI.KeyValueArrayAdapter;
@@ -40,7 +40,7 @@ import java.util.stream.Collectors;
 public class NewFragment extends Fragment implements GearDialogFragment.GearDialogListener{
     private Spinner categorySpinner;
     private Spinner weaponSpinner;
-    private EditText gearSetName;
+    private EditText loadoutName;
     private GearImageView headGear;
     private GearPowerReceptorImageView headMain;
     private GearPowerReceptorImageView headSub1;
@@ -94,7 +94,7 @@ public class NewFragment extends Fragment implements GearDialogFragment.GearDial
         weaponSpinner = view.findViewById(R.id.spinner_weapon);
 
         // textViewの画面要素を取得
-        gearSetName = view.findViewById(R.id.editText_gearSetName);
+        loadoutName = view.findViewById(R.id.editText_loadoutName);
 
         // GearPowerReceptorImageViewの画面要素を取得
         headMain = view.findViewById(R.id.receptorImageView_head_main);
@@ -182,9 +182,9 @@ public class NewFragment extends Fragment implements GearDialogFragment.GearDial
         // 選択したブキの絶対ID
         int absoluteId = ((Pair<Integer, String>)weaponSpinner.getSelectedItem()).first;
 
-        // Insert用のGearSetインスタンス作成
-        GearSet gearSet = new GearSet(
-                gearSetName.getText().toString(),
+        // Insert用のLoadoutインスタンス作成
+        Loadout loadout = new Loadout(
+                loadoutName.getText().toString(),
                 Util.getCategoryId(absoluteId),
                 Util.getMainId(absoluteId),
                 Util.getCustomizationId(absoluteId),
@@ -207,7 +207,7 @@ public class NewFragment extends Fragment implements GearDialogFragment.GearDial
         );
 
         AppDatabase db = AppDatabase.getDatabase(getContext());
-        InsertGearSetAsyncTask task = new InsertGearSetAsyncTask(db, gearSet);
+        InsertLoadoutAsyncTask task = new InsertLoadoutAsyncTask(db, loadout);
         task.execute();
     }
 
@@ -227,7 +227,7 @@ public class NewFragment extends Fragment implements GearDialogFragment.GearDial
         weaponSpinner.setSelection(0);
 
         // TextView文字入力初期化
-        gearSetName.setText("");
+        loadoutName.setText("");
 
         // GearImageView選択項目初期化
         headGear.init();
@@ -250,22 +250,22 @@ public class NewFragment extends Fragment implements GearDialogFragment.GearDial
     }
 
     /*
-     * 非同期でDBにGearSetデータをInsert
+     * 非同期でDBにLoadoutデータをInsert
      */
-    public class InsertGearSetAsyncTask extends AsyncTask<Void, Void, Integer> {
+    public class InsertLoadoutAsyncTask extends AsyncTask<Void, Void, Integer> {
         private AppDatabase db;
-        private GearSet gearSet;
+        private Loadout loadout;
 
-        public InsertGearSetAsyncTask(AppDatabase db, GearSet gearSet) {
+        public InsertLoadoutAsyncTask(AppDatabase db, Loadout loadout) {
             this.db = db;
-            this.gearSet = gearSet;
+            this.loadout = loadout;
         }
 
         @Override
         protected Integer doInBackground(Void... params) {
             //実際にDBにアクセスし結果を取得
-            GearSetDao gearSetDao = db.gearSetDao();
-            gearSetDao.InsertGearSet(gearSet);
+            LoadoutDao loadoutDao = db.loadoutDao();
+            loadoutDao.InsertLoadout(loadout);
 
             return 0;
         }
