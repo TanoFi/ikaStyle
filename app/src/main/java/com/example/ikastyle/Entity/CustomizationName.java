@@ -7,8 +7,8 @@ import androidx.room.Entity;
 import com.example.ikastyle.Common.Const.NumberPlace;
 import com.example.ikastyle.Common.Util;
 
-@Entity(tableName = "MAST_WEAPON_NAME", primaryKeys = {"id", "main_id", "category_id", "language_code"})
-public class WeaponName {
+@Entity(tableName = "MAST_CUSTOMIZATION_NAME", primaryKeys = {"id", "main_id", "category_id", "language_code"})
+public class CustomizationName {
     @ColumnInfo(name = "id")
     public int id;
 

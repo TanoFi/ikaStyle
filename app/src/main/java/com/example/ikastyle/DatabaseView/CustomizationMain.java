@@ -6,10 +6,10 @@ import androidx.room.DatabaseView;
 import com.example.ikastyle.Common.Const.NumberPlace;
 
 /*
- * MAST_MAIN_NAMEとMAST_WEAPON_NAMEの結合テーブルを取得するView
+ * MAST_MAIN_NAMEとMAST_CUSTOMIZATION_NAMEの結合テーブルを取得するView
  */
 @DatabaseView(
-        viewName = "WEAPON_MAIN_NAME",
+        viewName = "CUSTOMIZATION_MAIN_NAME",
         value = "SELECT \n" +
                 "WN.category_id,\n" +
                 "WN.main_id,\n" +
@@ -18,12 +18,12 @@ import com.example.ikastyle.Common.Const.NumberPlace;
                 "MN.name as main_name,\n" +
                 "WN.name as weapon_name\n" +
                 "FROM MAST_MAIN_NAME MN\n" +
-                "INNER JOIN MAST_WEAPON_NAME WN\n" +
+                "INNER JOIN MAST_CUSTOMIZATION_NAME WN\n" +
                 "ON WN.category_id = MN.category_id\n" +
                 "AND WN.main_id = MN.id \n" +
                 "AND WN.language_code = MN.language_code"
 )
-public class WeaponMain {
+public class CustomizationMain {
     @ColumnInfo(name = "category_id")
     public int categoryId;
 

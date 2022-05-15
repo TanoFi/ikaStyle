@@ -17,11 +17,11 @@ import android.widget.Toast;
 import com.example.ikastyle.Common.Const.GearKind;
 import com.example.ikastyle.Common.Const.NumberPlace;
 import com.example.ikastyle.Common.Util;
+import com.example.ikastyle.Dao.CustomizationMainDao;
 import com.example.ikastyle.Dao.LoadoutDao;
 import com.example.ikastyle.Dao.MainCategoryDao;
-import com.example.ikastyle.Dao.WeaponMainDao;
 import com.example.ikastyle.Database.AppDatabase;
-import com.example.ikastyle.DatabaseView.WeaponMain;
+import com.example.ikastyle.DatabaseView.CustomizationMain;
 import com.example.ikastyle.Entity.Loadout;
 import com.example.ikastyle.Entity.MainCategory;
 import com.example.ikastyle.UI.CategorySpinnerSelectedListener;
@@ -291,7 +291,7 @@ public class NewFragment extends Fragment implements GearDialogFragment.GearDial
         private Spinner weaponSpinner;
 
         List<MainCategory> categoryList;
-        List<WeaponMain> weaponMainList;
+        List<CustomizationMain> customizationMainList;
 
         public GetDataAndSetSpinnerAsyncTask(AppDatabase db, Context context, Spinner categorySpinner, Spinner weaponSpinner) {
             this.db = db;
@@ -307,9 +307,9 @@ public class NewFragment extends Fragment implements GearDialogFragment.GearDial
 
             //実際にDBにアクセスし結果を取得
             MainCategoryDao categoryDao = db.mainCategoryDao();
-            WeaponMainDao weaponMainDao = db.weaponMainDao();
+            CustomizationMainDao customizationMainDao = db.customizationMainDao();
             categoryList = categoryDao.getMainCategoryList(languageCode); //ブキカテゴリー名を取得
-            weaponMainList = weaponMainDao.getWeaponMainList(languageCode);
+            customizationMainList = customizationMainDao.getWeaponMainList(languageCode);
 
             return 0;
         }
@@ -318,31 +318,31 @@ public class NewFragment extends Fragment implements GearDialogFragment.GearDial
         protected void onPostExecute(Integer code){
             // ひとつのメインウェポン : そのメインウェポンを持つブキセットのリスト でMapを作成
             // 昇順でソートしたいのでTreeMap
-            TreeMap<Integer, List<WeaponMain>> weaponMainMap = new TreeMap<>(weaponMainList.stream().collect(
+            TreeMap<Integer, List<CustomizationMain>> customizationMainMap = new TreeMap<>(customizationMainList.stream().collect(
                     Collectors.groupingBy(x -> x.categoryId * NumberPlace.CATEGORY_PLACE + x.mainId * NumberPlace.MAIN_PLACE)
             ));
 
             // Spinnerに渡す用のリストを作成
             ArrayList<Pair<Integer, String>> categoryKeyValueList = new ArrayList<>();
-            ArrayList<Pair<Integer, String>> mainWeaponKeyValueList = new ArrayList<>();
+            ArrayList<Pair<Integer, String>> mainAndCustomizationKeyValueList = new ArrayList<>();
 
             // それぞれのリストの一番上に未選択時の項目を追加
             categoryKeyValueList.add(new Pair<>(0, context.getString(R.string.spinnerItem_categoryUnselected)));
-            mainWeaponKeyValueList.add(new Pair<>(0, context.getString(R.string.spinnerItem_weaponUnselected)));
+            mainAndCustomizationKeyValueList.add(new Pair<>(0, context.getString(R.string.spinnerItem_weaponUnselected)));
 
             //それぞれのリストにデータ(IDと名前のペア)を入れる
             categoryList.forEach(x -> categoryKeyValueList.add(new Pair<>(x.getAbsoluteId(), x.getName())));
-            for (Map.Entry<Integer, List<WeaponMain>> data :weaponMainMap.entrySet()) {
+            for (Map.Entry<Integer, List<CustomizationMain>> data :customizationMainMap.entrySet()) {
                 int key = data.getKey();
-                List<WeaponMain> value = data.getValue();
-                mainWeaponKeyValueList.add(new Pair<>(key, value.get(0).getMainName())); //メインウェポンのデータをAdd
+                List<CustomizationMain> value = data.getValue();
+                mainAndCustomizationKeyValueList.add(new Pair<>(key, value.get(0).getMainName())); //メインウェポンのデータをAdd
 
-                value.forEach(x -> mainWeaponKeyValueList.add(new Pair<>(x.getAbsoluteId(), x.getWeaponName()))); //ブキセットのデータをAdd
+                value.forEach(x -> mainAndCustomizationKeyValueList.add(new Pair<>(x.getAbsoluteId(), x.getWeaponName()))); //ブキセットのデータをAdd
             }
 
             //アダプター作成
             KeyValueArrayAdapter categoryAdapter = new KeyValueArrayAdapter(context, R.layout.spinner_list_item, categoryKeyValueList);
-            KeyValueArrayAdapter weaponAdapter = new KeyValueArrayAdapter(context, R.layout.spinner_list_item, mainWeaponKeyValueList);
+            KeyValueArrayAdapter weaponAdapter = new KeyValueArrayAdapter(context, R.layout.spinner_list_item, mainAndCustomizationKeyValueList);
 
             //レイアウトを付与
             categoryAdapter.setDropDownViewResource(R.layout.spinner_list_dropdown_item);
@@ -353,7 +353,7 @@ public class NewFragment extends Fragment implements GearDialogFragment.GearDial
             weaponSpinner.setAdapter(weaponAdapter);
 
             //リスナーを作成
-            CategorySpinnerSelectedListener categoryListener = new CategorySpinnerSelectedListener(context , weaponSpinner, mainWeaponKeyValueList);
+            CategorySpinnerSelectedListener categoryListener = new CategorySpinnerSelectedListener(context , weaponSpinner, mainAndCustomizationKeyValueList);
 
             //リスナーを設定
             categorySpinner.setOnItemSelectedListener(categoryListener);

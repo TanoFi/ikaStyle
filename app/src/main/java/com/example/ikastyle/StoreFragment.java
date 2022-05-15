@@ -22,11 +22,11 @@ import android.widget.Spinner;
 import com.example.ikastyle.Common.Util;
 import com.example.ikastyle.Dao.LoadoutDao;
 import com.example.ikastyle.Dao.MainCategoryDao;
-import com.example.ikastyle.Dao.WeaponNameDao;
+import com.example.ikastyle.Dao.CustomizationNameDao;
 import com.example.ikastyle.Database.AppDatabase;
+import com.example.ikastyle.Entity.CustomizationName;
 import com.example.ikastyle.Entity.Loadout;
 import com.example.ikastyle.Entity.MainCategory;
-import com.example.ikastyle.Entity.WeaponName;
 import com.example.ikastyle.UI.CategorySpinnerSelectedListener;
 import com.example.ikastyle.UI.KeyValueArrayAdapter;
 import com.example.ikastyle.UI.CustomizationSpinnerSelectedListener;
@@ -131,7 +131,7 @@ public class StoreFragment extends Fragment {
         private Context context;
 
         List<MainCategory> categoryList;
-        List<WeaponName> weaponNameList;
+        List<CustomizationName> customizationNameList;
 
         public GetDataAndSetSpinnerAsyncTask(AppDatabase db, Context context) {
             this.db = db;
@@ -145,9 +145,9 @@ public class StoreFragment extends Fragment {
 
             //実際にDBにアクセスし結果を取得
             MainCategoryDao categoryDao = db.mainCategoryDao();
-            WeaponNameDao weaponNameDao = db.weaponNameDao();
+            CustomizationNameDao customizationNameDao = db.customizationNameDao();
             categoryList = categoryDao.getMainCategoryList(languageCode); //ブキカテゴリー名を取得
-            weaponNameList = weaponNameDao.getWeaponNameList(languageCode);
+            customizationNameList = customizationNameDao.getWeaponNameList(languageCode);
 
             return 0;
         }
@@ -164,19 +164,19 @@ public class StoreFragment extends Fragment {
 
             //それぞれのリストにデータ(IDと名前のペア)を入れる
             categoryList.forEach(x -> categoryKeyValueList.add(new Pair<>(x.getAbsoluteId(), x.getName())));
-            weaponNameList.forEach(x -> customizationValueList.add(new Pair<>(x.getAbsoluteId(), x.getName())));
+            customizationNameList.forEach(x -> customizationValueList.add(new Pair<>(x.getAbsoluteId(), x.getName())));
 
             //アダプター作成
             KeyValueArrayAdapter categoryAdapter = new KeyValueArrayAdapter(context, R.layout.spinner_list_item, categoryKeyValueList);
-            KeyValueArrayAdapter weaponAdapter = new KeyValueArrayAdapter(context, R.layout.spinner_list_item, customizationValueList);
+            KeyValueArrayAdapter customizationAdapter = new KeyValueArrayAdapter(context, R.layout.spinner_list_item, customizationValueList);
 
             //レイアウトを付与
             categoryAdapter.setDropDownViewResource(R.layout.spinner_list_dropdown_item);
-            weaponAdapter.setDropDownViewResource(R.layout.spinner_list_dropdown_item);
+            customizationAdapter.setDropDownViewResource(R.layout.spinner_list_dropdown_item);
 
             //スピナーにアダプターを設定
             categorySpinner.setAdapter(categoryAdapter);
-            customizationSpinner.setAdapter(weaponAdapter);
+            customizationSpinner.setAdapter(customizationAdapter);
 
             //リスナーを作成
             CategorySpinnerSelectedListener categoryListener = new CategorySpinnerSelectedListener(context , customizationSpinner, customizationValueList);
