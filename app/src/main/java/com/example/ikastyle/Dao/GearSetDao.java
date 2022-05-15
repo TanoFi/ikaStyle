@@ -14,7 +14,7 @@ public interface GearSetDao {
     @Insert
     public void InsertGearSet(GearSet gearSet);
 
-    @Query("SELECT * FROM TRAN_GEAR_SET WHERE category_id = :categoryId AND main_id = :mainId AND customization_id = :customizationId ORDER BY update_date DESC")
+    @Query("SELECT * FROM TRAN_GEAR_SET WHERE category_id = :categoryId AND main_id = :mainId AND (customization_id = :customizationId OR customization_id = 0) ORDER BY update_date DESC")
     public List<GearSet> getGearSetList(int categoryId, int mainId, int customizationId);
 
     @Delete

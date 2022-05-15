@@ -24,10 +24,12 @@ import com.example.ikastyle.Common.Util;
 import com.example.ikastyle.Dao.GearSetDao;
 import com.example.ikastyle.Dao.MainCategoryDao;
 import com.example.ikastyle.Dao.WeaponMainDao;
+import com.example.ikastyle.Dao.WeaponNameDao;
 import com.example.ikastyle.Database.AppDatabase;
 import com.example.ikastyle.DatabaseView.WeaponMain;
 import com.example.ikastyle.Entity.GearSet;
 import com.example.ikastyle.Entity.MainCategory;
+import com.example.ikastyle.Entity.WeaponName;
 import com.example.ikastyle.UI.CategorySpinnerSelectedListener;
 import com.example.ikastyle.UI.KeyValueArrayAdapter;
 import com.example.ikastyle.UI.CustomizationSpinnerSelectedListener;
@@ -171,7 +173,7 @@ public class StoreFragment extends Fragment {
         private Context context;
 
         List<MainCategory> categoryList;
-        List<WeaponMain> weaponMainList;
+        List<WeaponName> weaponNameList;
 
         public GetDataAndSetSpinnerAsyncTask(AppDatabase db, Context context) {
             this.db = db;
@@ -185,42 +187,30 @@ public class StoreFragment extends Fragment {
 
             //実際にDBにアクセスし結果を取得
             MainCategoryDao categoryDao = db.mainCategoryDao();
-            WeaponMainDao weaponMainDao = db.weaponMainDao();
+            WeaponNameDao weaponNameDao = db.weaponNameDao();
             categoryList = categoryDao.getMainCategoryList(languageCode); //ブキカテゴリー名を取得
-            weaponMainList = weaponMainDao.getWeaponMainList(languageCode);
+            weaponNameList = weaponNameDao.getWeaponNameList(languageCode);
 
             return 0;
         }
 
         @Override
         protected void onPostExecute(Integer code){
-            // ひとつのメインウェポン : そのメインウェポンを持つブキセットのリスト でMapを作成
-            // 昇順でソートしたいのでTreeMap
-            TreeMap<Integer, List<WeaponMain>> weaponMainMap = new TreeMap<>(weaponMainList.stream().collect(
-                    Collectors.groupingBy(x -> x.categoryId * NumberPlace.CATEGORY_PLACE + x.mainId * NumberPlace.MAIN_PLACE)
-            ));
-
             // Spinnerに渡す用のリストを作成
             ArrayList<Pair<Integer, String>> categoryKeyValueList = new ArrayList<>();
-            ArrayList<Pair<Integer, String>> mainWeaponKeyValueList = new ArrayList<>();
+            ArrayList<Pair<Integer, String>> customizationValueList = new ArrayList<>();
 
             // それぞれのリストの一番上に未選択時の項目を追加
             categoryKeyValueList.add(new Pair<>(0, context.getString(R.string.spinnerItem_categoryUnselected)));
-            mainWeaponKeyValueList.add(new Pair<>(0, context.getString(R.string.spinnerItem_weaponUnselected)));
+            customizationValueList.add(new Pair<>(0, context.getString(R.string.spinnerItem_weaponUnselected)));
 
             //それぞれのリストにデータ(IDと名前のペア)を入れる
             categoryList.forEach(x -> categoryKeyValueList.add(new Pair<>(x.getAbsoluteId(), x.getName())));
-            for (Map.Entry<Integer, List<WeaponMain>> data :weaponMainMap.entrySet()) {
-                int key = data.getKey();
-                List<WeaponMain> value = data.getValue();
-                mainWeaponKeyValueList.add(new Pair<>(key, value.get(0).getMainName())); //メインウェポンのデータをAdd
-
-                value.forEach(x -> mainWeaponKeyValueList.add(new Pair<>(x.getAbsoluteId(), x.getWeaponName()))); //ブキセットのデータをAdd
-            }
+            weaponNameList.forEach(x -> customizationValueList.add(new Pair<>(x.getAbsoluteId(), x.getName())));
 
             //アダプター作成
             KeyValueArrayAdapter categoryAdapter = new KeyValueArrayAdapter(context, R.layout.spinner_list_item, categoryKeyValueList);
-            KeyValueArrayAdapter weaponAdapter = new KeyValueArrayAdapter(context, R.layout.spinner_list_item, mainWeaponKeyValueList);
+            KeyValueArrayAdapter weaponAdapter = new KeyValueArrayAdapter(context, R.layout.spinner_list_item, customizationValueList);
 
             //レイアウトを付与
             categoryAdapter.setDropDownViewResource(R.layout.spinner_list_dropdown_item);
@@ -231,7 +221,7 @@ public class StoreFragment extends Fragment {
             customizationSpinner.setAdapter(weaponAdapter);
 
             //リスナーを作成
-            CategorySpinnerSelectedListener categoryListener = new CategorySpinnerSelectedListener(context , customizationSpinner, mainWeaponKeyValueList);
+            CategorySpinnerSelectedListener categoryListener = new CategorySpinnerSelectedListener(context , customizationSpinner, customizationValueList);
             CustomizationSpinnerSelectedListener customizationListener = new CustomizationSpinnerSelectedListener(recyclerView, emptyView,onClickDeleteListener);
 
             //リスナーを設定
