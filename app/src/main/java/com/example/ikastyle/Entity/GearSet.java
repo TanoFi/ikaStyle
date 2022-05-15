@@ -1,11 +1,8 @@
 package com.example.ikastyle.Entity;
 
-import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-
-import java.util.Date;
 
 @Entity(tableName = "TRAN_GEAR_SET")
 public class GearSet {

@@ -5,7 +5,6 @@
     <string name="menuItem_Store">登録済み</string>
     <string name="spinnerItem_categoryUnselected">-- カテゴリー選択 --</string>
     <string name="spinnerItem_weaponUnselected">-- ブキ選択 --</string>
-    <string name="textView_headgear">Headgear</string>
     <string name="plainText_loadoutName">ギアセット名</string>
     <string name="toastMessage_spinnerNotSelected">ブキを選択してください</string>
     <string name="toastMessage_mainGearPowerNotSet">メインギアパワーを設定してください</string>

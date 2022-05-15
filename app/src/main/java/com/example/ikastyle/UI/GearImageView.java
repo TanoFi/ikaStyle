@@ -1,23 +1,13 @@
 package com.example.ikastyle.UI;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.Switch;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.AppCompatImageView;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 
 import com.example.ikastyle.Common.Const.GearKind;
 import com.example.ikastyle.Common.Const.ResourceIdMap;
-import com.example.ikastyle.NewFragment;
 import com.example.ikastyle.R;
 
 public class GearImageView extends AppCompatImageView{

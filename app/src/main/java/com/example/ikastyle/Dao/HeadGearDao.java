@@ -10,5 +10,5 @@ import java.util.List;
 @Dao
 public interface HeadGearDao {
     @Query("SELECT * FROM MAST_HEAD_GEAR WHERE language_code = :languageCode ORDER BY name")
-    public List<HeadGear> getHeadGearList(int languageCode);
+    List<HeadGear> getHeadGearList(int languageCode);
 }

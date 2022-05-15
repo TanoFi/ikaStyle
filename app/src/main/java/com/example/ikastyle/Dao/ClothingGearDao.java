@@ -4,7 +4,6 @@ import androidx.room.Dao;
 import androidx.room.Query;
 
 import com.example.ikastyle.Entity.ClothingGear;
-import com.example.ikastyle.Entity.HeadGear;
 
 import java.util.List;
 

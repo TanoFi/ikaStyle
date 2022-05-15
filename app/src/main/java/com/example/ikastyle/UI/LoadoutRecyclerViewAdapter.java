@@ -9,7 +9,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.ikastyle.Common.Const.ResourceIdMap;
 import com.example.ikastyle.Common.Util;
 import com.example.ikastyle.Entity.GearSet;
 import com.example.ikastyle.R;

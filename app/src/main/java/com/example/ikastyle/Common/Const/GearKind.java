@@ -10,7 +10,7 @@ public enum GearKind {
 
     private int id;
 
-    private GearKind(int id){
+    GearKind(int id){
         this.id = id;
     }
 

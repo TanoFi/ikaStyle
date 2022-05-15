@@ -4,8 +4,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
-import androidx.appcompat.widget.LinearLayoutCompat;
-
 import com.example.ikastyle.Common.Const.GearKind;
 
 /*

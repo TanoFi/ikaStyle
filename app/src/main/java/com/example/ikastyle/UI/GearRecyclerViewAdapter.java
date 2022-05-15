@@ -4,7 +4,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,11 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.ikastyle.Common.Const.GearKind;
 import com.example.ikastyle.Common.Util;
 import com.example.ikastyle.Entity.ClothingGear;
-import com.example.ikastyle.Entity.GearSet;
 import com.example.ikastyle.Entity.HeadGear;
 import com.example.ikastyle.Entity.ShoesGear;
 import com.example.ikastyle.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 

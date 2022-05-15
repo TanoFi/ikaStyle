@@ -19,14 +19,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
-import com.example.ikastyle.Common.Const.NumberPlace;
 import com.example.ikastyle.Common.Util;
 import com.example.ikastyle.Dao.GearSetDao;
 import com.example.ikastyle.Dao.MainCategoryDao;
-import com.example.ikastyle.Dao.WeaponMainDao;
 import com.example.ikastyle.Dao.WeaponNameDao;
 import com.example.ikastyle.Database.AppDatabase;
-import com.example.ikastyle.DatabaseView.WeaponMain;
 import com.example.ikastyle.Entity.GearSet;
 import com.example.ikastyle.Entity.MainCategory;
 import com.example.ikastyle.Entity.WeaponName;
@@ -38,15 +35,7 @@ import com.example.ikastyle.UI.LoadoutRecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.stream.Collectors;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link StoreFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class StoreFragment extends Fragment {
     private Spinner categorySpinner;
     private Spinner customizationSpinner;
@@ -56,44 +45,13 @@ public class StoreFragment extends Fragment {
     private final int colorNum = Util.getRandomColor();
     private View.OnClickListener onClickDeleteListener;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     public StoreFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment StoreFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static StoreFragment newInstance(String param1, String param2) {
-        StoreFragment fragment = new StoreFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
 
         // deleteボタンを押したときの処理
         onClickDeleteListener = new View.OnClickListener() {

@@ -1,26 +1,20 @@
 package com.example.ikastyle.UI;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Pair;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.ikastyle.Common.Const.NumberPlace;
 import com.example.ikastyle.Common.Util;
 import com.example.ikastyle.Dao.GearSetDao;
 import com.example.ikastyle.Database.AppDatabase;
 import com.example.ikastyle.Entity.GearSet;
-import com.example.ikastyle.R;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class CustomizationSpinnerSelectedListener implements AdapterView.OnItemSelectedListener {
     private RecyclerView recyclerView;
