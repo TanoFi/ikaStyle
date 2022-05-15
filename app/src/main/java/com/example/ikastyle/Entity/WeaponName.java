@@ -5,6 +5,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 
 import com.example.ikastyle.Common.Const.NumberPlace;
+import com.example.ikastyle.Common.Util;
 
 @Entity(tableName = "MAST_WEAPON_NAME", primaryKeys = {"id", "main_id", "category_id", "language_code"})
 public class WeaponName {
@@ -29,6 +30,6 @@ public class WeaponName {
     }
 
     public int getAbsoluteId(){
-        return categoryId * NumberPlace.CATEGORY_PLACE + mainId * NumberPlace.MAIN_PLACE + id;
+        return Util.getAbsoluteId(categoryId, mainId, id);
     }
 }

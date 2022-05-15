@@ -26,6 +26,13 @@ public class Util {
     }
 
     /*
+     * ブキのカテゴリーID,メインID,カスタマイズIDから絶対IDを返す
+     */
+    public static int getAbsoluteId(int categoryId, int mainId, int customizationId){
+        return categoryId * NumberPlace.CATEGORY_PLACE + mainId * NumberPlace.MAIN_PLACE + customizationId * NumberPlace.WEAPON_PLACE;
+    }
+
+    /*
      * ブキの絶対IDを受け取ってカテゴリーIDを返す
      */
     public static int getCategoryId(int absoluteId){

@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 
+import com.example.ikastyle.Common.Util;
+
 @Entity(tableName = "MAST_MAIN_CATEGORY", primaryKeys = {"id","language_code"})
 public class MainCategory {
     @ColumnInfo(name = "id")
@@ -17,7 +19,7 @@ public class MainCategory {
     public String name;
 
     public int getAbsoluteId(){
-        return id * 1000;
+        return Util.getAbsoluteId(id, 0, 0);
     }
 
     public String getName(){
