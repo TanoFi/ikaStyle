@@ -4,8 +4,10 @@
 
     <item
         android:id="@+id/storeFragment"
+        android:icon="@drawable/ic_baseline_list_24"
         android:title="@string/menuItem_Store" />
     <item
         android:id="@+id/newFragment"
+        android:icon="@drawable/ic_baseline_add_24"
         android:title="@string/menuItem_New" />
 </menu>
