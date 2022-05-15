@@ -62,7 +62,8 @@
         app:layout_constraintEnd_toStartOf="@+id/floatingActionButton.save"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/floatingActionButton.save"
-        tools:text="@string/plainText_loadoutName" />
+        tools:text="@string/plainText_loadoutName"
+        android:importantForAutofill="no" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton.save"
@@ -213,7 +214,8 @@
                 app:gearKind="2"
                 app:layout_column="0"
                 app:layout_columnWeight="6"
-                app:layout_row="0" />
+                app:layout_row="0"
+                tools:ignore="ImageContrastCheck" />
         </androidx.gridlayout.widget.GridLayout>
 
         <androidx.gridlayout.widget.GridLayout
