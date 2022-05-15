@@ -26,45 +26,18 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
-public class LoadoutDeleteButton extends FloatingActionButton implements View.OnClickListener {
+public class LoadoutDeleteButton extends FloatingActionButton {
     private GearSet gearSet;
 
     public LoadoutDeleteButton(Context context, AttributeSet attrs){
         super(context, attrs);
-
-        this.setOnClickListener(this::onClick);
     }
 
     public void setGearSet(GearSet gearSet) {
         this.gearSet = gearSet;
     }
 
-    @Override
-    public void onClick(View view) {
-        AppDatabase db = AppDatabase.getDatabase(getContext());
-        DeleteGearSetAsyncTask task = new DeleteGearSetAsyncTask(db, gearSet);
-        task.execute();
-    }
-
-    /*
-     * 非同期でTRAN_GEAR_SETのレコードを削除する
-     */
-    private class DeleteGearSetAsyncTask extends AsyncTask<Void, Void, Integer> {
-        private AppDatabase db;
-        private GearSet gearSet;
-
-        public DeleteGearSetAsyncTask(AppDatabase db, GearSet gearSet) {
-            this.db = db;
-            this.gearSet = gearSet;
-        }
-
-        @Override
-        protected Integer doInBackground(Void... params) {
-            //実際にDBにアクセスしレコードを削除
-            GearSetDao gearSetDao = db.gearSetDao();
-            gearSetDao.DeleteGearSet(gearSet);
-
-            return 0;
-        }
+    public GearSet getGearSet() {
+        return gearSet;
     }
 }

@@ -16,14 +16,18 @@ import android.widget.Spinner;
 
 import com.example.ikastyle.Common.Const.NumberPlace;
 import com.example.ikastyle.Common.Util;
+import com.example.ikastyle.Dao.GearSetDao;
 import com.example.ikastyle.Dao.MainCategoryDao;
 import com.example.ikastyle.Dao.WeaponMainDao;
 import com.example.ikastyle.Database.AppDatabase;
 import com.example.ikastyle.DatabaseView.WeaponMain;
+import com.example.ikastyle.Entity.GearSet;
 import com.example.ikastyle.Entity.MainCategory;
 import com.example.ikastyle.UI.CategorySpinnerSelectedListener;
 import com.example.ikastyle.UI.KeyValueArrayAdapter;
 import com.example.ikastyle.UI.CustomizationSpinnerSelectedListener;
+import com.example.ikastyle.UI.LoadoutDeleteButton;
+import com.example.ikastyle.UI.LoadoutRecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +44,8 @@ public class StoreFragment extends Fragment {
     private Spinner categorySpinner;
     private Spinner customizationSpinner;
     private RecyclerView recyclerView;
+
+    private View.OnClickListener onClickDeleteListener;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -79,6 +85,16 @@ public class StoreFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        onClickDeleteListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AppDatabase db = AppDatabase.getDatabase(getContext());
+                GearSet gearSet = ((LoadoutDeleteButton)view).getGearSet();
+                DeleteGearSetAsyncTask task = new DeleteGearSetAsyncTask(db, gearSet);
+                task.execute();
+            }
+        };
     }
 
     @Override
@@ -178,11 +194,46 @@ public class StoreFragment extends Fragment {
 
             //リスナーを作成
             CategorySpinnerSelectedListener categoryListener = new CategorySpinnerSelectedListener(context , customizationSpinner, mainWeaponKeyValueList);
-            CustomizationSpinnerSelectedListener customizationListener = new CustomizationSpinnerSelectedListener(recyclerView);
+            CustomizationSpinnerSelectedListener customizationListener = new CustomizationSpinnerSelectedListener(recyclerView, onClickDeleteListener);
 
             //リスナーを設定
             categorySpinner.setOnItemSelectedListener(categoryListener);
             customizationSpinner.setOnItemSelectedListener(customizationListener);
+        }
+    }
+
+    /*
+     * 非同期でTRAN_GEAR_SETのレコードを削除する
+     */
+    private class DeleteGearSetAsyncTask extends AsyncTask<Void, Void, Integer> {
+        private AppDatabase db;
+        private GearSet gearSet;
+
+        private  List<GearSet> newGearSet;
+
+        public DeleteGearSetAsyncTask(AppDatabase db, GearSet gearSet) {
+            this.db = db;
+            this.gearSet = gearSet;
+        }
+
+        @Override
+        protected Integer doInBackground(Void... params) {
+            //実際にDBにアクセスしレコードを削除
+            GearSetDao gearSetDao = db.gearSetDao();
+            gearSetDao.DeleteGearSet(gearSet);
+
+            // 削除後のギアセットリストを取得し直す
+            int selectedWeaponId = ((Pair<Integer, String>)customizationSpinner.getSelectedItem()).first;
+            newGearSet = gearSetDao.getGearSetList(Util.getCategoryId(selectedWeaponId), Util.getMainId(selectedWeaponId), Util.getCustomizationId(selectedWeaponId));
+
+            return 0;
+        }
+
+        @Override
+        protected void onPostExecute(Integer integer) {
+            // 選択ギアセット削除後のギアセットリストをrecycleViewにセットし直す
+            LoadoutRecyclerViewAdapter newAdapter = new LoadoutRecyclerViewAdapter(newGearSet, onClickDeleteListener);
+            recyclerView.setAdapter(newAdapter);
         }
     }
 }
