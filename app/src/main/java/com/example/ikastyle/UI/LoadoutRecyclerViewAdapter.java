@@ -19,6 +19,7 @@ import java.util.List;
 
 public class LoadoutRecyclerViewAdapter extends RecyclerView.Adapter<LoadoutRecyclerViewAdapter.ViewHolder> {
     private final List<GearSet> gearSetList;
+    private final View.OnClickListener onClickDeleteListener;
 
     static class ViewHolder extends RecyclerView.ViewHolder{
         private TextView loadoutNameView;
@@ -39,7 +40,7 @@ public class LoadoutRecyclerViewAdapter extends RecyclerView.Adapter<LoadoutRecy
         private ImageView shoesSub3View;
         private FloatingActionButton analyseView;
         private FloatingActionButton editView;
-        private FloatingActionButton deleteView;
+        private LoadoutDeleteButton deleteView;
 
         public ViewHolder(View view){
             super(view);
@@ -65,8 +66,9 @@ public class LoadoutRecyclerViewAdapter extends RecyclerView.Adapter<LoadoutRecy
         }
     }
 
-    public LoadoutRecyclerViewAdapter(List<GearSet> gearSetList){
+    public LoadoutRecyclerViewAdapter(List<GearSet> gearSetList, View.OnClickListener onClickDeleteListener){
         this.gearSetList = gearSetList;
+        this.onClickDeleteListener = onClickDeleteListener;
     }
 
     @Override
@@ -98,6 +100,8 @@ public class LoadoutRecyclerViewAdapter extends RecyclerView.Adapter<LoadoutRecy
         holder.shoesSub1View.setImageResource(Util.getGearPowerResourceId(gearSet.shoesSub1));
         holder.shoesSub2View.setImageResource(Util.getGearPowerResourceId(gearSet.shoesSub2));
         holder.shoesSub3View.setImageResource(Util.getGearPowerResourceId(gearSet.shoesSub3));
+        holder.deleteView.setGearSet(gearSet);
+        holder.deleteView.setOnClickListener(onClickDeleteListener);
     }
 
     @Override

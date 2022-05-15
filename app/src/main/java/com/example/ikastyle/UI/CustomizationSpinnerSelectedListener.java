@@ -23,9 +23,11 @@ import java.util.stream.Collectors;
 
 public class CustomizationSpinnerSelectedListener implements AdapterView.OnItemSelectedListener {
     private RecyclerView recyclerView;
+    private View.OnClickListener onClickDeleteListener;
 
-    public CustomizationSpinnerSelectedListener(RecyclerView recyclerView){
+    public CustomizationSpinnerSelectedListener(RecyclerView recyclerView, View.OnClickListener onClickDeleteListener){
         this.recyclerView = recyclerView;
+        this.onClickDeleteListener = onClickDeleteListener;
     }
 
     @Override
@@ -69,7 +71,7 @@ public class CustomizationSpinnerSelectedListener implements AdapterView.OnItemS
 
         @Override
         protected void onPostExecute(Integer code){
-            LoadoutRecyclerViewAdapter adapter = new LoadoutRecyclerViewAdapter(gearSetList);
+            LoadoutRecyclerViewAdapter adapter = new LoadoutRecyclerViewAdapter(gearSetList, onClickDeleteListener);
             recyclerView.setAdapter(adapter);
         }
     }
