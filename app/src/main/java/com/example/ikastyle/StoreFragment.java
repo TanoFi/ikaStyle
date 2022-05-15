@@ -1,6 +1,8 @@
 package com.example.ikastyle;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -86,13 +88,32 @@ public class StoreFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+        // deleteボタンを押したときの処理
         onClickDeleteListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AppDatabase db = AppDatabase.getDatabase(getContext());
-                GearSet gearSet = ((LoadoutDeleteButton)view).getGearSet();
-                DeleteGearSetAsyncTask task = new DeleteGearSetAsyncTask(db, gearSet);
-                task.execute();
+                // 確認ダイアログを表示
+                new AlertDialog.Builder(view.getContext())
+                        .setTitle(getString(R.string.dialogMessage_confirm))
+                        .setPositiveButton( // Yesを選んだ時
+                                getString(R.string.buttonNavigation_yes),
+                                new DialogInterface.OnClickListener() {
+                                    // データ削除
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        AppDatabase db = AppDatabase.getDatabase(getContext());
+                                        GearSet gearSet = ((LoadoutDeleteButton)view).getGearSet();
+                                        DeleteGearSetAsyncTask task = new DeleteGearSetAsyncTask(db, gearSet);
+                                        task.execute();
+                                    }
+                                }
+                        )
+                        .setNegativeButton( // Noを選んだ時
+                                getString(R.string.buttonNavigation_no),
+                                // 何もしない
+                                null
+                        )
+                        .show();
             }
         };
     }
