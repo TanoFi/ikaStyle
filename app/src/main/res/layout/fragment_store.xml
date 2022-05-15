@@ -80,6 +80,7 @@
             android:id="@+id/textView.noLoadout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:text="@string/textView_noLoadoutMessage"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
