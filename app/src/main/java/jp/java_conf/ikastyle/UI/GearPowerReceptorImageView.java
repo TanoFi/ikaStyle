@@ -8,13 +8,13 @@ import android.view.View;
 
 import androidx.appcompat.widget.AppCompatImageView;
 
-import jp.java_conf.ikastyle.Common.Const.GearKind;
+import jp.java_conf.ikastyle.Common.Const.GearPowerPositionKind;
 import jp.java_conf.ikastyle.Common.Util;
 import jp.java_conf.ikastyle.R;
 
 public class GearPowerReceptorImageView extends AppCompatImageView implements View.OnDragListener {
     private int gearPowerKind = 0;
-    private GearKind receptorKind;
+    private GearPowerPositionKind receptorKind;
 
     public GearPowerReceptorImageView(Context context){
         super(context);
@@ -25,7 +25,7 @@ public class GearPowerReceptorImageView extends AppCompatImageView implements Vi
 
         // カスタム属性receptorKindの値を取得しフィールド変数gearPowerKindに入れる
         TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.GearPowerReceptorImageView, 0, 0);
-        receptorKind = GearKind.getGearKind(typedArray.getInt(R.styleable.GearPowerReceptorImageView_receptorKind, 0));
+        receptorKind = GearPowerPositionKind.getGearPowerPositionKind(typedArray.getInt(R.styleable.GearPowerReceptorImageView_receptorKind, 0));
 
         // onDragリスナーをセット
         this.setOnDragListener(this);
