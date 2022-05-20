@@ -7,7 +7,6 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
 
-import jp.java_conf.ikastyle.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {

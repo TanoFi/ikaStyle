@@ -26,8 +26,6 @@ import jp.java_conf.ikastyle.DatabaseView.CustomizationMain;
 import jp.java_conf.ikastyle.Entity.Loadout;
 import jp.java_conf.ikastyle.Entity.MainCategory;
 
-import jp.java_conf.ikastyle.R;
-
 import jp.java_conf.ikastyle.UI.CategorySpinnerSelectedListener;
 import jp.java_conf.ikastyle.UI.KeyValueArrayAdapter;
 import jp.java_conf.ikastyle.UI.GearDialogFragment;

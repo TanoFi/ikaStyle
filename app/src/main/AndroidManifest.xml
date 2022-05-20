@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IkaStyle">
         <activity
-            android:name="jp.gr.java_conf.ikastyle.MainActivity"
+            android:name="jp.java_conf.ikastyle.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
