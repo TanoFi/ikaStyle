@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:layout_row="1"
     android:layout_column="7"
-    tools:context=".NewFragment">
+    tools:context="jp.java_conf.ikastyle.NewFragment">
 
     <Spinner
         android:id="@+id/spinner.category"
@@ -99,7 +99,7 @@
             android:layout_marginTop="120dp"
             android:background="@drawable/background_stripe_shoes">
 
-            <com.example.ikastyle.UI.GearPowerReceptorImageView
+            <jp.java_conf.ikastyle.UI.GearPowerReceptorImageView
                 android:id="@+id/receptorImageView.shoes_sub3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -110,7 +110,7 @@
                 app:layout_row="0"
                 app:receptorKind="0" />
 
-            <com.example.ikastyle.UI.GearPowerReceptorImageView
+            <jp.java_conf.ikastyle.UI.GearPowerReceptorImageView
                 android:id="@+id/receptorImageView.shoes_sub2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -121,7 +121,7 @@
                 app:layout_row="0"
                 app:receptorKind="0" />
 
-            <com.example.ikastyle.UI.GearPowerReceptorImageView
+            <jp.java_conf.ikastyle.UI.GearPowerReceptorImageView
                 android:id="@+id/receptorImageView.shoes_sub1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -132,7 +132,7 @@
                 app:layout_row="0"
                 app:receptorKind="0" />
 
-            <com.example.ikastyle.UI.GearPowerReceptorImageView
+            <jp.java_conf.ikastyle.UI.GearPowerReceptorImageView
                 android:id="@+id/receptorImageView.shoes_main"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -142,7 +142,7 @@
                 app:layout_row="0"
                 app:receptorKind="3" />
 
-            <com.example.ikastyle.UI.GearImageView
+            <jp.java_conf.ikastyle.UI.GearImageView
                 android:id="@+id/gearImageView.shoes"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -161,7 +161,7 @@
             android:layout_marginTop="60dp"
             android:background="@drawable/background_stripe_clothing">
 
-            <com.example.ikastyle.UI.GearPowerReceptorImageView
+            <jp.java_conf.ikastyle.UI.GearPowerReceptorImageView
                 android:id="@+id/receptorImageView.clothing_sub3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -172,7 +172,7 @@
                 app:layout_row="0"
                 app:receptorKind="0" />
 
-            <com.example.ikastyle.UI.GearPowerReceptorImageView
+            <jp.java_conf.ikastyle.UI.GearPowerReceptorImageView
                 android:id="@+id/receptorImageView.clothing_sub2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -183,7 +183,7 @@
                 app:layout_row="0"
                 app:receptorKind="0" />
 
-            <com.example.ikastyle.UI.GearPowerReceptorImageView
+            <jp.java_conf.ikastyle.UI.GearPowerReceptorImageView
                 android:id="@+id/receptorImageView.clothing_sub1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -195,7 +195,7 @@
                 app:layout_row="0"
                 app:receptorKind="0" />
 
-            <com.example.ikastyle.UI.GearPowerReceptorImageView
+            <jp.java_conf.ikastyle.UI.GearPowerReceptorImageView
                 android:id="@+id/receptorImageView.clothing_main"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -205,7 +205,7 @@
                 app:layout_row="0"
                 app:receptorKind="2" />
 
-            <com.example.ikastyle.UI.GearImageView
+            <jp.java_conf.ikastyle.UI.GearImageView
                 android:id="@+id/gearImageView.clothing"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -224,7 +224,7 @@
             android:layout_height="60dp"
             android:background="@drawable/background_stripe_head">
 
-            <com.example.ikastyle.UI.GearPowerReceptorImageView
+            <jp.java_conf.ikastyle.UI.GearPowerReceptorImageView
                 android:id="@+id/receptorImageView.head_sub3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -235,7 +235,7 @@
                 app:layout_row="0"
                 app:receptorKind="0" />
 
-            <com.example.ikastyle.UI.GearPowerReceptorImageView
+            <jp.java_conf.ikastyle.UI.GearPowerReceptorImageView
                 android:id="@+id/receptorImageView.head_sub2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -246,7 +246,7 @@
                 app:layout_row="0"
                 app:receptorKind="0" />
 
-            <com.example.ikastyle.UI.GearPowerReceptorImageView
+            <jp.java_conf.ikastyle.UI.GearPowerReceptorImageView
                 android:id="@+id/receptorImageView.head_sub1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -257,7 +257,7 @@
                 app:layout_row="0"
                 app:receptorKind="0" />
 
-            <com.example.ikastyle.UI.GearPowerReceptorImageView
+            <jp.java_conf.ikastyle.UI.GearPowerReceptorImageView
                 android:id="@+id/receptorImageView.head_main"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -267,7 +267,7 @@
                 app:layout_row="0"
                 app:receptorKind="1" />
 
-            <com.example.ikastyle.UI.GearImageView
+            <jp.java_conf.ikastyle.UI.GearImageView
                 android:id="@+id/gearImageView.head"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -293,7 +293,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView.loadout"
         app:rowCount="3">
 
-        <com.example.ikastyle.UI.GearPowerImageView
+        <jp.java_conf.ikastyle.UI.GearPowerImageView
             android:id="@+id/imageView.notSet"
             android:layout_width="0dp"
             android:layout_height="40dp"
@@ -304,7 +304,7 @@
             app:layout_columnWeight="1"
             app:layout_row="2" />
 
-        <com.example.ikastyle.UI.GearPowerImageView
+        <jp.java_conf.ikastyle.UI.GearPowerImageView
             android:id="@+id/imageView.dropRoller"
             android:layout_width="0dp"
             android:layout_height="@dimen/gear_size"
@@ -315,7 +315,7 @@
             app:layout_columnWeight="1"
             app:layout_row="2" />
 
-        <com.example.ikastyle.UI.GearPowerImageView
+        <jp.java_conf.ikastyle.UI.GearPowerImageView
             android:id="@+id/imageView.objectShredder"
             android:layout_width="0dp"
             android:layout_height="@dimen/gear_size"
@@ -326,7 +326,7 @@
             app:layout_columnWeight="1"
             app:layout_row="2" />
 
-        <com.example.ikastyle.UI.GearPowerImageView
+        <jp.java_conf.ikastyle.UI.GearPowerImageView
             android:id="@+id/imageView.stealthJump"
             android:layout_width="0dp"
             android:layout_height="@dimen/gear_size"
@@ -337,7 +337,7 @@
             app:layout_columnWeight="1"
             app:layout_row="2" />
 
-        <com.example.ikastyle.UI.GearPowerImageView
+        <jp.java_conf.ikastyle.UI.GearPowerImageView
             android:id="@+id/imageView.abilityDoubler"
             android:layout_width="0dp"
             android:layout_height="@dimen/gear_size"
@@ -348,7 +348,7 @@
             app:layout_columnWeight="1"
             app:layout_row="2" />
 
-        <com.example.ikastyle.UI.GearPowerImageView
+        <jp.java_conf.ikastyle.UI.GearPowerImageView
             android:id="@+id/imageView.thermalInk"
             android:layout_width="0dp"
             android:layout_height="@dimen/gear_size"
@@ -359,7 +359,7 @@
             app:layout_columnWeight="1"
             app:layout_row="2" />
 
-        <com.example.ikastyle.UI.GearPowerImageView
+        <jp.java_conf.ikastyle.UI.GearPowerImageView
             android:id="@+id/imageView.respawnPunisher"
             android:layout_width="0dp"
             android:layout_height="@dimen/gear_size"
@@ -370,7 +370,7 @@
             app:layout_columnWeight="1"
             app:layout_row="2" />
 
-        <com.example.ikastyle.UI.GearPowerImageView
+        <jp.java_conf.ikastyle.UI.GearPowerImageView
             android:id="@+id/imageView.haunt"
             android:layout_width="0dp"
             android:layout_height="@dimen/gear_size"
@@ -381,7 +381,7 @@
             app:layout_columnWeight="1"
             app:layout_row="2" />
 
-        <com.example.ikastyle.UI.GearPowerImageView
+        <jp.java_conf.ikastyle.UI.GearPowerImageView
             android:id="@+id/imageView.ninjaSquid"
             android:layout_width="0dp"
             android:layout_height="@dimen/gear_size"
@@ -392,7 +392,7 @@
             app:layout_columnWeight="1"
             app:layout_row="2" />
 
-        <com.example.ikastyle.UI.GearPowerImageView
+        <jp.java_conf.ikastyle.UI.GearPowerImageView
             android:id="@+id/imageView.comeback"
             android:layout_width="0dp"
             android:layout_height="@dimen/gear_size"
@@ -403,7 +403,7 @@
             app:layout_columnWeight="1"
             app:layout_row="1" />
 
-        <com.example.ikastyle.UI.GearPowerImageView
+        <jp.java_conf.ikastyle.UI.GearPowerImageView
             android:id="@+id/imageView.tenacity"
             android:layout_width="0dp"
             android:layout_height="@dimen/gear_size"
@@ -414,7 +414,7 @@
             app:layout_columnWeight="1"
             app:layout_row="1" />
 
-        <com.example.ikastyle.UI.GearPowerImageView
+        <jp.java_conf.ikastyle.UI.GearPowerImageView
             android:id="@+id/imageView.lastDitchEffort"
             android:layout_width="0dp"
             android:layout_height="@dimen/gear_size"
@@ -425,7 +425,7 @@
             app:layout_columnWeight="1"
             app:layout_row="1" />
 
-        <com.example.ikastyle.UI.GearPowerImageView
+        <jp.java_conf.ikastyle.UI.GearPowerImageView
             android:id="@+id/imageView.openingGambit"
             android:layout_width="0dp"
             android:layout_height="@dimen/gear_size"
@@ -436,7 +436,7 @@
             app:layout_columnWeight="1"
             app:layout_row="1" />
 
-        <com.example.ikastyle.UI.GearPowerImageView
+        <jp.java_conf.ikastyle.UI.GearPowerImageView
             android:id="@+id/imageView.mainPowerUp"
             android:layout_width="0dp"
             android:layout_height="@dimen/gear_size"
@@ -447,7 +447,7 @@
             app:layout_columnWeight="1"
             app:layout_row="1" />
 
-        <com.example.ikastyle.UI.GearPowerImageView
+        <jp.java_conf.ikastyle.UI.GearPowerImageView
             android:id="@+id/imageView.bombDefenceUpDx"
             android:layout_width="0dp"
             android:layout_height="@dimen/gear_size"
@@ -458,7 +458,7 @@
             app:layout_columnWeight="1"
             app:layout_row="1" />
 
-        <com.example.ikastyle.UI.GearPowerImageView
+        <jp.java_conf.ikastyle.UI.GearPowerImageView
             android:id="@+id/imageView.inkResistanceUp"
             android:layout_width="0dp"
             android:layout_height="@dimen/gear_size"
@@ -469,7 +469,7 @@
             app:layout_columnWeight="1"
             app:layout_row="1" />
 
-        <com.example.ikastyle.UI.GearPowerImageView
+        <jp.java_conf.ikastyle.UI.GearPowerImageView
             android:id="@+id/imageView.subPowerUp"
             android:layout_width="0dp"
             android:layout_height="@dimen/gear_size"
@@ -480,7 +480,7 @@
             app:layout_columnWeight="1"
             app:layout_row="1" />
 
-        <com.example.ikastyle.UI.GearPowerImageView
+        <jp.java_conf.ikastyle.UI.GearPowerImageView
             android:id="@+id/imageView.quickSuperJump"
             android:layout_width="0dp"
             android:layout_height="@dimen/gear_size"
@@ -491,7 +491,7 @@
             app:layout_columnWeight="1"
             app:layout_row="1" />
 
-        <com.example.ikastyle.UI.GearPowerImageView
+        <jp.java_conf.ikastyle.UI.GearPowerImageView
             android:id="@+id/imageView.quickRespawn"
             android:layout_width="0dp"
             android:layout_height="@dimen/gear_size"
@@ -502,7 +502,7 @@
             app:layout_columnWeight="1"
             app:layout_row="0" />
 
-        <com.example.ikastyle.UI.GearPowerImageView
+        <jp.java_conf.ikastyle.UI.GearPowerImageView
             android:id="@+id/imageView.specialPowerUp"
             android:layout_width="0dp"
             android:layout_height="@dimen/gear_size"
@@ -513,7 +513,7 @@
             app:layout_columnWeight="1"
             app:layout_row="0" />
 
-        <com.example.ikastyle.UI.GearPowerImageView
+        <jp.java_conf.ikastyle.UI.GearPowerImageView
             android:id="@+id/imageView.specialSaver"
             android:layout_width="0dp"
             android:layout_height="@dimen/gear_size"
@@ -524,7 +524,7 @@
             app:layout_columnWeight="1"
             app:layout_row="0" />
 
-        <com.example.ikastyle.UI.GearPowerImageView
+        <jp.java_conf.ikastyle.UI.GearPowerImageView
             android:id="@+id/imageView.specialChargeUp"
             android:layout_width="0dp"
             android:layout_height="@dimen/gear_size"
@@ -535,7 +535,7 @@
             app:layout_columnWeight="1"
             app:layout_row="0" />
 
-        <com.example.ikastyle.UI.GearPowerImageView
+        <jp.java_conf.ikastyle.UI.GearPowerImageView
             android:id="@+id/imageView.swimSpeedUp"
             android:layout_width="0dp"
             android:layout_height="@dimen/gear_size"
@@ -546,7 +546,7 @@
             app:layout_columnWeight="1"
             app:layout_row="0" />
 
-        <com.example.ikastyle.UI.GearPowerImageView
+        <jp.java_conf.ikastyle.UI.GearPowerImageView
             android:id="@+id/imageView.runSpeedUp"
             android:layout_width="0dp"
             android:layout_height="@dimen/gear_size"
@@ -557,7 +557,7 @@
             app:layout_columnWeight="1"
             app:layout_row="0" />
 
-        <com.example.ikastyle.UI.GearPowerImageView
+        <jp.java_conf.ikastyle.UI.GearPowerImageView
             android:id="@+id/imageView.inkRecoveryUp"
             android:layout_width="0dp"
             android:layout_height="@dimen/gear_size"
@@ -568,7 +568,7 @@
             app:layout_columnWeight="1"
             app:layout_row="0" />
 
-        <com.example.ikastyle.UI.GearPowerImageView
+        <jp.java_conf.ikastyle.UI.GearPowerImageView
             android:id="@+id/imageView.inkSaverSub"
             android:layout_width="0dp"
             android:layout_height="@dimen/gear_size"
@@ -579,7 +579,7 @@
             app:layout_columnWeight="1"
             app:layout_row="0" />
 
-        <com.example.ikastyle.UI.GearPowerImageView
+        <jp.java_conf.ikastyle.UI.GearPowerImageView
             android:id="@+id/imageView.inkSaverMain"
             android:layout_width="0dp"
             android:layout_height="@dimen/gear_size"
