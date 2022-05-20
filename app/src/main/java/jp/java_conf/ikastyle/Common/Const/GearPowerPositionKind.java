@@ -1,5 +1,7 @@
 package jp.java_conf.ikastyle.Common.Const;
-
+/*
+ * ギアパワーの場所種別(サブ,アタマメイン,フクメイン,クツメイン)のEnum
+ */
 public enum GearPowerPositionKind {
     SUB(0), // サブギアは0
     HEAD(1), // アタマのメインは1
@@ -16,7 +18,7 @@ public enum GearPowerPositionKind {
         return this.id;
     }
 
-    // idを受け取って該当idのGearKindを返す
+    // idを受け取って該当idのGearPowerPositionKindを返す
     public static GearPowerPositionKind getGearPowerPositionKind(int id){
         GearPowerPositionKind[] gearPowerPositionKinds = GearPowerPositionKind.values();
         for (GearPowerPositionKind item: gearPowerPositionKinds) {
