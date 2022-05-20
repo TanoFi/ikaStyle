@@ -38,7 +38,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:src="@drawable/not_set"
+                    android:src="@drawable/gearpower_not_set"
                     app:layout_column="4"
                     app:layout_columnWeight="2"
                     app:layout_row="0" />
@@ -48,7 +48,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:src="@drawable/not_set"
+                    android:src="@drawable/gearpower_not_set"
                     app:layout_column="3"
                     app:layout_columnWeight="2"
                     app:layout_row="0" />
@@ -58,7 +58,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:src="@drawable/not_set"
+                    android:src="@drawable/gearpower_not_set"
                     app:layout_column="2"
                     app:layout_columnWeight="2"
                     app:layout_row="0" />
@@ -67,7 +67,7 @@
                     android:id="@+id/imageView.head_main"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/not_set"
+                    android:src="@drawable/gearpower_not_set"
                     app:layout_column="1"
                     app:layout_columnWeight="3"
                     app:layout_row="0" />
@@ -95,7 +95,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:src="@drawable/not_set"
+                    android:src="@drawable/gearpower_not_set"
                     app:layout_column="4"
                     app:layout_columnWeight="2"
                     app:layout_row="0" />
@@ -105,7 +105,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:src="@drawable/not_set"
+                    android:src="@drawable/gearpower_not_set"
                     app:layout_column="3"
                     app:layout_columnWeight="2"
                     app:layout_row="0" />
@@ -115,7 +115,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:src="@drawable/not_set"
+                    android:src="@drawable/gearpower_not_set"
                     app:layout_column="2"
                     app:layout_columnWeight="2"
                     app:layout_gravity="bottom"
@@ -125,7 +125,7 @@
                     android:id="@+id/imageView.clothing_main"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/not_set"
+                    android:src="@drawable/gearpower_not_set"
                     app:layout_column="1"
                     app:layout_columnWeight="3"
                     app:layout_row="0" />
@@ -153,7 +153,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:src="@drawable/not_set"
+                    android:src="@drawable/gearpower_not_set"
                     app:layout_column="4"
                     app:layout_columnWeight="2"
                     app:layout_row="0" />
@@ -163,7 +163,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:src="@drawable/not_set"
+                    android:src="@drawable/gearpower_not_set"
                     app:layout_column="3"
                     app:layout_columnWeight="2"
                     app:layout_row="0" />
@@ -173,7 +173,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:src="@drawable/not_set"
+                    android:src="@drawable/gearpower_not_set"
                     app:layout_column="2"
                     app:layout_columnWeight="2"
                     app:layout_row="0" />
@@ -182,7 +182,7 @@
                     android:id="@+id/imageView.shoes_main"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/not_set"
+                    android:src="@drawable/gearpower_not_set"
                     app:layout_column="1"
                     app:layout_columnWeight="3"
                     app:layout_row="0" />
