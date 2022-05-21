@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="jp.java_conf.ikastyle">
+    package="com.splatool.ikastyle">
 
     <application
         android:allowBackup="true"
@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IkaStyle">
         <activity
-            android:name="jp.java_conf.ikastyle.MainActivity"
+            android:name="com.splatool.ikastyle.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
