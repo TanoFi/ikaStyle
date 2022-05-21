@@ -5,7 +5,7 @@
     android:id="@+id/constraintLayout_fragmentStore"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="jp.java_conf.ikastyle.StoreFragment">
+    tools:context="com.splatool.ikastyle.StoreFragment">
 
     <Spinner
         android:id="@+id/spinner.category"
