@@ -8,12 +8,8 @@
                 android:bottomLeftRadius="10dp"
                 android:bottomRightRadius="10dp"
                 />
-<!--            <solid-->
-<!--                android:color="@color/background_black"-->
-<!--                />-->
-            <stroke
-                android:width="1dp"
-                android:color="@color/light_black"
+            <solid
+                android:color="@color/gearpower_background"
                 />
         </shape>
     </item>

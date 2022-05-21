@@ -19,11 +19,10 @@
         android:layout_marginStart="4dp"
         android:layout_weight="5"
         android:background="@drawable/abc_spinner_mtrl_am_alpha"
-        android:backgroundTint="@color/black"
+        android:backgroundTint="@color/text_primary"
         android:ellipsize="marquee"
         android:gravity="center_vertical"
         android:singleLine="true"
-        android:textColor="@color/black"
         android:textSize="20sp" />
 
 </LinearLayout>
