@@ -1,87 +1,59 @@
-package com.splatool.ikastyle.UI;
+package com.splatool.ikastyle.ui
 
-import android.os.AsyncTask;
-import android.util.Pair;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Spinner;
+import androidx.recyclerview.widget.RecyclerView
+import com.splatool.ikastyle.database.AppDatabase
+import android.os.AsyncTask
+import com.splatool.ikastyle.entity.Loadout
+import android.widget.Spinner
+import android.widget.AdapterView
+import androidx.constraintlayout.widget.ConstraintLayout
+import android.util.Pair
+import android.view.*
+import com.splatool.ikastyle.common.Util
 
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.splatool.ikastyle.Common.Util;
-import com.splatool.ikastyle.Dao.LoadoutDao;
-import com.splatool.ikastyle.Database.AppDatabase;
-import com.splatool.ikastyle.Entity.Loadout;
-
-import java.util.List;
-
-public class CustomizationSpinnerSelectedListener implements AdapterView.OnItemSelectedListener {
-    private final RecyclerView recyclerView;
-    private final ConstraintLayout emptyView;
-    private final View.OnClickListener onClickDeleteListener;
-
-    public CustomizationSpinnerSelectedListener(RecyclerView recyclerView, ConstraintLayout emptyView, View.OnClickListener onClickDeleteListener){
-        this.recyclerView = recyclerView;
-        this.emptyView = emptyView;
-        this.onClickDeleteListener = onClickDeleteListener;
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        Spinner spinner = (Spinner)adapterView;
+class CustomizationSpinnerSelectedListener(
+    private val recyclerView: RecyclerView,
+    private val emptyView: ConstraintLayout,
+    private val onClickDeleteListener: View.OnClickListener
+) : AdapterView.OnItemSelectedListener {
+    override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, i: Int, l: Long) {
+        val spinner = adapterView as Spinner
         // Spinnerで選択したブキの絶対ID
-        int absoluteId = ((Pair<Integer, String>) spinner.getSelectedItem()).first;
-
-        AppDatabase db = AppDatabase.getDatabase(spinner.getContext());
-        GetLoadoutListAsyncTask task = new GetLoadoutListAsyncTask(db, absoluteId);
-        task.execute();
+        val absoluteId: Int = (spinner.selectedItem as Pair<Int, String>).first
+        val db: AppDatabase = AppDatabase.getDatabase(spinner.context)
+        val task = GetLoadoutListAsyncTask(db, absoluteId)
+        task.execute()
     }
 
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
+    override fun onNothingSelected(adapterView: AdapterView<*>?) {}
 
     /*
      * 選択したブキのギアセットリストをDBから非同期で取得
      */
-    private class GetLoadoutListAsyncTask extends AsyncTask<Void, Void, Integer> {
-        private final AppDatabase db;
-        private final int absoluteId;
-
-        private List<Loadout> loadoutList;
-
-        public GetLoadoutListAsyncTask(AppDatabase db, int absoluteId) {
-            this.db = db;
-            this.absoluteId = absoluteId;
-        }
-
-        @Override
-        protected Integer doInBackground(Void... params) {
+    private inner class GetLoadoutListAsyncTask(
+        private val db: AppDatabase,
+        private val absoluteId: Int
+    ) : AsyncTask<Void?, Void?, Int?>() {
+        private lateinit var loadoutList: List<Loadout>
+        override fun doInBackground(vararg params: Void?): Int {
             //実際にDBにアクセスし結果を取得
-            LoadoutDao loadoutDao = db.loadoutDao();
-            loadoutList = loadoutDao.getLoadoutList(Util.getCategoryId(absoluteId), Util.getMainId(absoluteId), Util.getCustomizationId(absoluteId));
-
-            return 0;
+            val loadoutDao = db.loadoutDao()
+            loadoutList = loadoutDao.getLoadoutList(Util.getCategoryId(absoluteId), Util.getMainId(absoluteId), Util.getCustomizationId(absoluteId))
+            return 0
         }
 
-        @Override
-        protected void onPostExecute(Integer code){
-            LoadoutRecyclerViewAdapter adapter = new LoadoutRecyclerViewAdapter(loadoutList, onClickDeleteListener);
-            recyclerView.setAdapter(adapter);
-
-            setEmptyViewVisibility(loadoutList.size());
+        override fun onPostExecute(code: Int?) {
+            val adapter = LoadoutRecyclerViewAdapter(loadoutList, onClickDeleteListener)
+            recyclerView.adapter = adapter
+            setEmptyViewVisibility(loadoutList.size)
         }
 
         // 表示するギアセットがあればEmptyViewは非表示、なければ表示
-        private void setEmptyViewVisibility(int size){
-            if(size == 0){
-                emptyView.setVisibility(View.VISIBLE);
-            }
-            else {
-                emptyView.setVisibility(View.GONE);
+        private fun setEmptyViewVisibility(listSize : Int) {
+            if (listSize == 0) {
+                emptyView.visibility = View.VISIBLE
+            } else {
+                emptyView.visibility = View.GONE
             }
         }
     }

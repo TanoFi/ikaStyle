@@ -1,25 +1,18 @@
-package com.splatool.ikastyle;
+package com.splatool.ikastyle
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.NavigationUI;
+import androidx.navigation.ui.NavigationUI.setupWithNavController
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.navigation.fragment.NavHostFragment
 
-import android.os.Bundle;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-public class MainActivity extends AppCompatActivity {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        BottomNavigationView bottomNavView = findViewById(R.id.bottom_navi);
-        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.navi_fragment);
-        NavController navController = navHostFragment.getNavController();
-
-        NavigationUI.setupWithNavController(bottomNavView, navController);
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        val bottomNavView = findViewById<BottomNavigationView?>(R.id.bottom_navi)
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.navi_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+        setupWithNavController(bottomNavView, navController)
     }
 }

@@ -1,36 +1,16 @@
-package com.splatool.ikastyle.UI;
+package com.splatool.ikastyle.ui
 
-import android.content.Context;
-import android.util.AttributeSet;
-import android.widget.LinearLayout;
-
-import com.splatool.ikastyle.Common.Const.GearKind;
+import android.content.Context
+import com.splatool.ikastyle.common.const.GearKind
+import android.widget.LinearLayout
+import android.util.AttributeSet
 
 /*
  * GearIdとGearKindを管理できるLinearLayoutクラス
  * ギアリストを表示するダイアログ上で使用
  */
-public class GearListItemLinearLayout extends LinearLayout {
-    private int gearId = 0;
-    private GearKind gearKind;
-
-    public GearListItemLinearLayout(Context context, AttributeSet attrs){
-        super(context,attrs);
-    }
-
-    public int getGearId() {
-        return gearId;
-    }
-
-    public void setGearId(int gearId) {
-        this.gearId = gearId;
-    }
-
-    public GearKind getGearKind(){
-        return gearKind;
-    }
-
-    public void setGearKind(GearKind gearKind) {
-        this.gearKind = gearKind;
-    }
+class GearListItemLinearLayout(context: Context?, attrs: AttributeSet?) :
+    LinearLayout(context, attrs) {
+    var gearId = 0
+    var gearKind: GearKind? = null
 }

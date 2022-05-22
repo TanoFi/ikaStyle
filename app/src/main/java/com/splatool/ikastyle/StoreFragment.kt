@@ -1,239 +1,213 @@
-package com.splatool.ikastyle;
+package com.splatool.ikastyle
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.graphics.PorterDuff;
-import android.os.AsyncTask;
-import android.os.Bundle;
+import android.app.AlertDialog
+import android.content.Context
+import androidx.recyclerview.widget.RecyclerView
+import android.os.Bundle
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.splatool.ikastyle.database.AppDatabase
+import android.os.AsyncTask
+import com.splatool.ikastyle.entity.Loadout
+import com.splatool.ikastyle.ui.LoadoutDeleteButton
+import com.splatool.ikastyle.ui.KeyValueArrayAdapter
+import androidx.constraintlayout.widget.ConstraintLayout
+import com.splatool.ikastyle.ui.LoadoutRecyclerViewAdapter
+import com.splatool.ikastyle.entity.MainCategory
+import com.splatool.ikastyle.entity.CustomizationName
+import com.splatool.ikastyle.ui.CategorySpinnerSelectedListener
+import android.graphics.PorterDuff
+import android.util.Pair
+import android.view.*
+import android.widget.*
+import androidx.fragment.app.Fragment
+import com.splatool.ikastyle.common.Util
+import com.splatool.ikastyle.ui.CustomizationSpinnerSelectedListener
+import java.util.ArrayList
+import java.util.function.Consumer
 
-import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Pair;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.Spinner;
-
-import com.splatool.ikastyle.Common.Util;
-import com.splatool.ikastyle.Dao.LoadoutDao;
-import com.splatool.ikastyle.Dao.MainCategoryDao;
-import com.splatool.ikastyle.Dao.CustomizationNameDao;
-import com.splatool.ikastyle.Database.AppDatabase;
-import com.splatool.ikastyle.Entity.CustomizationName;
-import com.splatool.ikastyle.Entity.Loadout;
-import com.splatool.ikastyle.Entity.MainCategory;
-
-import com.splatool.ikastyle.UI.CategorySpinnerSelectedListener;
-import com.splatool.ikastyle.UI.KeyValueArrayAdapter;
-import com.splatool.ikastyle.UI.CustomizationSpinnerSelectedListener;
-import com.splatool.ikastyle.UI.LoadoutDeleteButton;
-import com.splatool.ikastyle.UI.LoadoutRecyclerViewAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
-
-public class StoreFragment extends Fragment {
-    private Spinner categorySpinner;
-    private Spinner customizationSpinner;
-    private RecyclerView recyclerView;
-    private ConstraintLayout emptyView;
-
-    private final int colorNum = Util.getRandomColor();
-    private View.OnClickListener onClickDeleteListener;
-
-    public StoreFragment() {
-        // Required empty public constructor
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+class StoreFragment : Fragment() {
+    private lateinit var categorySpinner: Spinner
+    private lateinit var customizationSpinner: Spinner
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var emptyView: ConstraintLayout
+    private val colorNum = Util.getRandomColor()
+    private lateinit var onClickDeleteListener: View.OnClickListener
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
         // deleteボタンを押したときの処理
-        onClickDeleteListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // 確認ダイアログを表示
-                new AlertDialog.Builder(view.getContext())
-                        .setTitle(getString(R.string.dialogMessage_confirm))
-                        .setPositiveButton( // Yesを選んだ時
-                                getString(R.string.buttonNavigation_yes),
-                                new DialogInterface.OnClickListener() {
-                                    // データ削除
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        AppDatabase db = AppDatabase.getDatabase(getContext());
-                                        Loadout loadout = ((LoadoutDeleteButton)view).getLoadout();
-                                        DeleteLoadoutAsyncTask task = new DeleteLoadoutAsyncTask(db, loadout);
-                                        task.execute();
-                                    }
-                                }
-                        )
-                        .setNegativeButton( // Noを選んだ時
-                                getString(R.string.buttonNavigation_no),
-                                // 何もしない
-                                null
-                        )
-                        .show();
-            }
-        };
+        onClickDeleteListener = View.OnClickListener { view ->
+            // 確認ダイアログを表示
+            AlertDialog.Builder(view.context)
+                .setTitle(getString(R.string.dialogMessage_confirm))
+                .setPositiveButton( // Yesを選んだ時
+                    getString(R.string.buttonNavigation_yes)
+                ) { dialogInterface, i ->
+
+                    // データ削除
+                    val db: AppDatabase = AppDatabase.getDatabase(requireContext())
+                    val loadout = (view as LoadoutDeleteButton).loadout!!
+                    val task = DeleteLoadoutAsyncTask(db, loadout)
+                    task.execute()
+                }
+                .setNegativeButton( // Noを選んだ時
+                    getString(R.string.buttonNavigation_no),  // 何もしない
+                    null
+                )
+                .show()
+        }
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_store, container, false);
+        return inflater.inflate(R.layout.fragment_store, container, false)
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState){
-        super.onViewCreated(view, savedInstanceState);
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         // スピナーを取得
-        categorySpinner = view.findViewById(R.id.spinner_category);
-        customizationSpinner = view.findViewById(R.id.spinner_weapon);
+        categorySpinner = view.findViewById(R.id.spinner_category)
+        customizationSpinner = view.findViewById(R.id.spinner_weapon)
 
         // RecyclerViewを取得
-        recyclerView = view.findViewById(R.id.recyclerView_loadouts);
-        recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(view.getContext());
-        recyclerView.setLayoutManager(layoutManager);
+        recyclerView = view.findViewById(R.id.recyclerView_loadouts)
+        recyclerView.setHasFixedSize(true)
+        val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(view.context)
+        recyclerView.layoutManager = layoutManager
 
         // ギアセット未登録時に表示するViewを設定
-        emptyView = view.findViewById(R.id.constrainLayout_emptyInfo);
-        ImageView inkMarkImageView = view.findViewById(R.id.imageView_ink_mark);
-        inkMarkImageView.setColorFilter(colorNum, PorterDuff.Mode.SRC_ATOP);
+        emptyView = view.findViewById(R.id.constrainLayout_emptyInfo)
+        val inkMarkImageView = view.findViewById<ImageView?>(R.id.imageView_ink_mark)
+        inkMarkImageView.setColorFilter(colorNum, PorterDuff.Mode.SRC_ATOP)
 
         // Spinnerの項目に設定するためのDBを取得
-        AppDatabase db = AppDatabase.getDatabase(getContext());
+        val db: AppDatabase = AppDatabase.getDatabase(view.context)
         // SpinnerDataGetAsyncTaskクラス内でContextを取得できなかったためにonPostExecute()だけインスタンス作成時に記述
-        GetDataAndSetSpinnerAsyncTask task = new GetDataAndSetSpinnerAsyncTask(db, getContext());
-        task.execute();
+        val task = GetDataAndSetSpinnerAsyncTask(db, view.context)
+        task.execute()
     }
-
-
 
     /*
      * 非同期でDBからデータ取得しスピナーにセットするクラス
      */
-    private class GetDataAndSetSpinnerAsyncTask extends AsyncTask<Void, Void, Integer> {
-        private final AppDatabase db;
-        private final Context context;
-
-        List<MainCategory> categoryList;
-        List<CustomizationName> customizationNameList;
-
-        public GetDataAndSetSpinnerAsyncTask(AppDatabase db, Context context) {
-            this.db = db;
-            this.context = context;
-        }
-
-        @Override
-        protected Integer doInBackground(Void... params) {
+    private inner class GetDataAndSetSpinnerAsyncTask(
+        private val db: AppDatabase,
+        private val context: Context
+    ) : AsyncTask<Void?, Void?, Int?>() {
+        lateinit var categoryList: List<MainCategory>
+        lateinit var customizationNameList: List<CustomizationName>
+        override fun doInBackground(vararg params: Void?): Int {
             //端末の言語設定を取得
-            int languageCode = Util.getLanguageCode();
+            val languageCode = Util.getLanguageCode()
 
             //実際にDBにアクセスし結果を取得
-            MainCategoryDao categoryDao = db.mainCategoryDao();
-            CustomizationNameDao customizationNameDao = db.customizationNameDao();
-            categoryList = categoryDao.getMainCategoryList(languageCode); //ブキカテゴリー名を取得
-            customizationNameList = customizationNameDao.getWeaponNameList(languageCode);
-
-            return 0;
+            val categoryDao = db.mainCategoryDao()
+            val customizationNameDao = db.customizationNameDao()
+            categoryList = categoryDao.getMainCategoryList(languageCode) //ブキカテゴリー名を取得
+            customizationNameList = customizationNameDao.getWeaponNameList(languageCode)
+            return 0
         }
 
-        @Override
-        protected void onPostExecute(Integer code){
+        override fun onPostExecute(code: Int?) {
             // Spinnerに渡す用のリストを作成
-            ArrayList<Pair<Integer, String>> categoryKeyValueList = new ArrayList<>();
-            ArrayList<Pair<Integer, String>> customizationValueList = new ArrayList<>();
+            val categoryKeyValueList = ArrayList<Pair<Int, String>>()
+            val customizationKeyValueList = ArrayList<Pair<Int, String>>()
 
             // それぞれのリストの一番上に未選択時の項目を追加
-            categoryKeyValueList.add(new Pair<>(0, context.getString(R.string.spinnerItem_categoryUnselected)));
-            customizationValueList.add(new Pair<>(0, context.getString(R.string.spinnerItem_weaponUnselected)));
+            categoryKeyValueList.add(
+                Pair(
+                    0,
+                    context.getString(R.string.spinnerItem_categoryUnselected)
+                )
+            )
+            customizationKeyValueList.add(
+                Pair(
+                    0,
+                    context.getString(R.string.spinnerItem_weaponUnselected)
+                )
+            )
 
             //それぞれのリストにデータ(IDと名前のペア)を入れる
-            categoryList.forEach(x -> categoryKeyValueList.add(new Pair<>(x.getAbsoluteId(), x.getName())));
-            customizationNameList.forEach(x -> customizationValueList.add(new Pair<>(x.getAbsoluteId(), x.getName())));
+            categoryList.forEach(Consumer { x: MainCategory ->
+                categoryKeyValueList.add(
+                    Pair(
+                        x.getAbsoluteId(), x.name)
+                )
+            })
+            customizationNameList.forEach(Consumer { x: CustomizationName ->
+                customizationKeyValueList.add(
+                    Pair(x.getAbsoluteId(), x.name)
+                )
+            })
 
             //アダプター作成
-            KeyValueArrayAdapter categoryAdapter = new KeyValueArrayAdapter(context, R.layout.spinner_list_item, categoryKeyValueList);
-            KeyValueArrayAdapter customizationAdapter = new KeyValueArrayAdapter(context, R.layout.spinner_list_item, customizationValueList);
+            val categoryAdapter =
+                KeyValueArrayAdapter(context, R.layout.spinner_list_item, categoryKeyValueList)
+            val customizationAdapter =
+                KeyValueArrayAdapter(context, R.layout.spinner_list_item, customizationKeyValueList)
 
             //レイアウトを付与
-            categoryAdapter.setDropDownViewResource(R.layout.spinner_list_dropdown_item);
-            customizationAdapter.setDropDownViewResource(R.layout.spinner_list_dropdown_item);
+            categoryAdapter.setDropDownViewResource(R.layout.spinner_list_dropdown_item)
+            customizationAdapter.setDropDownViewResource(R.layout.spinner_list_dropdown_item)
 
             //スピナーにアダプターを設定
-            categorySpinner.setAdapter(categoryAdapter);
-            customizationSpinner.setAdapter(customizationAdapter);
+            categorySpinner.adapter = categoryAdapter
+            customizationSpinner.adapter = customizationAdapter
 
             //リスナーを作成
-            CategorySpinnerSelectedListener categoryListener = new CategorySpinnerSelectedListener(context , customizationSpinner, customizationValueList);
-            CustomizationSpinnerSelectedListener customizationListener = new CustomizationSpinnerSelectedListener(recyclerView, emptyView,onClickDeleteListener);
+            val categoryListener = CategorySpinnerSelectedListener(
+                context, customizationSpinner, customizationKeyValueList
+            )
+            val customizationListener =
+                CustomizationSpinnerSelectedListener(recyclerView, emptyView, onClickDeleteListener)
 
             //リスナーを設定
-            categorySpinner.setOnItemSelectedListener(categoryListener);
-            customizationSpinner.setOnItemSelectedListener(customizationListener);
+            categorySpinner.onItemSelectedListener = categoryListener
+            customizationSpinner.onItemSelectedListener = customizationListener
         }
     }
 
     /*
      * 非同期でTRAN_GEAR_SETのレコードを削除する
      */
-    private class DeleteLoadoutAsyncTask extends AsyncTask<Void, Void, Integer> {
-        private final AppDatabase db;
-        private final Loadout loadout;
-
-        private  List<Loadout> newLoadout;
-
-        public DeleteLoadoutAsyncTask(AppDatabase db, Loadout loadout) {
-            this.db = db;
-            this.loadout = loadout;
-        }
-
-        @Override
-        @SuppressWarnings("unchecked")
-        protected Integer doInBackground(Void... params) {
+    private inner class DeleteLoadoutAsyncTask(
+        private val db: AppDatabase,
+        private val loadout: Loadout
+    ) : AsyncTask<Void?, Void?, Int?>() {
+        private lateinit var newLoadout: List<Loadout>
+        override fun doInBackground(vararg params: Void?): Int {
             //実際にDBにアクセスしレコードを削除
-            LoadoutDao loadoutDao = db.loadoutDao();
-            loadoutDao.DeleteLoadout(loadout);
+            val loadoutDao = db.loadoutDao()
+            loadoutDao.deleteLoadout(loadout)
 
             // 削除後のギアセットリストを取得し直す
-            int selectedWeaponId = ((Pair<Integer, String>)customizationSpinner.getSelectedItem()).first;
-            newLoadout = loadoutDao.getLoadoutList(Util.getCategoryId(selectedWeaponId), Util.getMainId(selectedWeaponId), Util.getCustomizationId(selectedWeaponId));
-
-            return 0;
+            val selectedWeaponId: Int =
+                (customizationSpinner.selectedItem as Pair<Int, String>).first
+            newLoadout = loadoutDao.getLoadoutList(
+                Util.getCategoryId(selectedWeaponId),
+                Util.getMainId(selectedWeaponId),
+                Util.getCustomizationId(selectedWeaponId)
+            )
+            return 0
         }
 
-        @Override
-        protected void onPostExecute(Integer integer) {
+        override fun onPostExecute(integer: Int?) {
             // 選択ギアセット削除後のギアセットリストをrecycleViewにセットし直す
-            LoadoutRecyclerViewAdapter newAdapter = new LoadoutRecyclerViewAdapter(newLoadout, onClickDeleteListener);
-            recyclerView.setAdapter(newAdapter);
-
-            setEmptyViewVisibility(newLoadout.size());
+            val newAdapter = LoadoutRecyclerViewAdapter(newLoadout, onClickDeleteListener)
+            recyclerView.adapter = newAdapter
+            setEmptyViewVisibility(newLoadout.size)
         }
 
         // 表示するギアセットがあればEmptyViewは非表示、なければ表示
-        private void setEmptyViewVisibility(int size){
-            if(size == 0){
-                emptyView.setVisibility(View.VISIBLE);
-            }
-            else {
-                emptyView.setVisibility(View.GONE);
+        private fun setEmptyViewVisibility(listSize: Int) {
+            if (listSize == 0) {
+                emptyView.visibility = View.VISIBLE
+            } else {
+                emptyView.visibility = View.GONE
             }
         }
     }

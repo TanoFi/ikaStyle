@@ -1,9 +1,9 @@
-package com.splatool.ikastyle.Common.Const;
+package com.splatool.ikastyle.common.const
 
-public class DatabaseName {
+object DatabaseName {
     //DB名
-    public static final String DATABASE_NAME = "ikaStyle.db";
+    const val DATABASE_NAME: String = "ikaStyle.db"
 
     //DBファイル名
-    public static final String DATABASE_FILE_NAME = "database/ikaStyle.db";
+    const val DATABASE_FILE_NAME: String = "database/ikaStyle.db"
 }

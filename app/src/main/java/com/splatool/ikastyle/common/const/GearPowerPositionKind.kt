@@ -1,31 +1,29 @@
-package com.splatool.ikastyle.Common.Const;
+package com.splatool.ikastyle.common.const
+
 /*
  * ギアパワーの場所種別(サブ,アタマメイン,フクメイン,クツメイン)のEnum
  */
-public enum GearPowerPositionKind {
-    SUB(0), // サブギアは0
-    HEAD(1), // アタマのメインは1
-    CLOTHING(2), // フクのメインは2
-    SHOES(3); // クツのメインは3
+enum class GearPowerPositionKind(  // クツのメインは3
+    private val id: Int
+) {
+    SUB(0),  // サブギアは0
+    HEAD(1),  // アタマのメインは1
+    CLOTHING(2),  // フクのメインは2
+    SHOES(3);
 
-    private final int id;
-
-    GearPowerPositionKind(int id){
-        this.id = id;
+    fun getId(): Int {
+        return id
     }
 
-    public int getId(){
-        return this.id;
-    }
-
-    // idを受け取って該当idのGearPowerPositionKindを返す
-    public static GearPowerPositionKind getGearPowerPositionKind(int id){
-        GearPowerPositionKind[] gearPowerPositionKinds = GearPowerPositionKind.values();
-        for (GearPowerPositionKind item: gearPowerPositionKinds) {
-            if(item.getId() == id){
-                return item;
+    companion object {
+        // idを受け取って該当idのGearPowerPositionKindを返す
+        fun getGearPowerPositionKind(id: Int): GearPowerPositionKind? {
+            for(item: GearPowerPositionKind in values()){
+                if (item.getId() == id) {
+                    return item
+                }
             }
+            return null
         }
-        return null;
     }
 }

@@ -1,56 +1,35 @@
-package com.splatool.ikastyle.DatabaseView;
+package com.splatool.ikastyle.databaseView
 
-import androidx.room.ColumnInfo;
-import androidx.room.DatabaseView;
-
-import com.splatool.ikastyle.Common.Const.NumberPlace;
+import com.splatool.ikastyle.common.const.NumberPlace
+import androidx.room.ColumnInfo
+import androidx.room.DatabaseView
 
 /*
  * MAST_MAIN_NAMEとMAST_CUSTOMIZATION_NAMEの結合テーブルを取得するView
  */
 @DatabaseView(
-        viewName = "CUSTOMIZATION_MAIN_NAME",
-        value = "SELECT \n" +
-                "WN.category_id,\n" +
-                "WN.main_id,\n" +
-                "WN.id as weapon_id,\n" +
-                "WN.language_code, \n" +
-                "MN.name as main_name,\n" +
-                "WN.name as weapon_name\n" +
-                "FROM MAST_MAIN_NAME MN\n" +
-                "INNER JOIN MAST_CUSTOMIZATION_NAME WN\n" +
-                "ON WN.category_id = MN.category_id\n" +
-                "AND WN.main_id = MN.id \n" +
-                "AND WN.language_code = MN.language_code"
+    viewName = "CUSTOMIZATION_MAIN_NAME", value = """SELECT 
+WN.category_id,
+WN.main_id,
+WN.id as weapon_id,
+WN.language_code, 
+MN.name as main_name,
+WN.name as weapon_name
+FROM MAST_MAIN_NAME MN
+INNER JOIN MAST_CUSTOMIZATION_NAME WN
+ON WN.category_id = MN.category_id
+AND WN.main_id = MN.id 
+AND WN.language_code = MN.language_code"""
 )
-public class CustomizationMain {
-    @ColumnInfo(name = "category_id")
-    public int categoryId;
-
-    @ColumnInfo(name = "main_id")
-    public int mainId;
-
-    @ColumnInfo(name = "weapon_id")
-    public int weaponId;
-
-    @ColumnInfo(name = "language_code")
-    public int languageCode;
-
-    @ColumnInfo(name = "main_name")
-    public String mainName;
-
-    @ColumnInfo(name = "weapon_name")
-    public String weaponName;
-
-    public String getMainName(){
-        return "【" + mainName + "】";
-    }
-
-    public int getAbsoluteId(){
-        return  categoryId * NumberPlace.CATEGORY_PLACE + mainId * NumberPlace.MAIN_PLACE + weaponId;
-    }
-
-    public String getWeaponName(){
-        return weaponName;
+data class CustomizationMain (
+    @ColumnInfo(name = "category_id") val categoryId : Int,
+    @ColumnInfo(name = "main_id") val mainId : Int,
+    @ColumnInfo(name = "weapon_id") val weaponId : Int,
+    @ColumnInfo(name = "language_code") val languageCode : Int,
+    @ColumnInfo(name = "main_name") val mainName: String,
+    @ColumnInfo(name = "weapon_name") val weaponName: String
+){
+    fun getAbsoluteId(): Int {
+        return categoryId * NumberPlace.CATEGORY_PLACE + mainId * NumberPlace.MAIN_PLACE + weaponId
     }
 }

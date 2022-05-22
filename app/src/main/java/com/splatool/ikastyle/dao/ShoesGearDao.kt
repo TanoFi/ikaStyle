@@ -1,14 +1,10 @@
-package com.splatool.ikastyle.Dao;
+package com.splatool.ikastyle.dao
 
-import androidx.room.Dao;
-import androidx.room.Query;
-
-import com.splatool.ikastyle.Entity.ShoesGear;
-
-import java.util.List;
+import com.splatool.ikastyle.entity.ShoesGear
+import androidx.room.*
 
 @Dao
-public interface ShoesGearDao {
+interface ShoesGearDao {
     @Query("SELECT * FROM MAST_SHOES_GEAR WHERE language_code = :languageCode ORDER BY name")
-    List<ShoesGear> getShoesGearList(int languageCode);
+    fun getShoesGearList(languageCode: Int): List<ShoesGear>
 }

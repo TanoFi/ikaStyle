@@ -1,102 +1,30 @@
-package com.splatool.ikastyle.Entity;
+package com.splatool.ikastyle.entity
 
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+import androidx.annotation.NonNull
+import androidx.room.*
 
 @Entity(tableName = "TRAN_LOADOUT")
-public class Loadout {
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
-    public int id;
-
-    @ColumnInfo(name = "name")
-    public String name;
-
-    @ColumnInfo(name = "category_id")
-    public int categoryId;
-
-    @ColumnInfo(name = "main_id")
-    public int mainId;
-
-    @ColumnInfo(name = "customization_id")
-    public int customizationId;
-
-    @ColumnInfo(name = "head_gear_id")
-    public int headGearId;
-
-    @ColumnInfo(name = "head_main")
-    public int headMain;
-
-    @ColumnInfo(name = "head_sub1")
-    public int headSub1;
-
-    @ColumnInfo(name = "head_sub2")
-    public int headSub2;
-
-    @ColumnInfo(name = "head_sub3")
-    public int headSub3;
-
-    @ColumnInfo(name = "clothing_gear_id")
-    public int clothingGearId;
-
-    @ColumnInfo(name = "clothing_main")
-    public int clothingMain;
-
-    @ColumnInfo(name = "clothing_sub1")
-    public int clothingSub1;
-
-    @ColumnInfo(name = "clothing_sub2")
-    public int clothingSub2;
-
-    @ColumnInfo(name = "clothing_sub3")
-    public int clothingSub3;
-
-    @ColumnInfo(name = "shoes_gear_id")
-    public int shoesGearId;
-
-    @ColumnInfo(name = "shoes_main")
-    public int shoesMain;
-
-    @ColumnInfo(name = "shoes_sub1")
-    public int shoesSub1;
-
-    @ColumnInfo(name = "shoes_sub2")
-    public int shoesSub2;
-
-    @ColumnInfo(name = "shoes_sub3")
-    public int shoesSub3;
-
-    @ColumnInfo(name = "update_date")
-    public Long updateDate;
-
-    public Loadout(String name,
-                   int categoryId, int mainId, int customizationId,
-                   int headGearId, int headMain, int headSub1, int headSub2, int headSub3,
-                   int clothingGearId, int clothingMain, int clothingSub1, int clothingSub2, int clothingSub3,
-                   int shoesGearId, int shoesMain, int shoesSub1, int shoesSub2, int shoesSub3,
-                   Long updateDate){
-        this.id = 0; // autoGenerateがtrueなので0でInsertすればいいらしい
-        this.name = name;
-        this.categoryId = categoryId;
-        this.mainId = mainId;
-        this.customizationId = customizationId;
-        this.headGearId = headGearId;
-        this.headMain = headMain;
-        this.headSub1 = headSub1;
-        this.headSub2 = headSub2;
-        this.headSub3 = headSub3;
-        this.clothingGearId = clothingGearId;
-        this.clothingMain = clothingMain;
-        this.clothingSub1 = clothingSub1;
-        this.clothingSub2 = clothingSub2;
-        this.clothingSub3 = clothingSub3;
-        this.shoesGearId = shoesGearId;
-        this.shoesMain = shoesMain;
-        this.shoesSub1 = shoesSub1;
-        this.shoesSub2 = shoesSub2;
-        this.shoesSub3 = shoesSub3;
-        this.updateDate = updateDate;
-    }
-
-}
+data class Loadout
+    (
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") val id : Int,
+    @ColumnInfo(name = "name") @NonNull val name: String,
+    @ColumnInfo(name = "category_id") @NonNull val categoryId: Int,
+    @ColumnInfo(name = "main_id") @NonNull val mainId: Int,
+    @ColumnInfo(name = "customization_id") @NonNull val customizationId: Int,
+    @ColumnInfo(name = "head_gear_id") @NonNull var headGearId: Int,
+    @ColumnInfo(name = "head_main") @NonNull var headMain: Int,
+    @ColumnInfo(name = "head_sub1") @NonNull var headSub1: Int,
+    @ColumnInfo(name = "head_sub2") @NonNull var headSub2: Int,
+    @ColumnInfo(name = "head_sub3") @NonNull var headSub3: Int,
+    @ColumnInfo(name = "clothing_gear_id") @NonNull var clothingGearId: Int,
+    @ColumnInfo(name = "clothing_main") @NonNull var clothingMain: Int,
+    @ColumnInfo(name = "clothing_sub1") @NonNull var clothingSub1: Int,
+    @ColumnInfo(name = "clothing_sub2") @NonNull var clothingSub2: Int,
+    @ColumnInfo(name = "clothing_sub3") @NonNull var clothingSub3: Int,
+    @ColumnInfo(name = "shoes_gear_id") @NonNull var shoesGearId: Int,
+    @ColumnInfo(name = "shoes_main") @NonNull var shoesMain: Int,
+    @ColumnInfo(name = "shoes_sub1") @NonNull var shoesSub1: Int,
+    @ColumnInfo(name = "shoes_sub2") @NonNull var shoesSub2: Int,
+    @ColumnInfo(name = "shoes_sub3") @NonNull var shoesSub3: Int,
+    @ColumnInfo(name = "update_date") @NonNull var updateDate: Long
+)

@@ -1,14 +1,10 @@
-package com.splatool.ikastyle.Dao;
+package com.splatool.ikastyle.dao
 
-import androidx.room.Dao;
-import androidx.room.Query;
-
-import com.splatool.ikastyle.Entity.HeadGear;
-
-import java.util.List;
+import com.splatool.ikastyle.entity.HeadGear
+import androidx.room.*
 
 @Dao
-public interface HeadGearDao {
+interface HeadGearDao {
     @Query("SELECT * FROM MAST_HEAD_GEAR WHERE language_code = :languageCode ORDER BY name")
-    List<HeadGear> getHeadGearList(int languageCode);
+    fun getHeadGearList(languageCode: Int): List<HeadGear>
 }

@@ -1,89 +1,64 @@
-package com.splatool.ikastyle.UI;
+package com.splatool.ikastyle.ui
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
+import com.splatool.ikastyle.common.const.GearKind
+import com.splatool.ikastyle.R
+import androidx.recyclerview.widget.RecyclerView
+import com.splatool.ikastyle.entity.HeadGear
+import com.splatool.ikastyle.entity.ClothingGear
+import com.splatool.ikastyle.entity.ShoesGear
+import android.view.*
+import android.widget.*
+import com.splatool.ikastyle.common.Util
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+class GearRecyclerViewAdapter(private val gearList: List<*>) :
+    RecyclerView.Adapter<GearRecyclerViewAdapter.ViewHolder>() {
+    private var listener: View.OnClickListener? = null
 
-import com.splatool.ikastyle.Common.Const.GearKind;
-import com.splatool.ikastyle.Common.Util;
-import com.splatool.ikastyle.Entity.ClothingGear;
-import com.splatool.ikastyle.Entity.HeadGear;
-import com.splatool.ikastyle.Entity.ShoesGear;
-import com.splatool.ikastyle.R;
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val linearLayout: GearListItemLinearLayout = view.findViewById(R.id.linearLayout_gearListItem)
+        val gearView: ImageView = view.findViewById(R.id.imageView_gear)
+        val gearNameView: TextView = view.findViewById(R.id.textView_gearName)
+    }
 
-import java.util.List;
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.gear_list_item, parent, false)
+        return ViewHolder(view)
+    }
 
-public class GearRecyclerViewAdapter extends RecyclerView.Adapter<GearRecyclerViewAdapter.ViewHolder> {
-    private final List<?> gearList;
-    private View.OnClickListener listener;
-
-    static class ViewHolder extends RecyclerView.ViewHolder{
-        private final GearListItemLinearLayout linearLayout;
-        private final ImageView gearView;
-        private final TextView gearNameView;
-
-        public ViewHolder(View view){
-            super(view);
-            linearLayout = view.findViewById(R.id.linearLayout_gearListItem);
-            gearView = view.findViewById(R.id.imageView_gear);
-            gearNameView = view.findViewById(R.id.textView_gearName);
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        when (val gear = gearList[position]) {
+            is HeadGear -> {
+                holder.gearView.setImageResource(Util.getHeadGearResourceId(gear.id))
+                holder.gearNameView.text = gear.name
+                holder.linearLayout.gearId = gear.id
+                holder.linearLayout.gearKind = GearKind.HEAD
+            }
+            is ClothingGear -> {
+                holder.gearView.setImageResource(Util.getClothingResourceId(gear.id))
+                holder.gearNameView.text = gear.name
+                holder.linearLayout.gearId = gear.id
+                holder.linearLayout.gearKind = GearKind.CLOTHING
+            }
+            is ShoesGear -> {
+                holder.gearView.setImageResource(Util.getShoesResourceId(gear.id))
+                holder.gearNameView.text = gear.name
+                holder.linearLayout.gearId = gear.id
+                holder.linearLayout.gearKind = GearKind.SHOES
+            }
         }
+        holder.linearLayout.setOnClickListener(View.OnClickListener { view: View? ->
+            listener?.onClick(
+                view
+            )
+        })
     }
 
-    public GearRecyclerViewAdapter(List<?> gearList){
-        this.gearList = gearList;
+    fun setOnItemClickListener(listener: View.OnClickListener?) {
+        this.listener = listener
     }
 
-    @Override
-    @NonNull
-    public GearRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.gear_list_item, parent, false);
-
-        return new ViewHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull GearRecyclerViewAdapter.ViewHolder holder, int position){
-        Object gear = gearList.get(position);
-
-        if(gear instanceof HeadGear){
-            HeadGear headGear = (HeadGear)gear;
-            holder.gearView.setImageResource(Util.getHeadGearResourceId(headGear.id));
-            holder.gearNameView.setText(headGear.name);
-            holder.linearLayout.setGearId(headGear.id);
-            holder.linearLayout.setGearKind(GearKind.HEAD);
-        }
-        else if(gear instanceof ClothingGear){
-            ClothingGear clothingGear = (ClothingGear)gear;
-            holder.gearView.setImageResource(Util.getClothingResourceId(clothingGear.id));
-            holder.gearNameView.setText(clothingGear.name);
-            holder.linearLayout.setGearId(clothingGear.id);
-            holder.linearLayout.setGearKind(GearKind.CLOTHING);
-
-        }
-        else if(gear instanceof ShoesGear){
-            ShoesGear shoesGear = (ShoesGear)gear;
-            holder.gearView.setImageResource(Util.getShoesResourceId(shoesGear.id));
-            holder.gearNameView.setText(shoesGear.name);
-            holder.linearLayout.setGearId(shoesGear.id);
-            holder.linearLayout.setGearKind(GearKind.SHOES);
-        }
-
-        holder.linearLayout.setOnClickListener(view -> listener.onClick(view));
-    }
-
-    public void setOnItemClickListener(View.OnClickListener listener){
-        this.listener = listener;
-    }
-
-    @Override
-    public int getItemCount(){
-        return gearList.size();
+    override fun getItemCount(): Int {
+        return gearList.size
     }
 }

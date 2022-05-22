@@ -1,17 +1,13 @@
-package com.splatool.ikastyle.Dao;
+package com.splatool.ikastyle.dao
 
-import androidx.room.Dao;
-import androidx.room.Query;
-
-import com.splatool.ikastyle.DatabaseView.CustomizationMain;
-
-import java.util.List;
+import com.splatool.ikastyle.databaseView.CustomizationMain
+import androidx.room.*
 
 /*
  * WEAPON_MAINビューのDAO
  */
 @Dao
-public interface CustomizationMainDao {
+interface CustomizationMainDao {
     @Query("SELECT * FROM CUSTOMIZATION_MAIN_NAME WHERE language_code = :languageCode ORDER BY category_id, main_name, weapon_id")
-    List<CustomizationMain> getWeaponMainList(int languageCode);
+    fun getWeaponMainList(languageCode: Int): List<CustomizationMain>
 }

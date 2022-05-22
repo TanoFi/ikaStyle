@@ -1,35 +1,21 @@
-package com.splatool.ikastyle.Entity;
+package com.splatool.ikastyle.entity
 
-import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
+import androidx.annotation.NonNull
+import androidx.room.*
+import com.splatool.ikastyle.common.Util
 
-import com.splatool.ikastyle.Common.Util;
-
-@Entity(tableName = "MAST_CUSTOMIZATION_NAME", primaryKeys = {"id", "main_id", "category_id", "language_code"})
-public class CustomizationName {
-    @ColumnInfo(name = "id")
-    public int id;
-
-    @ColumnInfo(name = "main_id")
-    public int mainId;
-
-    @ColumnInfo(name = "category_id")
-    public int categoryId;
-
-    @ColumnInfo(name = "language_code")
-    public int languageCode;
-
-    @ColumnInfo(name = "name")
-    @NonNull
-    public String name;
-
-    @NonNull
-    public String getName(){
-        return name;
-    }
-
-    public int getAbsoluteId(){
-        return Util.getAbsoluteId(categoryId, mainId, id);
+@Entity(
+    tableName = "MAST_CUSTOMIZATION_NAME",
+    primaryKeys = ["id", "main_id", "category_id", "language_code"]
+)
+data class CustomizationName (
+    @ColumnInfo(name = "id") val id : Int,
+    @ColumnInfo(name = "main_id") val mainId : Int,
+    @ColumnInfo(name = "category_id") val categoryId : Int,
+    @ColumnInfo(name = "language_code") val languageCode : Int,
+    @ColumnInfo(name = "name") @NonNull val name: String
+) {
+    fun getAbsoluteId(): Int {
+        return Util.getAbsoluteId(categoryId, mainId, id)
     }
 }

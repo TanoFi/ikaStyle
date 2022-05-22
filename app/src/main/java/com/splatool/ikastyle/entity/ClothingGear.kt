@@ -1,18 +1,11 @@
-package com.splatool.ikastyle.Entity;
+package com.splatool.ikastyle.entity
 
-import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
+import androidx.annotation.NonNull
+import androidx.room.*
 
-@Entity(tableName = "MAST_CLOTHING_GEAR", primaryKeys = {"id", "language_code"})
-public class ClothingGear {
-    @ColumnInfo(name = "id")
-    public int id;
-
-    @ColumnInfo(name = "language_code")
-    public int languageCode;
-
-    @NonNull
-    @ColumnInfo(name = "name")
-    public String name;
-}
+@Entity(tableName = "MAST_CLOTHING_GEAR", primaryKeys = ["id", "language_code"])
+data class ClothingGear (
+    @ColumnInfo(name = "id") val id: Int,
+    @ColumnInfo(name = "language_code") val languageCode: Int,
+    @ColumnInfo(name = "name") @NonNull val name: String
+)

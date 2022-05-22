@@ -1,22 +1,11 @@
-package com.splatool.ikastyle.UI;
+package com.splatool.ikastyle.ui
 
-import android.content.Context;
-import android.util.AttributeSet;
-import com.splatool.ikastyle.Entity.Loadout;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import android.content.Context
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.splatool.ikastyle.entity.Loadout
+import android.util.AttributeSet
 
-public class LoadoutDeleteButton extends FloatingActionButton {
-    private Loadout loadout;
-
-    public LoadoutDeleteButton(Context context, AttributeSet attrs){
-        super(context, attrs);
-    }
-
-    public void setLoadout(Loadout loadout) {
-        this.loadout = loadout;
-    }
-
-    public Loadout getLoadout() {
-        return loadout;
-    }
+class LoadoutDeleteButton(context: Context, attrs: AttributeSet?) :
+    FloatingActionButton(context, attrs) {
+    var loadout: Loadout? = null
 }

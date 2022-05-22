@@ -1,47 +1,34 @@
-package com.splatool.ikastyle.UI;
+package com.splatool.ikastyle.ui
 
-import android.content.Context;
-import android.content.res.TypedArray;
-import android.util.AttributeSet;
-import android.view.MotionEvent;
-import android.view.View;
-
-import androidx.appcompat.widget.AppCompatImageView;
-
-import com.splatool.ikastyle.R;
+import android.content.Context
+import androidx.appcompat.widget.AppCompatImageView
+import com.splatool.ikastyle.R
+import android.view.View.OnTouchListener
+import android.util.AttributeSet
+import android.view.*
 
 /*
  * ギアパワー画像用のImageView
  */
-public class GearPowerImageView extends AppCompatImageView implements View.OnTouchListener {
-    private int gearPowerKind;
+class GearPowerImageView(context: Context, attrs: AttributeSet?) :
+    AppCompatImageView(context, attrs), OnTouchListener {
+    var gearPowerKind: Int = 0
 
-    public GearPowerImageView(Context context, AttributeSet attrs){
-        super(context, attrs);
+    override fun onTouch(view: View?, motionEvent: MotionEvent?): Boolean {
+        if (motionEvent?.action == MotionEvent.ACTION_DOWN) {
+            view?.startDragAndDrop(null, DragShadowBuilder(view), view, 0)
+        }
+        return true
+    }
+
+    init {
 
         //カスタム属性gearPowerKindの値を取得しフィールド変数gearPowerKindに入れる
-        TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.GearPowerImageView, 0, 0);
-        gearPowerKind = typedArray.getInt(R.styleable.GearPowerImageView_gearPowerKind, gearPowerKind);
+        val typedArray =
+            getContext().obtainStyledAttributes(attrs, R.styleable.GearPowerImageView, 0, 0)
+        gearPowerKind = typedArray.getInt(R.styleable.GearPowerImageView_gearPowerKind, gearPowerKind)
 
         // onTouchリスナーをセット
-        this.setOnTouchListener(this);
-    }
-
-    public int getGearPowerKind(){
-        return gearPowerKind;
-    }
-
-    @Override
-    public boolean onTouch(View view, MotionEvent motionEvent){
-        if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
-            view.startDragAndDrop(null, new View.DragShadowBuilder(view), view, 0);
-        }
-
-        return true;
-    }
-
-    @Override
-    public boolean performClick() {
-        return super.performClick();
+        setOnTouchListener(this)
     }
 }

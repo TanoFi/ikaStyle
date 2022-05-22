@@ -1,14 +1,10 @@
-package com.splatool.ikastyle.Dao;
+package com.splatool.ikastyle.dao
 
-import androidx.room.Dao;
-import androidx.room.Query;
-
-import com.splatool.ikastyle.Entity.MainCategory;
-
-import java.util.List;
+import com.splatool.ikastyle.entity.MainCategory
+import androidx.room.*
 
 @Dao
-public interface MainCategoryDao {
+interface MainCategoryDao {
     @Query("SELECT * FROM MAST_MAIN_CATEGORY WHERE language_code = :languageCode ORDER BY id")
-    List<MainCategory> getMainCategoryList(int languageCode);
+    open fun getMainCategoryList(languageCode: Int): List<MainCategory>
 }

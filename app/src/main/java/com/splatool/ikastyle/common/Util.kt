@@ -1,105 +1,100 @@
-package com.splatool.ikastyle.Common;
+package com.splatool.ikastyle.common
 
-import android.graphics.Color;
+import com.splatool.ikastyle.R
+import com.splatool.ikastyle.common.const.NumberPlace
+import com.splatool.ikastyle.common.const.ResourceIdMap
+import android.graphics.Color
+import java.util.*
 
-import com.splatool.ikastyle.Common.Const.NumberPlace;
-import com.splatool.ikastyle.Common.Const.ResourceIdMap;
-import com.splatool.ikastyle.R;
-
-import java.util.Locale;
-import java.util.Optional;
-import java.util.Random;
-
-public class Util {
+object Util {
     /*
      * 端末の設定が日本語なら2、それ以外なら1を返す
      */
-    public static int getLanguageCode()
-    {
-        Locale local = Locale.getDefault();
-        if(local.equals(Locale.JAPAN)){
-            return  2;
-        }
-        else {
-            return 1;
+    fun getLanguageCode(): Int {
+        val local = Locale.getDefault()
+        return if (local == Locale.JAPAN) {
+            2
+        } else {
+            1
         }
     }
 
     /*
      * ブキのカテゴリーID,メインID,カスタマイズIDから絶対IDを返す
      */
-    public static int getAbsoluteId(int categoryId, int mainId, int customizationId){
-        return categoryId * NumberPlace.CATEGORY_PLACE + mainId * NumberPlace.MAIN_PLACE + customizationId * NumberPlace.WEAPON_PLACE;
+    fun getAbsoluteId(categoryId: Int, mainId: Int, customizationId: Int): Int {
+        return categoryId * NumberPlace.CATEGORY_PLACE + mainId * NumberPlace.MAIN_PLACE + customizationId * NumberPlace.WEAPON_PLACE
     }
 
     /*
      * ブキの絶対IDを受け取ってカテゴリーIDを返す
      */
-    public static int getCategoryId(int absoluteId){
-        return absoluteId / NumberPlace.CATEGORY_PLACE;
+    fun getCategoryId(absoluteId: Int): Int {
+        return absoluteId / NumberPlace.CATEGORY_PLACE
     }
 
     /*
      * ブキの絶対IDを受け取ってメインIDを返す
      */
-    public static int getMainId(int absoluteId){
-        return (absoluteId % NumberPlace.CATEGORY_PLACE) / NumberPlace.MAIN_PLACE;
+    fun getMainId(absoluteId: Int): Int {
+        return absoluteId % NumberPlace.CATEGORY_PLACE / NumberPlace.MAIN_PLACE
     }
 
     /*
      * ブキの絶対IDを受け取ってカスタマイズIDを返す
      */
-    public static int getCustomizationId(int absoluteId){
-        return (absoluteId % NumberPlace.CATEGORY_PLACE) % NumberPlace.MAIN_PLACE;
+    fun getCustomizationId(absoluteId: Int): Int {
+        return absoluteId % NumberPlace.CATEGORY_PLACE % NumberPlace.MAIN_PLACE
     }
 
     /*
      * ギアパワーのIDを受け取って対応する画像のResourceIdを返す
      */
-    public static int getGearPowerResourceId(int gearPowerId){
-        return Optional.ofNullable(ResourceIdMap.gearPowerResourceIdMap.get(gearPowerId)).orElse(0);
+    fun getGearPowerResourceId(gearPowerId: Int): Int {
+        return Optional.ofNullable(ResourceIdMap.gearPowerResourceIdMap[gearPowerId]).orElse(0)
     }
 
     /*
      * アタマのギアIDを受け取って対応する画像のResourceIdを返す
      */
-    public static int getHeadGearResourceId(int gearId){
-        return Optional.ofNullable(ResourceIdMap.headGearResourceIdMap.get(gearId)).orElse(R.drawable.headgear0);
+    fun getHeadGearResourceId(gearId: Int): Int {
+        return Optional.ofNullable(ResourceIdMap.headGearResourceIdMap[gearId])
+            .orElse(R.drawable.headgear0)
     }
 
     /*
      * フクのギアIDを受け取って対応する画像のResourceIdを返す
      */
-    public static int getClothingResourceId(int gearId){
-        return Optional.ofNullable(ResourceIdMap.clothingGearResourceIdMap.get(gearId)).orElse(R.drawable.clothing_gear0);
+    fun getClothingResourceId(gearId: Int): Int {
+        return Optional.ofNullable(ResourceIdMap.clothingGearResourceIdMap[gearId])
+            .orElse(R.drawable.clothing_gear0)
     }
 
     /*
      * クツのギアIDを受け取って対応する画像のResourceIdを返す
      */
-
-    public static int getShoesResourceId(int gearId){
-        return Optional.ofNullable(ResourceIdMap.shoesGearResourceIdMap.get(gearId)).orElse(R.drawable.shoes_gear0);
+    fun getShoesResourceId(gearId: Int): Int {
+        return Optional.ofNullable(ResourceIdMap.shoesGearResourceIdMap[gearId])
+            .orElse(R.drawable.shoes_gear0)
     }
 
     /*
      * ブキの絶対IDを受け取って対応する画像のResourceIdを返す
      */
-    public static int getWeaponResourceId(int absoluteId){
-        return  Optional.ofNullable(ResourceIdMap.weaponResourceIdMap.get(absoluteId)).orElse(R.drawable.weapon1011_sploosh_o_matic);
+    fun getWeaponResourceId(absoluteId: Int): Int {
+        return Optional.ofNullable(ResourceIdMap.weaponResourceIdMap[absoluteId])
+            .orElse(R.drawable.weapon1011_sploosh_o_matic)
     }
 
     /*
      * ランダムな色を返す
      */
-    public static int getRandomColor(){
-        final int rgbNum = 256;
-
-        Random random = new Random();
-        int red = random.nextInt(rgbNum);
-        int green = random.nextInt(rgbNum);
-        int blue = random.nextInt(rgbNum);
-
-        return Color.rgb(red, green, blue);
+    fun getRandomColor(): Int {
+        val rgbNum = 256
+        val random = Random()
+        val red = random.nextInt(rgbNum)
+        val green = random.nextInt(rgbNum)
+        val blue = random.nextInt(rgbNum)
+        return Color.rgb(red, green, blue)
     }
 }

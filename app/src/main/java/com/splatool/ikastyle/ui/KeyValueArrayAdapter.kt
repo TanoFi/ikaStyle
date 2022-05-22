@@ -1,81 +1,63 @@
-package com.splatool.ikastyle.UI;
+package com.splatool.ikastyle.ui
 
+import android.content.Context
+import android.util.Pair
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.ImageView
+import android.widget.TextView
+import com.splatool.ikastyle.R
+import com.splatool.ikastyle.common.Util
+import com.splatool.ikastyle.common.const.NumberPlace
 
-import android.content.Context;
-import android.util.Pair;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
+class KeyValueArrayAdapter(
+    context: Context,
+    layoutResourceId: Int,
+    keyValues: List<Pair<Int, String>>
+) : ArrayAdapter<Pair<Int, String>>(context, layoutResourceId, keyValues) {
+    private val inflater: LayoutInflater = LayoutInflater.from(context)
 
-import androidx.annotation.NonNull;
-
-import com.splatool.ikastyle.Common.Const.NumberPlace;
-import com.splatool.ikastyle.Common.Util;
-import com.splatool.ikastyle.R;
-
-import java.util.ArrayList;
-
-public class KeyValueArrayAdapter extends ArrayAdapter<Pair<Integer, String>> {
-    private final LayoutInflater inflater;
-
-    private static class ViewHolder{
-        ImageView weaponImageView;
-        TextView weaponNameView;
+    private class ViewHolder(view : View) {
+        val weaponImageView: ImageView = view.findViewById(R.id.imageView_weapon)
+        val weaponNameView: TextView = view.findViewById(R.id.textView_weaponName)
     }
 
-    public KeyValueArrayAdapter(Context context, int layoutResourceId, ArrayList<Pair<Integer,String>> keyValues){
-        super(context, layoutResourceId, keyValues);
-
-        this.inflater = LayoutInflater.from(context);
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent){
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         // ブキIdとブキ名を取得
-        int absoluteWeaponId = getItem(position).first;
-        String weaponName = getItem(position).second;
+        val absoluteWeaponId: Int = getItem(position)!!.first
+        val weaponName = getItem(position)!!.second
 
         // spinner_list_item.xmlのレイアウトをインスタンス化する
-        View view = inflater.inflate(R.layout.spinner_list_item, null);
-        ViewHolder holder = new ViewHolder();
-        holder.weaponNameView = view.findViewById(R.id.textView_weaponName);
-        holder.weaponImageView = view.findViewById(R.id.imageView_weapon);
-
-        if(absoluteWeaponId % NumberPlace.MAIN_PLACE == 0){ // メイン単位の項目が選択されている場合
+        val view = inflater.inflate(R.layout.spinner_list_item, null)
+        val holder = ViewHolder(view)
+        if (absoluteWeaponId % NumberPlace.MAIN_PLACE == 0) { // メイン単位の項目が選択されている場合
             // 表示する画像がないのでimageViewを消す
-            holder.weaponImageView.setVisibility(View.GONE);
-        }
-        else { // カスタマイズ単位の項目が選択されている場合
+            holder.weaponImageView.visibility = View.GONE
+        } else { // カスタマイズ単位の項目が選択されている場合
             // imageViewに当該のブキ画像セット
-            holder.weaponImageView.setImageResource(Util.getWeaponResourceId(absoluteWeaponId));
+            holder.weaponImageView.setImageResource(Util.getWeaponResourceId(absoluteWeaponId))
         }
         // textViewにブキ名セット
-        holder.weaponNameView.setText(weaponName);
-
-        return view;
+        holder.weaponNameView.text = weaponName
+        return view
     }
 
-    @Override
-    public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent){
-        int absoluteWeaponId = getItem(position).first;
-        String weaponName = getItem(position).second;
+    override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
+        val absoluteWeaponId: Int = getItem(position)!!.first
+        val weaponName = getItem(position)!!.second
 
         // spinner_list_dropdown_item.xmlのレイアウトをインスタンス化する
-        View view = inflater.inflate(R.layout.spinner_list_dropdown_item, null);
-        ViewHolder holder = new ViewHolder();
-        holder.weaponNameView = view.findViewById(R.id.textView_weaponName);
-        holder.weaponImageView = view.findViewById(R.id.imageView_weapon);
-        if(absoluteWeaponId % NumberPlace.MAIN_PLACE == 0){
-            holder.weaponImageView.setVisibility(View.GONE);
+        val view = inflater.inflate(R.layout.spinner_list_dropdown_item, null)
+        val holder = ViewHolder(view)
+        if (absoluteWeaponId % NumberPlace.MAIN_PLACE == 0) {
+            holder.weaponImageView.visibility = View.GONE
+        } else {
+            holder.weaponImageView.setImageResource(Util.getWeaponResourceId(absoluteWeaponId))
         }
-        else {
-            holder.weaponImageView.setImageResource(Util.getWeaponResourceId(absoluteWeaponId));
-        }
-        holder.weaponNameView.setText(weaponName);
-
-        return view;
+        holder.weaponNameView.text = weaponName
+        return view
     }
+
 }

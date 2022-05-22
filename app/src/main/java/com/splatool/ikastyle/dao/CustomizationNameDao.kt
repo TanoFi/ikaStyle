@@ -1,14 +1,10 @@
-package com.splatool.ikastyle.Dao;
+package com.splatool.ikastyle.dao
 
-import androidx.room.Dao;
-import androidx.room.Query;
-
-import com.splatool.ikastyle.Entity.CustomizationName;
-
-import java.util.List;
+import com.splatool.ikastyle.entity.CustomizationName
+import androidx.room.*
 
 @Dao
-public interface CustomizationNameDao {
+interface CustomizationNameDao {
     @Query("SELECT * FROM MAST_CUSTOMIZATION_NAME WHERE language_code = :language_code ORDER BY category_id, main_id, id")
-    List<CustomizationName> getWeaponNameList(int language_code);
+    fun getWeaponNameList(language_code: Int): List<CustomizationName>
 }

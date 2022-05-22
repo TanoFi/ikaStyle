@@ -1,152 +1,124 @@
-package com.splatool.ikastyle;
+package com.splatool.ikastyle
 
-import android.content.Context;
-import android.os.AsyncTask;
-import android.os.Bundle;
+import android.content.Context
+import com.splatool.ikastyle.common.const.GearKind
+import com.splatool.ikastyle.ui.GearDialogFragment
+import com.splatool.ikastyle.ui.GearDialogFragment.GearDialogListener
+import android.os.Bundle
+import com.splatool.ikastyle.database.AppDatabase
+import android.os.AsyncTask
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.splatool.ikastyle.entity.Loadout
+import com.splatool.ikastyle.common.const.NumberPlace
+import com.splatool.ikastyle.ui.GearPowerReceptorImageView
+import android.widget.Spinner
+import com.splatool.ikastyle.ui.KeyValueArrayAdapter
+import com.splatool.ikastyle.entity.MainCategory
+import com.splatool.ikastyle.databaseView.CustomizationMain
+import android.widget.EditText
+import com.splatool.ikastyle.ui.GearImageView
+import android.widget.Toast
+import com.splatool.ikastyle.ui.CategorySpinnerSelectedListener
+import android.util.Pair
+import android.view.*
+import androidx.fragment.app.Fragment
+import com.splatool.ikastyle.common.Util
+import java.util.*
+import java.util.function.Consumer
+import java.util.stream.Collectors
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
-import android.util.Pair;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.Toast;
-
-import com.splatool.ikastyle.Common.Const.GearKind;
-import com.splatool.ikastyle.Common.Const.NumberPlace;
-import com.splatool.ikastyle.Common.Util;
-import com.splatool.ikastyle.Dao.CustomizationMainDao;
-import com.splatool.ikastyle.Dao.LoadoutDao;
-import com.splatool.ikastyle.Dao.MainCategoryDao;
-import com.splatool.ikastyle.Database.AppDatabase;
-import com.splatool.ikastyle.DatabaseView.CustomizationMain;
-import com.splatool.ikastyle.Entity.Loadout;
-import com.splatool.ikastyle.Entity.MainCategory;
-
-import com.splatool.ikastyle.UI.CategorySpinnerSelectedListener;
-import com.splatool.ikastyle.UI.KeyValueArrayAdapter;
-import com.splatool.ikastyle.UI.GearDialogFragment;
-import com.splatool.ikastyle.UI.GearImageView;
-import com.splatool.ikastyle.UI.GearPowerReceptorImageView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.stream.Collectors;
-
-public class NewFragment extends Fragment implements GearDialogFragment.GearDialogListener {
-    private Spinner categorySpinner;
-    private Spinner weaponSpinner;
-    private EditText loadoutName;
-    private GearImageView headGear;
-    private GearPowerReceptorImageView headMain;
-    private GearPowerReceptorImageView headSub1;
-    private GearPowerReceptorImageView headSub2;
-    private GearPowerReceptorImageView headSub3;
-    private GearImageView clothingGear;
-    private GearPowerReceptorImageView clothingMain;
-    private GearPowerReceptorImageView clothingSub1;
-    private GearPowerReceptorImageView clothingSub2;
-    private GearPowerReceptorImageView clothingSub3;
-    private GearImageView shoesGear;
-    private GearPowerReceptorImageView shoesMain;
-    private GearPowerReceptorImageView shoesSub1;
-    private GearPowerReceptorImageView shoesSub2;
-    private GearPowerReceptorImageView shoesSub3;
-
-    // GearImageViewをクリックしたときの処理
-    private static View.OnClickListener onClickGearImageView;
-
-    public NewFragment() {
-        // Required empty public constructor
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+class NewFragment : Fragment(), GearDialogListener {
+    private lateinit var categorySpinner: Spinner
+    private lateinit var weaponSpinner: Spinner
+    private lateinit var loadoutName: EditText
+    private lateinit var headGear: GearImageView
+    private lateinit var headMain: GearPowerReceptorImageView
+    private lateinit var headSub1: GearPowerReceptorImageView
+    private lateinit var headSub2: GearPowerReceptorImageView
+    private lateinit var headSub3: GearPowerReceptorImageView
+    private lateinit var clothingGear: GearImageView
+    private lateinit var clothingMain: GearPowerReceptorImageView
+    private lateinit var clothingSub1: GearPowerReceptorImageView
+    private lateinit var clothingSub2: GearPowerReceptorImageView
+    private lateinit var clothingSub3: GearPowerReceptorImageView
+    private lateinit var shoesGear: GearImageView
+    private lateinit var shoesMain: GearPowerReceptorImageView
+    private lateinit var shoesSub1: GearPowerReceptorImageView
+    private lateinit var shoesSub2: GearPowerReceptorImageView
+    private lateinit var shoesSub3: GearPowerReceptorImageView
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
         // GearImageViewをクリックした時の処理を定義
-        onClickGearImageView = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                GearDialogFragment gearDialogFragment = new GearDialogFragment(((GearImageView)view).getGearKind());
-                gearDialogFragment.show(getChildFragmentManager(), "gear_dialog");
-            }
-        };
+        onClickGearImageView = View.OnClickListener { view ->
+            val gearDialogFragment = GearDialogFragment((view as GearImageView).gearKind)
+            gearDialogFragment.show(childFragmentManager, "gear_dialog")
+        }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_new, container, false);
+        return inflater.inflate(R.layout.fragment_new, container, false)
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState){
-        super.onViewCreated(view, savedInstanceState);
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         // Spinnerの画面要素を取得
-        categorySpinner = view.findViewById(R.id.spinner_category);
-        weaponSpinner = view.findViewById(R.id.spinner_weapon);
+        categorySpinner = view.findViewById(R.id.spinner_category)
+        weaponSpinner = view.findViewById(R.id.spinner_weapon)
 
         // textViewの画面要素を取得
-        loadoutName = view.findViewById(R.id.editText_loadoutName);
+        loadoutName = view.findViewById(R.id.editText_loadoutName)
 
         // GearPowerReceptorImageViewの画面要素を取得
-        headMain = view.findViewById(R.id.receptorImageView_head_main);
-        headSub1 = view.findViewById(R.id.receptorImageView_head_sub1);
-        headSub2 = view.findViewById(R.id.receptorImageView_head_sub2);
-        headSub3 = view.findViewById(R.id.receptorImageView_head_sub3);
-        clothingMain = view.findViewById(R.id.receptorImageView_clothing_main);
-        clothingSub1 = view.findViewById(R.id.receptorImageView_clothing_sub1);
-        clothingSub2 = view.findViewById(R.id.receptorImageView_clothing_sub2);
-        clothingSub3 = view.findViewById(R.id.receptorImageView_clothing_sub3);
-        shoesMain = view.findViewById(R.id.receptorImageView_shoes_main);
-        shoesSub1 = view.findViewById(R.id.receptorImageView_shoes_sub1);
-        shoesSub2 = view.findViewById(R.id.receptorImageView_shoes_sub2);
-        shoesSub3 = view.findViewById(R.id.receptorImageView_shoes_sub3);
+        headMain = view.findViewById(R.id.receptorImageView_head_main)
+        headSub1 = view.findViewById(R.id.receptorImageView_head_sub1)
+        headSub2 = view.findViewById(R.id.receptorImageView_head_sub2)
+        headSub3 = view.findViewById(R.id.receptorImageView_head_sub3)
+        clothingMain = view.findViewById(R.id.receptorImageView_clothing_main)
+        clothingSub1 = view.findViewById(R.id.receptorImageView_clothing_sub1)
+        clothingSub2 = view.findViewById(R.id.receptorImageView_clothing_sub2)
+        clothingSub3 = view.findViewById(R.id.receptorImageView_clothing_sub3)
+        shoesMain = view.findViewById(R.id.receptorImageView_shoes_main)
+        shoesSub1 = view.findViewById(R.id.receptorImageView_shoes_sub1)
+        shoesSub2 = view.findViewById(R.id.receptorImageView_shoes_sub2)
+        shoesSub3 = view.findViewById(R.id.receptorImageView_shoes_sub3)
 
         // Spinnerの項目に設定するためのDBを取得
-        AppDatabase db = AppDatabase.getDatabase(getContext());
+        val db: AppDatabase = AppDatabase.getDatabase(view.context)
         // DBからデータを取得しスピナーにセット
-        GetDataAndSetSpinnerAsyncTask task = new GetDataAndSetSpinnerAsyncTask(db, getContext(), categorySpinner, weaponSpinner);
-        task.execute();
-
-        FloatingActionButton saveButton = view.findViewById(R.id.floatingActionButton_save);
-        saveButton.setOnClickListener(x ->{
-            if(checkUserInput()){ //入力チェック
+        val task = GetDataAndSetSpinnerAsyncTask(db, view.context, categorySpinner, weaponSpinner)
+        task.execute()
+        val saveButton: FloatingActionButton = view.findViewById(R.id.floatingActionButton_save)
+        saveButton.setOnClickListener { x: View? ->
+            if (checkUserInput()) { //入力チェック
                 // DBに保存
-                save();
+                save()
             }
-        });
+        }
 
         // GearImageViewの画面要素を取得
-        headGear = view.findViewById(R.id.gearImageView_head);
-        clothingGear = view.findViewById(R.id.gearImageView_clothing);
-        shoesGear = view.findViewById(R.id.gearImageView_shoes);
+        headGear = view.findViewById(R.id.gearImageView_head)
+        clothingGear = view.findViewById(R.id.gearImageView_clothing)
+        shoesGear = view.findViewById(R.id.gearImageView_shoes)
 
         // GearImageViewにonClickListenerをまとめてセット
-        setOnClickListener(headGear, clothingGear, shoesGear);
+        setOnClickListener(headGear, clothingGear, shoesGear)
     }
 
-    @Override
-    public void onListItemClick(GearDialogFragment dialogFragment, GearKind gearKind, int gearId){
-        switch (gearKind){
-            case HEAD:
-                headGear.setGearId(gearId);
-                break;
-            case CLOTHING:
-                clothingGear.setGearId(gearId);
-                break;
-            case SHOES:
-                shoesGear.setGearId(gearId);
-                break;
+    override fun onListItemClick(
+        dialogFragment: GearDialogFragment,
+        gearKind: GearKind,
+        gearId: Int
+    ) {
+        when (gearKind) {
+            GearKind.HEAD -> headGear.gearId = gearId
+            GearKind.CLOTHING -> clothingGear.gearId = gearId
+            GearKind.SHOES -> shoesGear.gearId = gearId
         }
     }
 
@@ -154,210 +126,235 @@ public class NewFragment extends Fragment implements GearDialogFragment.GearDial
      * 入力チェック用のメソッド
      * 戻り値 true → 問題なし, false → 問題あり
      */
-    @SuppressWarnings("unchecked")
-    private boolean checkUserInput(){
+    private fun checkUserInput(): Boolean {
         // ブキSpinnerが未選択状態
-        if(((Pair<Integer, String>)weaponSpinner.getSelectedItem()).first == 0){
+        if ((weaponSpinner.selectedItem as Pair<Int, String>).first == 0) {
             // Toastでメッセージ表示
-            Toast toast = Toast.makeText(getContext(), getString(R.string.toastMessage_spinnerNotSelected), Toast.LENGTH_LONG);
-            toast.show();
-            return false;
+            val toast = Toast.makeText(
+                context,
+                getString(R.string.toastMessage_spinnerNotSelected),
+                Toast.LENGTH_LONG
+            )
+            toast.show()
+            return false
         }
 
         // メインギアパワーが設定されていない
-        if(headMain.getGearPowerKind() == 0 || clothingMain.getGearPowerKind() == 0 || shoesMain.getGearPowerKind() == 0){
+        if (headMain.gearPowerKind == 0 || clothingMain.gearPowerKind == 0 || shoesMain.gearPowerKind == 0) {
             // Toastでメッセージ表示
-            Toast toast = Toast.makeText(getContext(), getString(R.string.toastMessage_mainGearPowerNotSet), Toast.LENGTH_LONG);
-            toast.show();
-            return false;
+            val toast = Toast.makeText(
+                context,
+                getString(R.string.toastMessage_mainGearPowerNotSet),
+                Toast.LENGTH_LONG
+            )
+            toast.show()
+            return false
         }
-
-        return true;
+        return true
     }
 
     /*
      * 入力値をデータベースに保存
      */
-    @SuppressWarnings("unchecked")
-    private void save(){
+    private fun save() {
         // 選択したブキの絶対ID
-        int absoluteId = ((Pair<Integer, String>)weaponSpinner.getSelectedItem()).first;
+        val absoluteId: Int = (weaponSpinner.selectedItem as Pair<Int, String>).first
 
         // Insert用のLoadoutインスタンス作成
-        Loadout loadout = new Loadout(
-                loadoutName.getText().toString(),
-                Util.getCategoryId(absoluteId),
-                Util.getMainId(absoluteId),
-                Util.getCustomizationId(absoluteId),
-                headGear.getGearId(),
-                headMain.getGearPowerKind(),
-                headSub1.getGearPowerKind(),
-                headSub2.getGearPowerKind(),
-                headSub3.getGearPowerKind(),
-                clothingGear.getGearId(),
-                clothingMain.getGearPowerKind(),
-                clothingSub1.getGearPowerKind(),
-                clothingSub2.getGearPowerKind(),
-                clothingSub3.getGearPowerKind(),
-                shoesGear.getGearId(),
-                shoesMain.getGearPowerKind(),
-                shoesSub1.getGearPowerKind(),
-                shoesSub2.getGearPowerKind(),
-                shoesSub3.getGearPowerKind(),
-                System.currentTimeMillis()
-        );
-
-        AppDatabase db = AppDatabase.getDatabase(getContext());
-        InsertLoadoutAsyncTask task = new InsertLoadoutAsyncTask(db, loadout);
-        task.execute();
+        val loadout = Loadout(
+            0, // IDが自動生成されるので適当に0をInsert
+            loadoutName.text.toString(),
+            Util.getCategoryId(absoluteId),
+            Util.getMainId(absoluteId),
+            Util.getCustomizationId(absoluteId),
+            headGear.gearId,
+            headMain.gearPowerKind,
+            headSub1.gearPowerKind,
+            headSub2.gearPowerKind,
+            headSub3.gearPowerKind,
+            clothingGear.gearId,
+            clothingMain.gearPowerKind,
+            clothingSub1.gearPowerKind,
+            clothingSub2.gearPowerKind,
+            clothingSub3.gearPowerKind,
+            shoesGear.gearId,
+            shoesMain.gearPowerKind,
+            shoesSub1.gearPowerKind,
+            shoesSub2.gearPowerKind,
+            shoesSub3.gearPowerKind,
+            System.currentTimeMillis()
+        )
+        val db: AppDatabase = AppDatabase.getDatabase(requireContext())
+        val task = InsertLoadoutAsyncTask(db, loadout)
+        task.execute()
     }
 
     /*
      * GearImageViewにonClickListenerをまとめてセットする
      */
-    private void setOnClickListener(GearImageView... gearImageViews){
-        for (GearImageView gearImageView: gearImageViews) {
-            gearImageView.setOnClickListener(onClickGearImageView);
+    private fun setOnClickListener(vararg gearImageViews: GearImageView) {
+        for (gearImageView in gearImageViews) {
+            gearImageView.setOnClickListener(onClickGearImageView)
         }
     }
 
     // View初期化用メソッド
-    private void init(){
+    private fun init() {
         // Spinner選択項目初期化
-        categorySpinner.setSelection(0);
-        weaponSpinner.setSelection(0);
+        categorySpinner.setSelection(0)
+        weaponSpinner.setSelection(0)
 
         // TextView文字入力初期化
-        loadoutName.setText("");
+        loadoutName.setText("")
 
         // GearImageView選択項目初期化
-        headGear.init();
-        clothingGear.init();
-        shoesGear.init();
+        headGear.init()
+        clothingGear.init()
+        shoesGear.init()
 
         // ReceptorImageView設定ギア初期化
-        headMain.init();
-        headSub1.init();
-        headSub2.init();
-        headSub3.init();
-        clothingMain.init();
-        clothingSub1.init();
-        clothingSub2.init();
-        clothingSub3.init();
-        shoesMain.init();
-        shoesSub1.init();
-        shoesSub2.init();
-        shoesSub3.init();
+        headMain.init()
+        headSub1.init()
+        headSub2.init()
+        headSub3.init()
+        clothingMain.init()
+        clothingSub1.init()
+        clothingSub2.init()
+        clothingSub3.init()
+        shoesMain.init()
+        shoesSub1.init()
+        shoesSub2.init()
+        shoesSub3.init()
     }
 
     /*
      * 非同期でDBにLoadoutデータをInsert
      */
-    private class InsertLoadoutAsyncTask extends AsyncTask<Void, Void, Integer> {
-        private final AppDatabase db;
-        private final Loadout loadout;
-
-        public InsertLoadoutAsyncTask(AppDatabase db, Loadout loadout) {
-            this.db = db;
-            this.loadout = loadout;
-        }
-
-        @Override
-        protected Integer doInBackground(Void... params) {
+    private inner class InsertLoadoutAsyncTask(
+        private val db: AppDatabase,
+        private val loadout: Loadout
+    ) : AsyncTask<Void?, Void?, Int?>() {
+        override fun doInBackground(vararg params: Void?): Int {
             //実際にDBにアクセスし結果を取得
-            LoadoutDao loadoutDao = db.loadoutDao();
-            loadoutDao.InsertLoadout(loadout);
-
-            return 0;
+            val loadoutDao = db.loadoutDao()
+            loadoutDao.insertLoadout(loadout)
+            return 0
         }
 
-        @Override
-        protected void onPostExecute(Integer code){
+        override fun onPostExecute(code: Int?) {
             // Viewを初期化
-            init();
+            init()
 
             // ToastでInsert完了のメッセージ表示
-            Toast toast = Toast.makeText(getContext(), getString(R.string.toastMessage_insertCompleted), Toast.LENGTH_LONG);
-            toast.show();
+            val toast = Toast.makeText(
+                context,
+                getString(R.string.toastMessage_insertCompleted),
+                Toast.LENGTH_LONG
+            )
+            toast.show()
         }
     }
 
     /*
      * 非同期でDBからデータ取得しスピナーにセットするクラス
      */
-    private class GetDataAndSetSpinnerAsyncTask extends AsyncTask<Void, Void, Integer> {
-        private final AppDatabase db;
-        private final Context context;
-        private final Spinner categorySpinner;
-        private final Spinner weaponSpinner;
-
-        List<MainCategory> categoryList;
-        List<CustomizationMain> customizationMainList;
-
-        public GetDataAndSetSpinnerAsyncTask(AppDatabase db, Context context, Spinner categorySpinner, Spinner weaponSpinner) {
-            this.db = db;
-            this.context = context;
-            this.categorySpinner = categorySpinner;
-            this.weaponSpinner = weaponSpinner;
-        }
-
-        @Override
-        protected Integer doInBackground(Void... params) {
+    private inner class GetDataAndSetSpinnerAsyncTask(
+        private val db: AppDatabase,
+        private val context: Context,
+        private val categorySpinner: Spinner,
+        private val weaponSpinner: Spinner
+    ) : AsyncTask<Void?, Void?, Int>() {
+        lateinit var categoryList: List<MainCategory>
+        lateinit var customizationMainList: List<CustomizationMain>
+        override fun doInBackground(vararg params: Void?): Int {
             //端末の言語設定を取得
-            int languageCode = Util.getLanguageCode();
+            val languageCode = Util.getLanguageCode()
 
             //実際にDBにアクセスし結果を取得
-            MainCategoryDao categoryDao = db.mainCategoryDao();
-            CustomizationMainDao customizationMainDao = db.customizationMainDao();
-            categoryList = categoryDao.getMainCategoryList(languageCode); //ブキカテゴリー名を取得
-            customizationMainList = customizationMainDao.getWeaponMainList(languageCode);
-
-            return 0;
+            val categoryDao = db.mainCategoryDao()
+            val customizationMainDao = db.customizationMainDao()
+            categoryList = categoryDao.getMainCategoryList(languageCode) //ブキカテゴリー名を取得
+            customizationMainList = customizationMainDao.getWeaponMainList(languageCode)
+            return 0
         }
 
-        @Override
-        protected void onPostExecute(Integer code){
+        override fun onPostExecute(code: Int) {
             // ひとつのメインウェポン : そのメインウェポンを持つブキセットのリスト でMapを作成
             // 昇順でソートしたいのでTreeMap
-            TreeMap<Integer, List<CustomizationMain>> customizationMainMap = new TreeMap<>(customizationMainList.stream().collect(
-                    Collectors.groupingBy(x -> x.categoryId * NumberPlace.CATEGORY_PLACE + x.mainId * NumberPlace.MAIN_PLACE)
-            ));
+            val customizationMainMap = TreeMap(customizationMainList.stream().collect(
+                Collectors.groupingBy { x: CustomizationMain -> x.categoryId * NumberPlace.CATEGORY_PLACE + x.mainId * NumberPlace.MAIN_PLACE }
+            ))
 
             // Spinnerに渡す用のリストを作成
-            ArrayList<Pair<Integer, String>> categoryKeyValueList = new ArrayList<>();
-            ArrayList<Pair<Integer, String>> mainAndCustomizationKeyValueList = new ArrayList<>();
+            val categoryKeyValueList = ArrayList<Pair<Int, String>>()
+            val mainAndCustomizationKeyValueList = ArrayList<Pair<Int, String>>()
 
             // それぞれのリストの一番上に未選択時の項目を追加
-            categoryKeyValueList.add(new Pair<>(0, context.getString(R.string.spinnerItem_categoryUnselected)));
-            mainAndCustomizationKeyValueList.add(new Pair<>(0, context.getString(R.string.spinnerItem_weaponUnselected)));
+            categoryKeyValueList.add(
+                Pair(
+                    0,
+                    context.getString(R.string.spinnerItem_categoryUnselected)
+                )
+            )
+            mainAndCustomizationKeyValueList.add(
+                Pair(
+                    0,
+                    context.getString(R.string.spinnerItem_weaponUnselected)
+                )
+            )
 
             //それぞれのリストにデータ(IDと名前のペア)を入れる
-            categoryList.forEach(x -> categoryKeyValueList.add(new Pair<>(x.getAbsoluteId(), x.getName())));
-            for (Map.Entry<Integer, List<CustomizationMain>> data :customizationMainMap.entrySet()) {
-                int key = data.getKey();
-                List<CustomizationMain> value = data.getValue();
-                mainAndCustomizationKeyValueList.add(new Pair<>(key, value.get(0).getMainName())); //メインウェポンのデータをAdd
-
-                value.forEach(x -> mainAndCustomizationKeyValueList.add(new Pair<>(x.getAbsoluteId(), x.getWeaponName()))); //ブキセットのデータをAdd
+            categoryList.forEach(Consumer { x: MainCategory ->
+                categoryKeyValueList.add(
+                    Pair(
+                        x.getAbsoluteId(),
+                        x.name
+                    )
+                )
+            })
+            for ((key, value) in customizationMainMap) {
+                mainAndCustomizationKeyValueList.add(
+                    Pair(
+                        key,
+                        value[0].mainName
+                    )
+                ) //メインウェポンのデータをAdd
+                value.forEach(Consumer { x: CustomizationMain ->
+                    mainAndCustomizationKeyValueList.add(
+                        Pair(x.getAbsoluteId(), x.weaponName)
+                    )
+                }) //ブキセットのデータをAdd
             }
 
             //アダプター作成
-            KeyValueArrayAdapter categoryAdapter = new KeyValueArrayAdapter(context, R.layout.spinner_list_item, categoryKeyValueList);
-            KeyValueArrayAdapter weaponAdapter = new KeyValueArrayAdapter(context, R.layout.spinner_list_item, mainAndCustomizationKeyValueList);
+            val categoryAdapter =
+                KeyValueArrayAdapter(context, R.layout.spinner_list_item, categoryKeyValueList)
+            val weaponAdapter = KeyValueArrayAdapter(
+                context,
+                R.layout.spinner_list_item,
+                mainAndCustomizationKeyValueList
+            )
 
             //レイアウトを付与
-            categoryAdapter.setDropDownViewResource(R.layout.spinner_list_dropdown_item);
-            weaponAdapter.setDropDownViewResource(R.layout.spinner_list_dropdown_item);
+            categoryAdapter.setDropDownViewResource(R.layout.spinner_list_dropdown_item)
+            weaponAdapter.setDropDownViewResource(R.layout.spinner_list_dropdown_item)
 
             //スピナーにアダプターを設定
-            categorySpinner.setAdapter(categoryAdapter);
-            weaponSpinner.setAdapter(weaponAdapter);
+            categorySpinner.adapter = categoryAdapter
+            weaponSpinner.adapter = weaponAdapter
 
             //リスナーを作成
-            CategorySpinnerSelectedListener categoryListener = new CategorySpinnerSelectedListener(context , weaponSpinner, mainAndCustomizationKeyValueList);
+            val categoryListener = CategorySpinnerSelectedListener(
+                requireContext(), weaponSpinner, mainAndCustomizationKeyValueList
+            )
 
             //リスナーを設定
-            categorySpinner.setOnItemSelectedListener(categoryListener);
+            categorySpinner.onItemSelectedListener = categoryListener
         }
+    }
+
+    companion object {
+        // GearImageViewをクリックしたときの処理
+        private var onClickGearImageView: View.OnClickListener? = null
     }
 }
