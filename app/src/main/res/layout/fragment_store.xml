@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="viewModel"
+            type="com.splatool.ikastyle.viewModel.StoreViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout_fragmentStore"
         android:layout_width="match_parent"
@@ -19,6 +25,7 @@
             android:background="@drawable/background_round_corner"
             android:minHeight="48dp"
             android:spinnerMode="dialog"
+            android:onItemSelected="@{(parent, view, position, id) -> viewModel.onCategorySelected(parent, view, position, id)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

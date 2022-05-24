@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.splatool.ikastyle.common.Util
+import com.splatool.ikastyle.databinding.FragmentStoreBinding
 import com.splatool.ikastyle.model.data.repository.CustomizationNameRepository
 import com.splatool.ikastyle.model.data.repository.MainCategoryRepository
 import com.splatool.ikastyle.ui.CustomizationSpinnerSelectedListener
@@ -40,6 +41,9 @@ class StoreFragment : Fragment() {
     private lateinit var storeViewModel: StoreViewModel
     private lateinit var categoryAdapter : KeyValueArrayAdapter
     private lateinit var customizationAdapter : KeyValueArrayAdapter
+
+    private lateinit var binding : FragmentStoreBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -49,6 +53,7 @@ class StoreFragment : Fragment() {
 
         storeViewModel = ViewModelProvider(this, StoreViewModel.StoreFactory(categoryRepository, customizationRepository))[StoreViewModel::class.java]
 
+        // spinnerのアダプター作成
         categoryAdapter = KeyValueArrayAdapter(requireContext(), R.layout.spinner_list_item, storeViewModel.categoryPairListLiveData.value!!)
         customizationAdapter = KeyValueArrayAdapter(requireContext(), R.layout.spinner_list_item, storeViewModel.customizationPairListLiveData.value!!)
 
@@ -78,9 +83,11 @@ class StoreFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_store, container, false)
+    ): View {
+        binding = FragmentStoreBinding.inflate(inflater, container, false)
+        binding.viewModel = storeViewModel
+        binding.lifecycleOwner = this
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -111,11 +118,9 @@ class StoreFragment : Fragment() {
         customizationSpinner.adapter = customizationAdapter
 
         // リスナーを作成
-        val categoryListener = CategorySpinnerSelectedListener(view.context, customizationSpinner, storeViewModel.customizationPairListLiveData.value!!)
         val customizationListener = CustomizationSpinnerSelectedListener(recyclerView, emptyView, onClickDeleteListener)
 
         //リスナーを設定
-        categorySpinner.onItemSelectedListener = categoryListener
         customizationSpinner.onItemSelectedListener = customizationListener
 
         observeViewModel(storeViewModel)

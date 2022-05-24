@@ -10,4 +10,8 @@ class CustomizationNameRepository(private val customizationDao : CustomizationNa
     suspend fun getCustomizationList(): List<CustomizationName> {
         return customizationDao.getWeaponNameList(languageCode)
     }
+
+    suspend fun getCustomizationListByCategory(categoryId : Int) : List<CustomizationName>{
+        return customizationDao.getWeaponNameListByCategory(languageCode, categoryId)
+    }
 }
