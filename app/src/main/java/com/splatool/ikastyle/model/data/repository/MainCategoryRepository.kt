@@ -7,7 +7,16 @@ import com.splatool.ikastyle.model.data.entity.MainCategory
 class MainCategoryRepository(private val categoryDao : MainCategoryDao) {
     val languageCode = Util.getLanguageCode()
 
-    suspend fun getCategoryList(): List<MainCategory> {
-        return categoryDao.getMainCategoryList(languageCode)
+    suspend fun getCategoryList(): ArrayList<Pair<Int, String>> {
+        val categoryList = categoryDao.getMainCategoryList(languageCode)
+        return convertCategoryToPair(categoryList)
+    }
+
+    private fun convertCategoryToPair(categoryList: List<MainCategory>) : ArrayList<Pair<Int, String>>{
+        val categoryPairList : ArrayList<Pair<Int, String>> = arrayListOf()
+        categoryList.forEach{
+            categoryPairList.add(Pair(it.getAbsoluteId(), it.name))
+        }
+        return categoryPairList
     }
 }

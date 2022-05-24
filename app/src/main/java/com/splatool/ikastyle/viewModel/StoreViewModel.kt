@@ -5,11 +5,14 @@ import android.widget.AdapterView
 import android.widget.Spinner
 import androidx.lifecycle.*
 import com.splatool.ikastyle.R
+import com.splatool.ikastyle.common.Util
 import com.splatool.ikastyle.common.const.NumberPlace
 import com.splatool.ikastyle.model.data.database.AppDatabase
 import com.splatool.ikastyle.model.data.databaseView.CustomizationMain
+import com.splatool.ikastyle.model.data.entity.Loadout
 import com.splatool.ikastyle.model.data.entity.MainCategory
 import com.splatool.ikastyle.model.data.repository.CustomizationNameRepository
+import com.splatool.ikastyle.model.data.repository.LoadoutRepository
 import com.splatool.ikastyle.model.data.repository.MainCategoryRepository
 import com.splatool.ikastyle.ui.KeyValueArrayAdapter
 import kotlinx.coroutines.launch
@@ -34,37 +37,22 @@ class StoreViewModel(private val categoryRepository: MainCategoryRepository,
 
     private fun loadCategoryList(){
         viewModelScope.launch {
-            val categoryList = categoryRepository.getCategoryList()
-
-            val tempCategoryPairList : ArrayList<Pair<Int, String>> = arrayListOf()
-            categoryList.forEach{
-                tempCategoryPairList.add(Pair(it.getAbsoluteId(), it.name))
-            }
-            categoryPairListLiveData.postValue(tempCategoryPairList)
+            val categoryPairList = categoryRepository.getCategoryList()
+            categoryPairListLiveData.postValue(categoryPairList)
         }
     }
 
     private fun loadCustomizationList(){
         viewModelScope.launch {
-            val customizationList = customizationRepository.getCustomizationList()
-
-            val tempCustomizationPairList : ArrayList<Pair<Int, String>> = arrayListOf()
-            customizationList.forEach{
-                tempCustomizationPairList.add(Pair(it.getAbsoluteId(), it.name))
-            }
-            customizationPairListLiveData.postValue(tempCustomizationPairList)
+            val customizationPairList = customizationRepository.getCustomizationList()
+            customizationPairListLiveData.postValue(customizationPairList)
         }
     }
 
     private fun loadCustomizationListByCategory(categoryId : Int){
         viewModelScope.launch {
-            val customizationList = customizationRepository.getCustomizationListByCategory(categoryId)
-
-            val tempCustomizationPairList : ArrayList<Pair<Int, String>> = arrayListOf()
-            customizationList.forEach{
-                tempCustomizationPairList.add(Pair(it.getAbsoluteId(), it.name))
-            }
-            customizationPairListLiveData.postValue(tempCustomizationPairList)
+            val customizationPairList = customizationRepository.getCustomizationListByCategory(categoryId)
+            customizationPairListLiveData.postValue(customizationPairList)
         }
     }
     
@@ -75,10 +63,10 @@ class StoreViewModel(private val categoryRepository: MainCategoryRepository,
         val categoryId = ((spinner.selectedItem as Pair<*, *>).first as Int) / NumberPlace.CATEGORY_PLACE
 
         if (categoryId == 0) { // カテゴリーSpinnerで未選択項目が選ばれているとき
-            //ブキSpinnerの項目を全表示にする
+            //ブキSpinnerの項目を全表示
             loadCustomizationList()
         } else {
-            // カテゴリーSpinnerで選択したカテゴリーに属するブキだけをブキSpinnerに表示される
+            // カテゴリーSpinnerで選択したカテゴリーに属するブキだけをCustomizationSpinnerに表示
             loadCustomizationListByCategory(categoryId)
         }
     }
