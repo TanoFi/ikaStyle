@@ -1,13 +1,12 @@
 package com.splatool.ikastyle.ui
 
 import androidx.recyclerview.widget.RecyclerView
-import com.splatool.ikastyle.database.AppDatabase
+import com.splatool.ikastyle.model.data.database.AppDatabase
 import android.os.AsyncTask
-import com.splatool.ikastyle.entity.Loadout
+import com.splatool.ikastyle.model.data.entity.Loadout
 import android.widget.Spinner
 import android.widget.AdapterView
 import androidx.constraintlayout.widget.ConstraintLayout
-import android.util.Pair
 import android.view.*
 import com.splatool.ikastyle.common.Util
 

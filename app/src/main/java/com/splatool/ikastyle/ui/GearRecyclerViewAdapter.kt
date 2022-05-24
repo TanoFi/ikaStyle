@@ -3,9 +3,9 @@ package com.splatool.ikastyle.ui
 import com.splatool.ikastyle.common.const.GearKind
 import com.splatool.ikastyle.R
 import androidx.recyclerview.widget.RecyclerView
-import com.splatool.ikastyle.entity.HeadGear
-import com.splatool.ikastyle.entity.ClothingGear
-import com.splatool.ikastyle.entity.ShoesGear
+import com.splatool.ikastyle.model.data.entity.HeadGear
+import com.splatool.ikastyle.model.data.entity.ClothingGear
+import com.splatool.ikastyle.model.data.entity.ShoesGear
 import android.view.*
 import android.widget.*
 import com.splatool.ikastyle.common.Util

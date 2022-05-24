@@ -2,7 +2,7 @@ package com.splatool.ikastyle.ui
 
 import android.content.Context
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.splatool.ikastyle.entity.Loadout
+import com.splatool.ikastyle.model.data.entity.Loadout
 import android.util.AttributeSet
 
 class LoadoutDeleteButton(context: Context, attrs: AttributeSet?) :

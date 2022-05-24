@@ -2,8 +2,7 @@ package com.splatool.ikastyle.ui
 
 import com.splatool.ikastyle.R
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.splatool.ikastyle.entity.Loadout
+import com.splatool.ikastyle.model.data.entity.Loadout
 import android.view.*
 import android.widget.*
 import com.splatool.ikastyle.common.Util

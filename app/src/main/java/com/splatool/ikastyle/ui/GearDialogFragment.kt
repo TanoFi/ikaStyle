@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.splatool.ikastyle.database.AppDatabase
+import com.splatool.ikastyle.model.data.database.AppDatabase
 import android.os.AsyncTask
 import androidx.fragment.app.DialogFragment
 import com.splatool.ikastyle.common.Util

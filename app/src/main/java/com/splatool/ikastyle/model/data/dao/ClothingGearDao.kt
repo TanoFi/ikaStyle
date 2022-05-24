@@ -1,6 +1,6 @@
-package com.splatool.ikastyle.dao
+package com.splatool.ikastyle.model.data.dao
 
-import com.splatool.ikastyle.entity.ClothingGear
+import com.splatool.ikastyle.model.data.entity.ClothingGear
 import androidx.room.*
 
 @Dao

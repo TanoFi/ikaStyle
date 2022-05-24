@@ -1,6 +1,6 @@
-package com.splatool.ikastyle.dao
+package com.splatool.ikastyle.model.data.dao
 
-import com.splatool.ikastyle.databaseView.CustomizationMain
+import com.splatool.ikastyle.model.data.databaseView.CustomizationMain
 import androidx.room.*
 
 /*

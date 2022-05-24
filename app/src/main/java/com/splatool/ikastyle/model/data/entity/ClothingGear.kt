@@ -1,4 +1,4 @@
-package com.splatool.ikastyle.entity
+package com.splatool.ikastyle.model.data.entity
 
 import androidx.annotation.NonNull
 import androidx.room.*

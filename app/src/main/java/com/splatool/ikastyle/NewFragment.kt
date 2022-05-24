@@ -5,24 +5,25 @@ import com.splatool.ikastyle.common.const.GearKind
 import com.splatool.ikastyle.ui.GearDialogFragment
 import com.splatool.ikastyle.ui.GearDialogFragment.GearDialogListener
 import android.os.Bundle
-import com.splatool.ikastyle.database.AppDatabase
+import com.splatool.ikastyle.model.data.database.AppDatabase
 import android.os.AsyncTask
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.splatool.ikastyle.entity.Loadout
+import com.splatool.ikastyle.model.data.entity.Loadout
 import com.splatool.ikastyle.common.const.NumberPlace
 import com.splatool.ikastyle.ui.GearPowerReceptorImageView
 import android.widget.Spinner
 import com.splatool.ikastyle.ui.KeyValueArrayAdapter
-import com.splatool.ikastyle.entity.MainCategory
-import com.splatool.ikastyle.databaseView.CustomizationMain
+import com.splatool.ikastyle.model.data.entity.MainCategory
+import com.splatool.ikastyle.model.data.databaseView.CustomizationMain
 import android.widget.EditText
 import com.splatool.ikastyle.ui.GearImageView
 import android.widget.Toast
 import com.splatool.ikastyle.ui.CategorySpinnerSelectedListener
-import android.util.Pair
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.splatool.ikastyle.common.Util
+import com.splatool.ikastyle.viewModel.NewViewModel
 import java.util.*
 import java.util.function.Consumer
 import java.util.stream.Collectors
@@ -48,6 +49,8 @@ class NewFragment : Fragment(), GearDialogListener {
     private lateinit var shoesSub3: GearPowerReceptorImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val viewModel : NewViewModel by lazy{ViewModelProvider.NewInstanceFactory().create(NewViewModel::class.java)}
 
         // GearImageViewをクリックした時の処理を定義
         onClickGearImageView = View.OnClickListener { view ->
@@ -273,7 +276,7 @@ class NewFragment : Fragment(), GearDialogListener {
             //実際にDBにアクセスし結果を取得
             val categoryDao = db.mainCategoryDao()
             val customizationMainDao = db.customizationMainDao()
-            categoryList = categoryDao.getMainCategoryList(languageCode) //ブキカテゴリー名を取得
+            categoryList = categoryDao.getMainCategoryList_nonSuspend(languageCode) //ブキカテゴリー名を取得
             customizationMainList = customizationMainDao.getWeaponMainList(languageCode)
             return 0
         }

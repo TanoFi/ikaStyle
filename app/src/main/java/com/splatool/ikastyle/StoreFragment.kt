@@ -5,23 +5,27 @@ import android.content.Context
 import androidx.recyclerview.widget.RecyclerView
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.splatool.ikastyle.database.AppDatabase
+import com.splatool.ikastyle.model.data.database.AppDatabase
 import android.os.AsyncTask
-import com.splatool.ikastyle.entity.Loadout
+import com.splatool.ikastyle.model.data.entity.Loadout
 import com.splatool.ikastyle.ui.LoadoutDeleteButton
 import com.splatool.ikastyle.ui.KeyValueArrayAdapter
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.splatool.ikastyle.ui.LoadoutRecyclerViewAdapter
-import com.splatool.ikastyle.entity.MainCategory
-import com.splatool.ikastyle.entity.CustomizationName
+import com.splatool.ikastyle.model.data.entity.MainCategory
+import com.splatool.ikastyle.model.data.entity.CustomizationName
 import com.splatool.ikastyle.ui.CategorySpinnerSelectedListener
 import android.graphics.PorterDuff
-import android.util.Pair
 import android.view.*
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.splatool.ikastyle.common.Util
+import com.splatool.ikastyle.model.data.repository.CustomizationNameRepository
+import com.splatool.ikastyle.model.data.repository.MainCategoryRepository
 import com.splatool.ikastyle.ui.CustomizationSpinnerSelectedListener
+import com.splatool.ikastyle.viewModel.StoreViewModel
 import java.util.ArrayList
 import java.util.function.Consumer
 
@@ -32,8 +36,22 @@ class StoreFragment : Fragment() {
     private lateinit var emptyView: ConstraintLayout
     private val colorNum = Util.getRandomColor()
     private lateinit var onClickDeleteListener: View.OnClickListener
+
+    private lateinit var storeViewModel: StoreViewModel
+    private lateinit var categoryAdapter : KeyValueArrayAdapter
+    private lateinit var customizationAdapter : KeyValueArrayAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val db : AppDatabase = AppDatabase.getDatabase(requireContext())
+        val categoryRepository = MainCategoryRepository(db.mainCategoryDao())
+        val customizationRepository = CustomizationNameRepository(db.customizationNameDao())
+
+        storeViewModel = ViewModelProvider(this, StoreViewModel.StoreFactory(categoryRepository, customizationRepository))[StoreViewModel::class.java]
+
+        categoryAdapter = KeyValueArrayAdapter(requireContext(), R.layout.spinner_list_item, storeViewModel.categoryPairListLiveData.value!!)
+        customizationAdapter = KeyValueArrayAdapter(requireContext(), R.layout.spinner_list_item, storeViewModel.customizationPairListLiveData.value!!)
+
 
         // deleteボタンを押したときの処理
         onClickDeleteListener = View.OnClickListener { view ->
@@ -45,7 +63,6 @@ class StoreFragment : Fragment() {
                 ) { dialogInterface, i ->
 
                     // データ削除
-                    val db: AppDatabase = AppDatabase.getDatabase(requireContext())
                     val loadout = (view as LoadoutDeleteButton).loadout!!
                     val task = DeleteLoadoutAsyncTask(db, loadout)
                     task.execute()
@@ -84,91 +101,45 @@ class StoreFragment : Fragment() {
         val inkMarkImageView = view.findViewById<ImageView?>(R.id.imageView_ink_mark)
         inkMarkImageView.setColorFilter(colorNum, PorterDuff.Mode.SRC_ATOP)
 
-        // Spinnerの項目に設定するためのDBを取得
-        val db: AppDatabase = AppDatabase.getDatabase(view.context)
-        // SpinnerDataGetAsyncTaskクラス内でContextを取得できなかったためにonPostExecute()だけインスタンス作成時に記述
-        val task = GetDataAndSetSpinnerAsyncTask(db, view.context)
-        task.execute()
+
+        // レイアウトを付与
+        categoryAdapter.setDropDownViewResource(R.layout.spinner_list_dropdown_item)
+        customizationAdapter.setDropDownViewResource(R.layout.spinner_list_dropdown_item)
+
+        // Spinnerにアダプターを設定
+        categorySpinner.adapter = categoryAdapter
+        customizationSpinner.adapter = customizationAdapter
+
+        // リスナーを作成
+        val categoryListener = CategorySpinnerSelectedListener(view.context, customizationSpinner, storeViewModel.customizationPairListLiveData.value!!)
+        val customizationListener = CustomizationSpinnerSelectedListener(recyclerView, emptyView, onClickDeleteListener)
+
+        //リスナーを設定
+        categorySpinner.onItemSelectedListener = categoryListener
+        customizationSpinner.onItemSelectedListener = customizationListener
+
+        observeViewModel(storeViewModel)
     }
 
-    /*
-     * 非同期でDBからデータ取得しスピナーにセットするクラス
-     */
-    private inner class GetDataAndSetSpinnerAsyncTask(
-        private val db: AppDatabase,
-        private val context: Context
-    ) : AsyncTask<Void?, Void?, Int?>() {
-        lateinit var categoryList: List<MainCategory>
-        lateinit var customizationNameList: List<CustomizationName>
-        override fun doInBackground(vararg params: Void?): Int {
-            //端末の言語設定を取得
-            val languageCode = Util.getLanguageCode()
-
-            //実際にDBにアクセスし結果を取得
-            val categoryDao = db.mainCategoryDao()
-            val customizationNameDao = db.customizationNameDao()
-            categoryList = categoryDao.getMainCategoryList(languageCode) //ブキカテゴリー名を取得
-            customizationNameList = customizationNameDao.getWeaponNameList(languageCode)
-            return 0
+    private fun observeViewModel(viewModel: StoreViewModel){
+        val categoryObserver = Observer<ArrayList<Pair<Int,String>>>{
+            it.let{
+                categoryAdapter.clear()
+                categoryAdapter.addAll(it)
+                categoryAdapter.notifyDataSetChanged()
+            }
         }
 
-        override fun onPostExecute(code: Int?) {
-            // Spinnerに渡す用のリストを作成
-            val categoryKeyValueList = ArrayList<Pair<Int, String>>()
-            val customizationKeyValueList = ArrayList<Pair<Int, String>>()
-
-            // それぞれのリストの一番上に未選択時の項目を追加
-            categoryKeyValueList.add(
-                Pair(
-                    0,
-                    context.getString(R.string.spinnerItem_categoryUnselected)
-                )
-            )
-            customizationKeyValueList.add(
-                Pair(
-                    0,
-                    context.getString(R.string.spinnerItem_weaponUnselected)
-                )
-            )
-
-            //それぞれのリストにデータ(IDと名前のペア)を入れる
-            categoryList.forEach(Consumer { x: MainCategory ->
-                categoryKeyValueList.add(
-                    Pair(
-                        x.getAbsoluteId(), x.name)
-                )
-            })
-            customizationNameList.forEach(Consumer { x: CustomizationName ->
-                customizationKeyValueList.add(
-                    Pair(x.getAbsoluteId(), x.name)
-                )
-            })
-
-            //アダプター作成
-            val categoryAdapter =
-                KeyValueArrayAdapter(context, R.layout.spinner_list_item, categoryKeyValueList)
-            val customizationAdapter =
-                KeyValueArrayAdapter(context, R.layout.spinner_list_item, customizationKeyValueList)
-
-            //レイアウトを付与
-            categoryAdapter.setDropDownViewResource(R.layout.spinner_list_dropdown_item)
-            customizationAdapter.setDropDownViewResource(R.layout.spinner_list_dropdown_item)
-
-            //スピナーにアダプターを設定
-            categorySpinner.adapter = categoryAdapter
-            customizationSpinner.adapter = customizationAdapter
-
-            //リスナーを作成
-            val categoryListener = CategorySpinnerSelectedListener(
-                context, customizationSpinner, customizationKeyValueList
-            )
-            val customizationListener =
-                CustomizationSpinnerSelectedListener(recyclerView, emptyView, onClickDeleteListener)
-
-            //リスナーを設定
-            categorySpinner.onItemSelectedListener = categoryListener
-            customizationSpinner.onItemSelectedListener = customizationListener
+        val customizationObserver = Observer<ArrayList<Pair<Int, String>>>{
+            it.let{
+                customizationAdapter.clear()
+                customizationAdapter.addAll(it)
+                customizationAdapter.notifyDataSetChanged()
+            }
         }
+
+        viewModel.categoryPairListLiveData.observe(viewLifecycleOwner, categoryObserver)
+        viewModel.customizationPairListLiveData.observe(viewLifecycleOwner, customizationObserver)
     }
 
     /*

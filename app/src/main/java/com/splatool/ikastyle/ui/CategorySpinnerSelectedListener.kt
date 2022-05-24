@@ -5,7 +5,6 @@ import com.splatool.ikastyle.R
 import com.splatool.ikastyle.common.const.NumberPlace
 import android.widget.Spinner
 import android.widget.AdapterView
-import android.util.Pair
 import android.view.*
 import java.util.ArrayList
 
@@ -20,12 +19,12 @@ class CategorySpinnerSelectedListener(
         // 絶対IDからカテゴリーIDを割り出す
         val categoryId = ((spinner.selectedItem as Pair<*, *>).first as Int) / NumberPlace.CATEGORY_PLACE
 
-        val selectedKeyValueList: List<Pair<Int, String>> = if (categoryId == 0) { // カテゴリーSpinnerで未選択項目が選ばれているとき
+        val selectedKeyValueList: ArrayList<Pair<Int, String>> = if (categoryId == 0) { // カテゴリーSpinnerで未選択項目が選ばれているとき
             //ブキSpinnerの項目を全表示にする
             keyValueList
         } else {
             // カテゴリーSpinnerで選択したカテゴリーに属するブキだけをブキSpinnerに表示される
-            keyValueList.filter{it.first / NumberPlace.CATEGORY_PLACE == categoryId || it.first == 0}
+            (keyValueList.filter{it.first / NumberPlace.CATEGORY_PLACE == categoryId || it.first == 0}.toMutableList()) as ArrayList<Pair<Int, String>>
         }
         val newAdapter =
             KeyValueArrayAdapter(context, R.layout.spinner_list_item, selectedKeyValueList)

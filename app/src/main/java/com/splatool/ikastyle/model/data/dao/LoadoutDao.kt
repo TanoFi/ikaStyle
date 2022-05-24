@@ -1,6 +1,6 @@
-package com.splatool.ikastyle.dao
+package com.splatool.ikastyle.model.data.dao
 
-import com.splatool.ikastyle.entity.Loadout
+import com.splatool.ikastyle.model.data.entity.Loadout
 import androidx.room.*
 
 @Dao

@@ -1,7 +1,6 @@
 package com.splatool.ikastyle.ui
 
 import android.content.Context
-import android.util.Pair
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +14,7 @@ import com.splatool.ikastyle.common.const.NumberPlace
 class KeyValueArrayAdapter(
     context: Context,
     layoutResourceId: Int,
-    keyValues: List<Pair<Int, String>>
+    keyValues: ArrayList<Pair<Int, String>>
 ) : ArrayAdapter<Pair<Int, String>>(context, layoutResourceId, keyValues) {
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 
