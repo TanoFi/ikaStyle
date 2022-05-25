@@ -23,7 +23,13 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.splatool.ikastyle.common.Util
+import com.splatool.ikastyle.databinding.FragmentNewBinding
+import com.splatool.ikastyle.databinding.FragmentStoreBinding
+import com.splatool.ikastyle.model.data.repository.CustomizationMainRepository
+import com.splatool.ikastyle.model.data.repository.LoadoutRepository
+import com.splatool.ikastyle.model.data.repository.MainCategoryRepository
 import com.splatool.ikastyle.viewModel.NewViewModel
+import androidx.lifecycle.Observer
 import java.util.*
 import java.util.function.Consumer
 import java.util.stream.Collectors
@@ -47,10 +53,26 @@ class NewFragment : Fragment(), GearDialogListener {
     private lateinit var shoesSub1: GearPowerReceptorImageView
     private lateinit var shoesSub2: GearPowerReceptorImageView
     private lateinit var shoesSub3: GearPowerReceptorImageView
+
+    private lateinit var newViewModel : NewViewModel
+    private lateinit var categoryAdapter: KeyValueArrayAdapter
+    private lateinit var weaponAdapter : KeyValueArrayAdapter
+
+    private lateinit var binding : FragmentNewBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val viewModel : NewViewModel by lazy{ViewModelProvider.NewInstanceFactory().create(NewViewModel::class.java)}
+        val db : AppDatabase = AppDatabase.getDatabase(requireContext())
+        val categoryRepository = MainCategoryRepository(db.mainCategoryDao())
+        val customizationMainRepository = CustomizationMainRepository(db.customizationMainDao())
+        val loadoutRepository = LoadoutRepository(db.loadoutDao())
+
+        newViewModel = ViewModelProvider(this, NewViewModel.NewFactory(categoryRepository, customizationMainRepository, loadoutRepository))[NewViewModel::class.java]
+
+        // spinnerのアダプター作成
+        categoryAdapter = KeyValueArrayAdapter(requireContext(), R.layout.spinner_list_item, newViewModel.categoryPairListLiveData.value!!)
+        weaponAdapter = KeyValueArrayAdapter(requireContext(), R.layout.spinner_list_item, newViewModel.weaponPairListLiveData.value!!)
 
         // GearImageViewをクリックした時の処理を定義
         onClickGearImageView = View.OnClickListener { view ->
@@ -62,9 +84,11 @@ class NewFragment : Fragment(), GearDialogListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_new, container, false)
+    ): View {
+        binding = FragmentNewBinding.inflate(inflater, container, false)
+        binding.viewModel = newViewModel
+        binding.lifecycleOwner = this
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -91,11 +115,14 @@ class NewFragment : Fragment(), GearDialogListener {
         shoesSub2 = view.findViewById(R.id.receptorImageView_shoes_sub2)
         shoesSub3 = view.findViewById(R.id.receptorImageView_shoes_sub3)
 
-        // Spinnerの項目に設定するためのDBを取得
-        val db: AppDatabase = AppDatabase.getDatabase(view.context)
-        // DBからデータを取得しスピナーにセット
-        val task = GetDataAndSetSpinnerAsyncTask(db, view.context, categorySpinner, weaponSpinner)
-        task.execute()
+        // レイアウトを付与
+        categoryAdapter.setDropDownViewResource(R.layout.spinner_list_dropdown_item)
+        weaponAdapter.setDropDownViewResource(R.layout.spinner_list_dropdown_item)
+
+        // Spinnerにアダプターを設定
+        categorySpinner.adapter = categoryAdapter
+        weaponSpinner.adapter = weaponAdapter
+
         val saveButton: FloatingActionButton = view.findViewById(R.id.floatingActionButton_save)
         saveButton.setOnClickListener { x: View? ->
             if (checkUserInput()) { //入力チェック
@@ -111,6 +138,29 @@ class NewFragment : Fragment(), GearDialogListener {
 
         // GearImageViewにonClickListenerをまとめてセット
         setOnClickListener(headGear, clothingGear, shoesGear)
+
+        observeViewModel(newViewModel)
+    }
+
+    private fun observeViewModel(viewModel: NewViewModel){
+        val categoryObserver = Observer<ArrayList<Pair<Int, String>>>{
+            it.let{
+                categoryAdapter.clear()
+                categoryAdapter.addAll(it)
+                categoryAdapter.notifyDataSetChanged()
+            }
+        }
+
+        val weaponObserver = Observer<ArrayList<Pair<Int, String>>>{
+            it.let{
+                weaponAdapter.clear()
+                weaponAdapter.addAll(it)
+                weaponAdapter.notifyDataSetChanged()
+            }
+        }
+
+        viewModel.categoryPairListLiveData.observe(viewLifecycleOwner, categoryObserver)
+        viewModel.weaponPairListLiveData.observe(viewLifecycleOwner, weaponObserver)
     }
 
     override fun onListItemClick(
@@ -258,103 +308,103 @@ class NewFragment : Fragment(), GearDialogListener {
         }
     }
 
-    /*
-     * 非同期でDBからデータ取得しスピナーにセットするクラス
-     */
-    private inner class GetDataAndSetSpinnerAsyncTask(
-        private val db: AppDatabase,
-        private val context: Context,
-        private val categorySpinner: Spinner,
-        private val weaponSpinner: Spinner
-    ) : AsyncTask<Void?, Void?, Int>() {
-        lateinit var categoryList: List<MainCategory>
-        lateinit var customizationMainList: List<CustomizationMain>
-        override fun doInBackground(vararg params: Void?): Int {
-            //端末の言語設定を取得
-            val languageCode = Util.getLanguageCode()
-
-            //実際にDBにアクセスし結果を取得
-            val categoryDao = db.mainCategoryDao()
-            val customizationMainDao = db.customizationMainDao()
-            categoryList = categoryDao.getMainCategoryList_nonSuspend(languageCode) //ブキカテゴリー名を取得
-            customizationMainList = customizationMainDao.getWeaponMainList(languageCode)
-            return 0
-        }
-
-        override fun onPostExecute(code: Int) {
-            // ひとつのメインウェポン : そのメインウェポンを持つブキセットのリスト でMapを作成
-            // 昇順でソートしたいのでTreeMap
-            val customizationMainMap = TreeMap(customizationMainList.stream().collect(
-                Collectors.groupingBy { x: CustomizationMain -> x.categoryId * NumberPlace.CATEGORY_PLACE + x.mainId * NumberPlace.MAIN_PLACE }
-            ))
-
-            // Spinnerに渡す用のリストを作成
-            val categoryKeyValueList = ArrayList<Pair<Int, String>>()
-            val mainAndCustomizationKeyValueList = ArrayList<Pair<Int, String>>()
-
-            // それぞれのリストの一番上に未選択時の項目を追加
-            categoryKeyValueList.add(
-                Pair(
-                    0,
-                    context.getString(R.string.spinnerItem_categoryUnselected)
-                )
-            )
-            mainAndCustomizationKeyValueList.add(
-                Pair(
-                    0,
-                    context.getString(R.string.spinnerItem_weaponUnselected)
-                )
-            )
-
-            //それぞれのリストにデータ(IDと名前のペア)を入れる
-            categoryList.forEach(Consumer { x: MainCategory ->
-                categoryKeyValueList.add(
-                    Pair(
-                        x.getAbsoluteId(),
-                        x.name
-                    )
-                )
-            })
-            for ((key, value) in customizationMainMap) {
-                mainAndCustomizationKeyValueList.add(
-                    Pair(
-                        key,
-                        value[0].mainName
-                    )
-                ) //メインウェポンのデータをAdd
-                value.forEach(Consumer { x: CustomizationMain ->
-                    mainAndCustomizationKeyValueList.add(
-                        Pair(x.getAbsoluteId(), x.weaponName)
-                    )
-                }) //ブキセットのデータをAdd
-            }
-
-            //アダプター作成
-            val categoryAdapter =
-                KeyValueArrayAdapter(context, R.layout.spinner_list_item, categoryKeyValueList)
-            val weaponAdapter = KeyValueArrayAdapter(
-                context,
-                R.layout.spinner_list_item,
-                mainAndCustomizationKeyValueList
-            )
-
-            //レイアウトを付与
-            categoryAdapter.setDropDownViewResource(R.layout.spinner_list_dropdown_item)
-            weaponAdapter.setDropDownViewResource(R.layout.spinner_list_dropdown_item)
-
-            //スピナーにアダプターを設定
-            categorySpinner.adapter = categoryAdapter
-            weaponSpinner.adapter = weaponAdapter
-
-            //リスナーを作成
-            val categoryListener = CategorySpinnerSelectedListener(
-                requireContext(), weaponSpinner, mainAndCustomizationKeyValueList
-            )
-
-            //リスナーを設定
-            categorySpinner.onItemSelectedListener = categoryListener
-        }
-    }
+//    /*
+//     * 非同期でDBからデータ取得しスピナーにセットするクラス
+//     */
+//    private inner class GetDataAndSetSpinnerAsyncTask(
+//        private val db: AppDatabase,
+//        private val context: Context,
+//        private val categorySpinner: Spinner,
+//        private val weaponSpinner: Spinner
+//    ) : AsyncTask<Void?, Void?, Int>() {
+//        lateinit var categoryList: List<MainCategory>
+//        lateinit var customizationMainList: List<CustomizationMain>
+//        override fun doInBackground(vararg params: Void?): Int {
+//            //端末の言語設定を取得
+//            val languageCode = Util.getLanguageCode()
+//
+//            //実際にDBにアクセスし結果を取得
+//            val categoryDao = db.mainCategoryDao()
+//            val customizationMainDao = db.customizationMainDao()
+//            categoryList = categoryDao.getMainCategoryList_nonSuspend(languageCode) //ブキカテゴリー名を取得
+//            customizationMainList = customizationMainDao.getWeaponMainList(languageCode)
+//            return 0
+//        }
+//
+//        override fun onPostExecute(code: Int) {
+//            // ひとつのメインウェポン : そのメインウェポンを持つブキセットのリスト でMapを作成
+//            // 昇順でソートしたいのでTreeMap
+//            val customizationMainMap = TreeMap(customizationMainList.stream().collect(
+//                Collectors.groupingBy { x: CustomizationMain -> x.categoryId * NumberPlace.CATEGORY_PLACE + x.mainId * NumberPlace.MAIN_PLACE }
+//            ))
+//
+//            // Spinnerに渡す用のリストを作成
+//            val categoryKeyValueList = ArrayList<Pair<Int, String>>()
+//            val mainAndCustomizationKeyValueList = ArrayList<Pair<Int, String>>()
+//
+//            // それぞれのリストの一番上に未選択時の項目を追加
+//            categoryKeyValueList.add(
+//                Pair(
+//                    0,
+//                    context.getString(R.string.spinnerItem_categoryUnselected)
+//                )
+//            )
+//            mainAndCustomizationKeyValueList.add(
+//                Pair(
+//                    0,
+//                    context.getString(R.string.spinnerItem_weaponUnselected)
+//                )
+//            )
+//
+//            //それぞれのリストにデータ(IDと名前のペア)を入れる
+//            categoryList.forEach(Consumer { x: MainCategory ->
+//                categoryKeyValueList.add(
+//                    Pair(
+//                        x.getAbsoluteId(),
+//                        x.name
+//                    )
+//                )
+//            })
+//            for ((key, value) in customizationMainMap) {
+//                mainAndCustomizationKeyValueList.add(
+//                    Pair(
+//                        key,
+//                        value[0].mainName
+//                    )
+//                ) //メインウェポンのデータをAdd
+//                value.forEach(Consumer { x: CustomizationMain ->
+//                    mainAndCustomizationKeyValueList.add(
+//                        Pair(x.getAbsoluteId(), x.weaponName)
+//                    )
+//                }) //ブキセットのデータをAdd
+//            }
+//
+//            //アダプター作成
+//            val categoryAdapter =
+//                KeyValueArrayAdapter(context, R.layout.spinner_list_item, categoryKeyValueList)
+//            val weaponAdapter = KeyValueArrayAdapter(
+//                context,
+//                R.layout.spinner_list_item,
+//                mainAndCustomizationKeyValueList
+//            )
+//
+//            //レイアウトを付与
+//            categoryAdapter.setDropDownViewResource(R.layout.spinner_list_dropdown_item)
+//            weaponAdapter.setDropDownViewResource(R.layout.spinner_list_dropdown_item)
+//
+//            //スピナーにアダプターを設定
+//            categorySpinner.adapter = categoryAdapter
+//            weaponSpinner.adapter = weaponAdapter
+//
+//            //リスナーを作成
+//            val categoryListener = CategorySpinnerSelectedListener(
+//                requireContext(), weaponSpinner, mainAndCustomizationKeyValueList
+//            )
+//
+//            //リスナーを設定
+//            categorySpinner.onItemSelectedListener = categoryListener
+//        }
+//    }
 
     companion object {
         // GearImageViewをクリックしたときの処理

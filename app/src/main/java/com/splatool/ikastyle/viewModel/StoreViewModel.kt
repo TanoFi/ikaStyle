@@ -31,7 +31,7 @@ class StoreViewModel(private val categoryRepository: MainCategoryRepository,
         // LiveDataに初期値を入れる
         categoryPairListLiveData.value = arrayListOf()
         customizationPairListLiveData.value = arrayListOf()
-        
+
         loadCategoryList()
         loadCustomizationList()
     }
