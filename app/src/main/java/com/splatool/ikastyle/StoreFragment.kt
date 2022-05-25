@@ -32,18 +32,14 @@ import java.util.ArrayList
 import java.util.function.Consumer
 
 class StoreFragment : Fragment() {
-    private lateinit var categorySpinner: Spinner
-    private lateinit var customizationSpinner: Spinner
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var emptyView: ConstraintLayout
-    private val colorNum = Util.getRandomColor()
-
     private lateinit var storeViewModel: StoreViewModel
     private lateinit var categoryAdapter : KeyValueArrayAdapter
     private lateinit var customizationAdapter : KeyValueArrayAdapter
     private lateinit var loadoutAdapter: LoadoutRecyclerViewAdapter
 
     private lateinit var binding : FragmentStoreBinding
+
+    private val colorNum = Util.getRandomColor()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +55,10 @@ class StoreFragment : Fragment() {
         categoryAdapter = KeyValueArrayAdapter(requireContext(), R.layout.spinner_list_item, storeViewModel.getCategoryPairListLiveData().value ?: arrayListOf())
         customizationAdapter = KeyValueArrayAdapter(requireContext(), R.layout.spinner_list_item, storeViewModel.getCustomizationPairListLiveData().value ?: arrayListOf())
 
+        // レイアウトを付与
+        categoryAdapter.setDropDownViewResource(R.layout.spinner_list_dropdown_item)
+        customizationAdapter.setDropDownViewResource(R.layout.spinner_list_dropdown_item)
+
         // recyclerViewのアダプター作成
         loadoutAdapter = LoadoutRecyclerViewAdapter(storeViewModel)
     }
@@ -69,6 +69,8 @@ class StoreFragment : Fragment() {
     ): View {
         binding = FragmentStoreBinding.inflate(inflater, container, false)
         binding.viewModel = storeViewModel
+        binding.spinnerCategory.adapter = categoryAdapter
+        binding.spinnerWeapon.adapter = customizationAdapter
         binding.recyclerViewLoadouts.adapter = loadoutAdapter
         binding.lifecycleOwner = this
         return binding.root
@@ -77,28 +79,13 @@ class StoreFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // スピナーを取得
-        categorySpinner = view.findViewById(R.id.spinner_category)
-        customizationSpinner = view.findViewById(R.id.spinner_weapon)
-
-        // RecyclerViewを取得
-        recyclerView = view.findViewById(R.id.recyclerView_loadouts)
-        recyclerView.setHasFixedSize(true)
+        binding.recyclerViewLoadouts.setHasFixedSize(true)
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(view.context)
-        recyclerView.layoutManager = layoutManager
+        binding.recyclerViewLoadouts.layoutManager = layoutManager
 
-        // ギアセット未登録時に表示するViewを設定
-        emptyView = view.findViewById(R.id.constrainLayout_emptyInfo)
-        val inkMarkImageView = view.findViewById<ImageView?>(R.id.imageView_ink_mark)
-        inkMarkImageView.setColorFilter(colorNum, PorterDuff.Mode.SRC_ATOP)
+        // ギアセット未登録時に表示する画像にランダム色を設定
+        binding.imageViewInkMark.setColorFilter(colorNum, PorterDuff.Mode.SRC_ATOP)
 
-        // レイアウトを付与
-        categoryAdapter.setDropDownViewResource(R.layout.spinner_list_dropdown_item)
-        customizationAdapter.setDropDownViewResource(R.layout.spinner_list_dropdown_item)
-
-        // Spinnerにアダプターを設定
-        categorySpinner.adapter = categoryAdapter
-        customizationSpinner.adapter = customizationAdapter
 
         observeViewModel(storeViewModel)
     }
@@ -121,10 +108,10 @@ class StoreFragment : Fragment() {
                 loadoutAdapter.setLoadoutList(it)
 
                 if(it.size == 0){
-                    emptyView.visibility = View.VISIBLE
+                    binding.constrainLayoutEmptyInfo.visibility = View.VISIBLE
                 }
                 else{
-                    emptyView.visibility = View.GONE
+                    binding.constrainLayoutEmptyInfo.visibility = View.GONE
                 }
             }
         }

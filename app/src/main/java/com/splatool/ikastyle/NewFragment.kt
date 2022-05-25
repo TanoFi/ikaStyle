@@ -35,25 +35,6 @@ import java.util.function.Consumer
 import java.util.stream.Collectors
 
 class NewFragment : Fragment(), GearDialogListener {
-    private lateinit var categorySpinner: Spinner
-    private lateinit var weaponSpinner: Spinner
-    private lateinit var loadoutName: EditText
-    private lateinit var headGear: GearImageView
-    private lateinit var headMain: GearPowerReceptorImageView
-    private lateinit var headSub1: GearPowerReceptorImageView
-    private lateinit var headSub2: GearPowerReceptorImageView
-    private lateinit var headSub3: GearPowerReceptorImageView
-    private lateinit var clothingGear: GearImageView
-    private lateinit var clothingMain: GearPowerReceptorImageView
-    private lateinit var clothingSub1: GearPowerReceptorImageView
-    private lateinit var clothingSub2: GearPowerReceptorImageView
-    private lateinit var clothingSub3: GearPowerReceptorImageView
-    private lateinit var shoesGear: GearImageView
-    private lateinit var shoesMain: GearPowerReceptorImageView
-    private lateinit var shoesSub1: GearPowerReceptorImageView
-    private lateinit var shoesSub2: GearPowerReceptorImageView
-    private lateinit var shoesSub3: GearPowerReceptorImageView
-
     private lateinit var newViewModel : NewViewModel
     private lateinit var categoryAdapter: KeyValueArrayAdapter
     private lateinit var weaponAdapter : KeyValueArrayAdapter
@@ -90,6 +71,8 @@ class NewFragment : Fragment(), GearDialogListener {
     ): View {
         binding = FragmentNewBinding.inflate(inflater, container, false)
         binding.viewModel = newViewModel
+        binding.spinnerCategory.adapter = categoryAdapter
+        binding.spinnerWeapon.adapter = weaponAdapter
         binding.lifecycleOwner = this
         return binding.root
     }
@@ -97,50 +80,15 @@ class NewFragment : Fragment(), GearDialogListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Spinnerの画面要素を取得
-        categorySpinner = view.findViewById(R.id.spinner_category)
-        weaponSpinner = view.findViewById(R.id.spinner_weapon)
-
-        // textViewの画面要素を取得
-        loadoutName = view.findViewById(R.id.editText_loadoutName)
-
-        // GearPowerReceptorImageViewの画面要素を取得
-        headMain = view.findViewById(R.id.receptorImageView_head_main)
-        headSub1 = view.findViewById(R.id.receptorImageView_head_sub1)
-        headSub2 = view.findViewById(R.id.receptorImageView_head_sub2)
-        headSub3 = view.findViewById(R.id.receptorImageView_head_sub3)
-        clothingMain = view.findViewById(R.id.receptorImageView_clothing_main)
-        clothingSub1 = view.findViewById(R.id.receptorImageView_clothing_sub1)
-        clothingSub2 = view.findViewById(R.id.receptorImageView_clothing_sub2)
-        clothingSub3 = view.findViewById(R.id.receptorImageView_clothing_sub3)
-        shoesMain = view.findViewById(R.id.receptorImageView_shoes_main)
-        shoesSub1 = view.findViewById(R.id.receptorImageView_shoes_sub1)
-        shoesSub2 = view.findViewById(R.id.receptorImageView_shoes_sub2)
-        shoesSub3 = view.findViewById(R.id.receptorImageView_shoes_sub3)
-
-        // レイアウトを付与
-        categoryAdapter.setDropDownViewResource(R.layout.spinner_list_dropdown_item)
-        weaponAdapter.setDropDownViewResource(R.layout.spinner_list_dropdown_item)
-
-        // Spinnerにアダプターを設定
-        categorySpinner.adapter = categoryAdapter
-        weaponSpinner.adapter = weaponAdapter
-
-        val saveButton: FloatingActionButton = view.findViewById(R.id.floatingActionButton_save)
-        saveButton.setOnClickListener { x: View? ->
+        binding.floatingActionButtonSave.setOnClickListener { x: View? ->
             if (checkUserInput()) { //入力チェック
                 // DBに保存
                 save()
             }
         }
 
-        // GearImageViewの画面要素を取得
-        headGear = view.findViewById(R.id.gearImageView_head)
-        clothingGear = view.findViewById(R.id.gearImageView_clothing)
-        shoesGear = view.findViewById(R.id.gearImageView_shoes)
-
         // GearImageViewにonClickListenerをまとめてセット
-        setOnClickListener(headGear, clothingGear, shoesGear)
+        setOnClickListener(binding.gearImageViewHead, binding.gearImageViewClothing, binding.gearImageViewShoes)
 
         observeViewModel(newViewModel)
     }
@@ -168,9 +116,9 @@ class NewFragment : Fragment(), GearDialogListener {
         gearId: Int
     ) {
         when (gearKind) {
-            GearKind.HEAD -> headGear.gearId = gearId
-            GearKind.CLOTHING -> clothingGear.gearId = gearId
-            GearKind.SHOES -> shoesGear.gearId = gearId
+            GearKind.HEAD -> binding.gearImageViewHead.gearId = gearId
+            GearKind.CLOTHING -> binding.gearImageViewClothing.gearId = gearId
+            GearKind.SHOES -> binding.gearImageViewShoes.gearId = gearId
         }
     }
 
@@ -180,7 +128,7 @@ class NewFragment : Fragment(), GearDialogListener {
      */
     private fun checkUserInput(): Boolean {
         // ブキSpinnerが未選択状態
-        if ((weaponSpinner.selectedItem as Pair<Int, String>).first == 0) {
+        if ((binding.spinnerCategory.selectedItem as Pair<Int, String>).first == 0) {
             // Toastでメッセージ表示
             val toast = Toast.makeText(
                 context,
@@ -192,7 +140,7 @@ class NewFragment : Fragment(), GearDialogListener {
         }
 
         // メインギアパワーが設定されていない
-        if (headMain.gearPowerKind == 0 || clothingMain.gearPowerKind == 0 || shoesMain.gearPowerKind == 0) {
+        if (binding.receptorImageViewHeadMain.gearPowerKind == 0 || binding.receptorImageViewClothingMain.gearPowerKind == 0 || binding.receptorImageViewShoesMain.gearPowerKind == 0) {
             // Toastでメッセージ表示
             val toast = Toast.makeText(
                 context,
@@ -210,30 +158,30 @@ class NewFragment : Fragment(), GearDialogListener {
      */
     private fun save() {
         // 選択したブキの絶対ID
-        val absoluteId: Int = (weaponSpinner.selectedItem as Pair<Int, String>).first
+        val absoluteId: Int = (binding.spinnerWeapon.selectedItem as Pair<Int, String>).first
 
         // Insert用のLoadoutインスタンス作成
         val loadout = Loadout(
             0, // IDが自動生成されるので適当に0をInsert
-            loadoutName.text.toString(),
+            binding.editTextLoadoutName.text.toString(),
             Util.getCategoryId(absoluteId),
             Util.getMainId(absoluteId),
             Util.getCustomizationId(absoluteId),
-            headGear.gearId,
-            headMain.gearPowerKind,
-            headSub1.gearPowerKind,
-            headSub2.gearPowerKind,
-            headSub3.gearPowerKind,
-            clothingGear.gearId,
-            clothingMain.gearPowerKind,
-            clothingSub1.gearPowerKind,
-            clothingSub2.gearPowerKind,
-            clothingSub3.gearPowerKind,
-            shoesGear.gearId,
-            shoesMain.gearPowerKind,
-            shoesSub1.gearPowerKind,
-            shoesSub2.gearPowerKind,
-            shoesSub3.gearPowerKind,
+            binding.gearImageViewHead.gearId,
+            binding.receptorImageViewHeadMain.gearPowerKind,
+            binding.receptorImageViewHeadSub1.gearPowerKind,
+            binding.receptorImageViewHeadSub2.gearPowerKind,
+            binding.receptorImageViewHeadSub3.gearPowerKind,
+            binding.gearImageViewClothing.gearId,
+            binding.receptorImageViewClothingMain.gearPowerKind,
+            binding.receptorImageViewClothingSub1.gearPowerKind,
+            binding.receptorImageViewClothingSub2.gearPowerKind,
+            binding.receptorImageViewClothingSub3.gearPowerKind,
+            binding.gearImageViewShoes.gearId,
+            binding.receptorImageViewShoesMain.gearPowerKind,
+            binding.receptorImageViewShoesSub1.gearPowerKind,
+            binding.receptorImageViewShoesSub2.gearPowerKind,
+            binding.receptorImageViewShoesSub3.gearPowerKind,
             System.currentTimeMillis()
         )
         val db: AppDatabase = AppDatabase.getDatabase(requireContext())
@@ -253,30 +201,30 @@ class NewFragment : Fragment(), GearDialogListener {
     // View初期化用メソッド
     private fun init() {
         // Spinner選択項目初期化
-        categorySpinner.setSelection(0)
-        weaponSpinner.setSelection(0)
+        binding.spinnerCategory.setSelection(0)
+        binding.spinnerWeapon.setSelection(0)
 
         // TextView文字入力初期化
-        loadoutName.setText("")
+        binding.editTextLoadoutName.setText("")
 
         // GearImageView選択項目初期化
-        headGear.init()
-        clothingGear.init()
-        shoesGear.init()
+        binding.gearImageViewHead.init()
+        binding.gearImageViewClothing.init()
+        binding.gearImageViewShoes.init()
 
         // ReceptorImageView設定ギア初期化
-        headMain.init()
-        headSub1.init()
-        headSub2.init()
-        headSub3.init()
-        clothingMain.init()
-        clothingSub1.init()
-        clothingSub2.init()
-        clothingSub3.init()
-        shoesMain.init()
-        shoesSub1.init()
-        shoesSub2.init()
-        shoesSub3.init()
+        binding.receptorImageViewHeadMain.init()
+        binding.receptorImageViewHeadSub1.init()
+        binding.receptorImageViewHeadSub2.init()
+        binding.receptorImageViewHeadSub3.init()
+        binding.receptorImageViewClothingMain.init()
+        binding.receptorImageViewClothingSub1.init()
+        binding.receptorImageViewClothingSub2.init()
+        binding.receptorImageViewClothingSub3.init()
+        binding.receptorImageViewShoesMain.init()
+        binding.receptorImageViewShoesSub1.init()
+        binding.receptorImageViewShoesSub2.init()
+        binding.receptorImageViewShoesSub3.init()
     }
 
     /*
