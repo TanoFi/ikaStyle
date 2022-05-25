@@ -71,8 +71,8 @@ class NewFragment : Fragment(), GearDialogListener {
         newViewModel = ViewModelProvider(this, NewViewModel.NewFactory(categoryRepository, customizationMainRepository, loadoutRepository))[NewViewModel::class.java]
 
         // spinnerのアダプター作成
-        categoryAdapter = KeyValueArrayAdapter(requireContext(), R.layout.spinner_list_item, newViewModel.categoryPairListLiveData.value!!)
-        weaponAdapter = KeyValueArrayAdapter(requireContext(), R.layout.spinner_list_item, newViewModel.weaponPairListLiveData.value!!)
+        categoryAdapter = KeyValueArrayAdapter(requireContext(), R.layout.spinner_list_item, newViewModel.getCategoryPairListLiveData().value!!)
+        weaponAdapter = KeyValueArrayAdapter(requireContext(), R.layout.spinner_list_item, newViewModel.getWeaponPairListLiveData().value!!)
 
         // GearImageViewをクリックした時の処理を定義
         onClickGearImageView = View.OnClickListener { view ->
@@ -145,22 +145,18 @@ class NewFragment : Fragment(), GearDialogListener {
     private fun observeViewModel(viewModel: NewViewModel){
         val categoryObserver = Observer<ArrayList<Pair<Int, String>>>{
             it.let{
-                categoryAdapter.clear()
-                categoryAdapter.addAll(it)
-                categoryAdapter.notifyDataSetChanged()
+                categoryAdapter.resetKeyValues(it)
             }
         }
 
         val weaponObserver = Observer<ArrayList<Pair<Int, String>>>{
             it.let{
-                weaponAdapter.clear()
-                weaponAdapter.addAll(it)
-                weaponAdapter.notifyDataSetChanged()
+                weaponAdapter.resetKeyValues(it)
             }
         }
 
-        viewModel.categoryPairListLiveData.observe(viewLifecycleOwner, categoryObserver)
-        viewModel.weaponPairListLiveData.observe(viewLifecycleOwner, weaponObserver)
+        viewModel.getCategoryPairListLiveData().observe(viewLifecycleOwner, categoryObserver)
+        viewModel.getWeaponPairListLiveData().observe(viewLifecycleOwner, weaponObserver)
     }
 
     override fun onListItemClick(

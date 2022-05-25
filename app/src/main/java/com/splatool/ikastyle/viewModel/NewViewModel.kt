@@ -5,6 +5,7 @@ import android.widget.AdapterView
 import android.widget.Spinner
 import androidx.lifecycle.*
 import com.splatool.ikastyle.common.const.NumberPlace
+import com.splatool.ikastyle.model.data.entity.Loadout
 import com.splatool.ikastyle.model.data.repository.CustomizationMainRepository
 import com.splatool.ikastyle.model.data.repository.LoadoutRepository
 import com.splatool.ikastyle.model.data.repository.MainCategoryRepository
@@ -14,8 +15,11 @@ class NewViewModel(private val categoryRepository: MainCategoryRepository,
                    private val customizationMainRepository: CustomizationMainRepository,
                    private val loadoutRepository: LoadoutRepository) : ViewModel() {
 
-    var categoryPairListLiveData = MutableLiveData<ArrayList<Pair<Int,String>>>()
-    var weaponPairListLiveData = MutableLiveData<ArrayList<Pair<Int,String>>>()
+    private val categoryPairListLiveData = MutableLiveData<ArrayList<Pair<Int,String>>>()
+    private val weaponPairListLiveData = MutableLiveData<ArrayList<Pair<Int,String>>>()
+
+    fun getCategoryPairListLiveData() : LiveData<ArrayList<Pair<Int,String>>> = categoryPairListLiveData
+    fun getWeaponPairListLiveData() : LiveData<ArrayList<Pair<Int,String>>> = weaponPairListLiveData
 
     init{
         // LiveDataに初期値を入れる
@@ -57,7 +61,7 @@ class NewViewModel(private val categoryRepository: MainCategoryRepository,
             //ブキSpinnerの項目を全表示
             loadWeaponList()
         } else {
-            // カテゴリーSpinnerで選択したカテゴリーに属するブキだけをCustomizationSpinnerに表示
+            // カテゴリーSpinnerで選択したカテゴリーに属するブキだけをWeaponSpinnerに表示
             loadWeaponListByCategory(categoryId)
         }
     }

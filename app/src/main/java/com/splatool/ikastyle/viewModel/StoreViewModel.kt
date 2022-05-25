@@ -23,9 +23,13 @@ class StoreViewModel(private val categoryRepository: MainCategoryRepository,
                      private val customizationRepository : CustomizationNameRepository,
                      private val loadoutRepository: LoadoutRepository) : ViewModel() {
 
-    var categoryPairListLiveData = MutableLiveData<ArrayList<Pair<Int,String>>>()
-    var customizationPairListLiveData = MutableLiveData<ArrayList<Pair<Int,String>>>()
-    var loadoutListLiveData = MutableLiveData<ArrayList<Loadout>>()
+    private val categoryPairListLiveData = MutableLiveData<ArrayList<Pair<Int,String>>>()
+    private val customizationPairListLiveData = MutableLiveData<ArrayList<Pair<Int,String>>>()
+    private val loadoutListLiveData = MutableLiveData<ArrayList<Loadout>>()
+
+    fun getCategoryPairListLiveData() : LiveData<ArrayList<Pair<Int,String>>> = categoryPairListLiveData
+    fun getCustomizationPairListLiveData() : LiveData<ArrayList<Pair<Int,String>>> = customizationPairListLiveData
+    fun getLoadoutListLiveData() : LiveData<ArrayList<Loadout>> = loadoutListLiveData
 
     init{
         // LiveDataに初期値を入れる

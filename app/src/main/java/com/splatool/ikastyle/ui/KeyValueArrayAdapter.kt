@@ -59,4 +59,10 @@ class KeyValueArrayAdapter(
         return view
     }
 
+    fun resetKeyValues(keyValues: ArrayList<Pair<Int, String>>){
+        clear()
+        addAll(keyValues)
+        notifyDataSetChanged()
+    }
+
 }

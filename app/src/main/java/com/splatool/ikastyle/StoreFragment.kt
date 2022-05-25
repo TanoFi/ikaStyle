@@ -56,8 +56,8 @@ class StoreFragment : Fragment() {
         storeViewModel = ViewModelProvider(this, StoreViewModel.StoreFactory(categoryRepository, customizationRepository, loadoutRepository))[StoreViewModel::class.java]
 
         // spinnerのアダプター作成
-        categoryAdapter = KeyValueArrayAdapter(requireContext(), R.layout.spinner_list_item, storeViewModel.categoryPairListLiveData.value!!)
-        customizationAdapter = KeyValueArrayAdapter(requireContext(), R.layout.spinner_list_item, storeViewModel.customizationPairListLiveData.value!!)
+        categoryAdapter = KeyValueArrayAdapter(requireContext(), R.layout.spinner_list_item, storeViewModel.getCategoryPairListLiveData().value!!)
+        customizationAdapter = KeyValueArrayAdapter(requireContext(), R.layout.spinner_list_item, storeViewModel.getCustomizationPairListLiveData().value!!)
 
         // recyclerViewのアダプター作成
         loadoutAdapter = LoadoutRecyclerViewAdapter(storeViewModel)
@@ -106,17 +106,13 @@ class StoreFragment : Fragment() {
     private fun observeViewModel(viewModel: StoreViewModel){
         val categoryObserver = Observer<ArrayList<Pair<Int,String>>>{
             it.let{
-                categoryAdapter.clear()
-                categoryAdapter.addAll(it)
-                categoryAdapter.notifyDataSetChanged()
+                categoryAdapter.resetKeyValues(it)
             }
         }
 
         val customizationObserver = Observer<ArrayList<Pair<Int, String>>>{
             it.let{
-                customizationAdapter.clear()
-                customizationAdapter.addAll(it)
-                customizationAdapter.notifyDataSetChanged()
+                customizationAdapter.resetKeyValues(it)
             }
         }
 
@@ -133,8 +129,8 @@ class StoreFragment : Fragment() {
             }
         }
 
-        viewModel.categoryPairListLiveData.observe(viewLifecycleOwner, categoryObserver)
-        viewModel.customizationPairListLiveData.observe(viewLifecycleOwner, customizationObserver)
-        viewModel.loadoutListLiveData.observe(viewLifecycleOwner, loadoutObserver)
+        viewModel.getCategoryPairListLiveData().observe(viewLifecycleOwner, categoryObserver)
+        viewModel.getCustomizationPairListLiveData().observe(viewLifecycleOwner, customizationObserver)
+        viewModel.getLoadoutListLiveData().observe(viewLifecycleOwner, loadoutObserver)
     }
 }
