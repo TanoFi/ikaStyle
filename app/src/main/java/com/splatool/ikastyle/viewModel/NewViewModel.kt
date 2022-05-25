@@ -22,10 +22,6 @@ class NewViewModel(private val categoryRepository: MainCategoryRepository,
     fun getWeaponPairListLiveData() : LiveData<ArrayList<Pair<Int,String>>> = weaponPairListLiveData
 
     init{
-        // LiveDataに初期値を入れる
-        categoryPairListLiveData.value = arrayListOf()
-        weaponPairListLiveData.value = arrayListOf()
-
         loadCategoryList()
         loadWeaponList()
     }

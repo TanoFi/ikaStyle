@@ -71,8 +71,11 @@ class NewFragment : Fragment(), GearDialogListener {
         newViewModel = ViewModelProvider(this, NewViewModel.NewFactory(categoryRepository, customizationMainRepository, loadoutRepository))[NewViewModel::class.java]
 
         // spinnerのアダプター作成
-        categoryAdapter = KeyValueArrayAdapter(requireContext(), R.layout.spinner_list_item, newViewModel.getCategoryPairListLiveData().value!!)
-        weaponAdapter = KeyValueArrayAdapter(requireContext(), R.layout.spinner_list_item, newViewModel.getWeaponPairListLiveData().value!!)
+        categoryAdapter = KeyValueArrayAdapter(requireContext(), R.layout.spinner_list_item, newViewModel.getCategoryPairListLiveData().value ?: arrayListOf())
+        weaponAdapter = KeyValueArrayAdapter(requireContext(), R.layout.spinner_list_item, newViewModel.getWeaponPairListLiveData().value ?: arrayListOf())
+        // レイアウトを付与
+        categoryAdapter.setDropDownViewResource(R.layout.spinner_list_dropdown_item)
+        weaponAdapter.setDropDownViewResource(R.layout.spinner_list_dropdown_item)
 
         // GearImageViewをクリックした時の処理を定義
         onClickGearImageView = View.OnClickListener { view ->

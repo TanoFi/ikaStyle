@@ -32,10 +32,6 @@ class StoreViewModel(private val categoryRepository: MainCategoryRepository,
     fun getLoadoutListLiveData() : LiveData<ArrayList<Loadout>> = loadoutListLiveData
 
     init{
-        // LiveDataに初期値を入れる
-        categoryPairListLiveData.value = arrayListOf()
-        customizationPairListLiveData.value = arrayListOf()
-
         loadCategoryList()
         loadCustomizationList()
     }

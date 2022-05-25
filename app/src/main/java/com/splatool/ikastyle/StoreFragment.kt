@@ -56,8 +56,8 @@ class StoreFragment : Fragment() {
         storeViewModel = ViewModelProvider(this, StoreViewModel.StoreFactory(categoryRepository, customizationRepository, loadoutRepository))[StoreViewModel::class.java]
 
         // spinnerのアダプター作成
-        categoryAdapter = KeyValueArrayAdapter(requireContext(), R.layout.spinner_list_item, storeViewModel.getCategoryPairListLiveData().value!!)
-        customizationAdapter = KeyValueArrayAdapter(requireContext(), R.layout.spinner_list_item, storeViewModel.getCustomizationPairListLiveData().value!!)
+        categoryAdapter = KeyValueArrayAdapter(requireContext(), R.layout.spinner_list_item, storeViewModel.getCategoryPairListLiveData().value ?: arrayListOf())
+        customizationAdapter = KeyValueArrayAdapter(requireContext(), R.layout.spinner_list_item, storeViewModel.getCustomizationPairListLiveData().value ?: arrayListOf())
 
         // recyclerViewのアダプター作成
         loadoutAdapter = LoadoutRecyclerViewAdapter(storeViewModel)
