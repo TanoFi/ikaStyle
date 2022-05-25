@@ -24,6 +24,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.splatool.ikastyle.common.Util
 import com.splatool.ikastyle.databinding.FragmentStoreBinding
 import com.splatool.ikastyle.model.data.repository.CustomizationNameRepository
+import com.splatool.ikastyle.model.data.repository.LoadoutRepository
 import com.splatool.ikastyle.model.data.repository.MainCategoryRepository
 import com.splatool.ikastyle.ui.CustomizationSpinnerSelectedListener
 import com.splatool.ikastyle.viewModel.StoreViewModel
@@ -36,11 +37,11 @@ class StoreFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var emptyView: ConstraintLayout
     private val colorNum = Util.getRandomColor()
-    private lateinit var onClickDeleteListener: View.OnClickListener
 
     private lateinit var storeViewModel: StoreViewModel
     private lateinit var categoryAdapter : KeyValueArrayAdapter
     private lateinit var customizationAdapter : KeyValueArrayAdapter
+    private lateinit var loadoutAdapter: LoadoutRecyclerViewAdapter
 
     private lateinit var binding : FragmentStoreBinding
 
@@ -50,34 +51,16 @@ class StoreFragment : Fragment() {
         val db : AppDatabase = AppDatabase.getDatabase(requireContext())
         val categoryRepository = MainCategoryRepository(db.mainCategoryDao())
         val customizationRepository = CustomizationNameRepository(db.customizationNameDao())
+        val loadoutRepository = LoadoutRepository(db.loadoutDao())
 
-        storeViewModel = ViewModelProvider(this, StoreViewModel.StoreFactory(categoryRepository, customizationRepository))[StoreViewModel::class.java]
+        storeViewModel = ViewModelProvider(this, StoreViewModel.StoreFactory(categoryRepository, customizationRepository, loadoutRepository))[StoreViewModel::class.java]
 
         // spinnerのアダプター作成
         categoryAdapter = KeyValueArrayAdapter(requireContext(), R.layout.spinner_list_item, storeViewModel.categoryPairListLiveData.value!!)
         customizationAdapter = KeyValueArrayAdapter(requireContext(), R.layout.spinner_list_item, storeViewModel.customizationPairListLiveData.value!!)
 
-
-        // deleteボタンを押したときの処理
-        onClickDeleteListener = View.OnClickListener { view ->
-            // 確認ダイアログを表示
-            AlertDialog.Builder(view.context)
-                .setTitle(getString(R.string.dialogMessage_confirm))
-                .setPositiveButton( // Yesを選んだ時
-                    getString(R.string.buttonNavigation_yes)
-                ) { dialogInterface, i ->
-
-                    // データ削除
-                    val loadout = (view as LoadoutDeleteButton).loadout!!
-                    val task = DeleteLoadoutAsyncTask(db, loadout)
-                    task.execute()
-                }
-                .setNegativeButton( // Noを選んだ時
-                    getString(R.string.buttonNavigation_no),  // 何もしない
-                    null
-                )
-                .show()
-        }
+        // recyclerViewのアダプター作成
+        loadoutAdapter = LoadoutRecyclerViewAdapter(storeViewModel)
     }
 
     override fun onCreateView(
@@ -86,6 +69,7 @@ class StoreFragment : Fragment() {
     ): View {
         binding = FragmentStoreBinding.inflate(inflater, container, false)
         binding.viewModel = storeViewModel
+        binding.recyclerViewLoadouts.adapter = loadoutAdapter
         binding.lifecycleOwner = this
         return binding.root
     }
@@ -108,7 +92,6 @@ class StoreFragment : Fragment() {
         val inkMarkImageView = view.findViewById<ImageView?>(R.id.imageView_ink_mark)
         inkMarkImageView.setColorFilter(colorNum, PorterDuff.Mode.SRC_ATOP)
 
-
         // レイアウトを付与
         categoryAdapter.setDropDownViewResource(R.layout.spinner_list_dropdown_item)
         customizationAdapter.setDropDownViewResource(R.layout.spinner_list_dropdown_item)
@@ -116,12 +99,6 @@ class StoreFragment : Fragment() {
         // Spinnerにアダプターを設定
         categorySpinner.adapter = categoryAdapter
         customizationSpinner.adapter = customizationAdapter
-
-        // リスナーを作成
-        val customizationListener = CustomizationSpinnerSelectedListener(recyclerView, emptyView, onClickDeleteListener)
-
-        //リスナーを設定
-        customizationSpinner.onItemSelectedListener = customizationListener
 
         observeViewModel(storeViewModel)
     }
@@ -143,48 +120,21 @@ class StoreFragment : Fragment() {
             }
         }
 
-        viewModel.categoryPairListLiveData.observe(viewLifecycleOwner, categoryObserver)
-        viewModel.customizationPairListLiveData.observe(viewLifecycleOwner, customizationObserver)
-    }
+        val loadoutObserver = Observer<ArrayList<Loadout>> {
+            it.let{
+                loadoutAdapter.setLoadoutList(it)
 
-    /*
-     * 非同期でTRAN_GEAR_SETのレコードを削除する
-     */
-    private inner class DeleteLoadoutAsyncTask(
-        private val db: AppDatabase,
-        private val loadout: Loadout
-    ) : AsyncTask<Void?, Void?, Int?>() {
-        private lateinit var newLoadout: List<Loadout>
-        override fun doInBackground(vararg params: Void?): Int {
-            //実際にDBにアクセスしレコードを削除
-            val loadoutDao = db.loadoutDao()
-            loadoutDao.deleteLoadout(loadout)
-
-            // 削除後のギアセットリストを取得し直す
-            val selectedWeaponId: Int =
-                (customizationSpinner.selectedItem as Pair<Int, String>).first
-            newLoadout = loadoutDao.getLoadoutList(
-                Util.getCategoryId(selectedWeaponId),
-                Util.getMainId(selectedWeaponId),
-                Util.getCustomizationId(selectedWeaponId)
-            )
-            return 0
-        }
-
-        override fun onPostExecute(integer: Int?) {
-            // 選択ギアセット削除後のギアセットリストをrecycleViewにセットし直す
-            val newAdapter = LoadoutRecyclerViewAdapter(newLoadout, onClickDeleteListener)
-            recyclerView.adapter = newAdapter
-            setEmptyViewVisibility(newLoadout.size)
-        }
-
-        // 表示するギアセットがあればEmptyViewは非表示、なければ表示
-        private fun setEmptyViewVisibility(listSize: Int) {
-            if (listSize == 0) {
-                emptyView.visibility = View.VISIBLE
-            } else {
-                emptyView.visibility = View.GONE
+                if(it.size == 0){
+                    emptyView.visibility = View.VISIBLE
+                }
+                else{
+                    emptyView.visibility = View.GONE
+                }
             }
         }
+
+        viewModel.categoryPairListLiveData.observe(viewLifecycleOwner, categoryObserver)
+        viewModel.customizationPairListLiveData.observe(viewLifecycleOwner, customizationObserver)
+        viewModel.loadoutListLiveData.observe(viewLifecycleOwner, loadoutObserver)
     }
 }

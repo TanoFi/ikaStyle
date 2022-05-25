@@ -1,29 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:cardCornerRadius="10dp"
-    app:cardElevation="5dp"
-    app:cardUseCompatPadding="true">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <data>
+        <variable
+            name="loadout"
+            type="com.splatool.ikastyle.model.data.entity.Loadout" />
+        <variable
+            name="viewModel"
+            type="com.splatool.ikastyle.viewModel.StoreViewModel" />
+    </data>
+
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="5dp"
+        app:cardUseCompatPadding="true">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardView"
-            android:layout_width="0dp"
-            android:layout_height="150dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="2dp"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/floatingActionButton.analyse"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView.loadoutName">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/floatingActionButton.analyse"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView.loadoutName">
 
             <androidx.gridlayout.widget.GridLayout
                 android:id="@+id/gridLayout.head"
@@ -83,12 +94,12 @@
                     app:layout_row="0" />
             </androidx.gridlayout.widget.GridLayout>
 
-            <androidx.gridlayout.widget.GridLayout
-                android:id="@+id/gridLayout.clothing"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="50dp"
-                android:background="@drawable/background_stripe_clothing">
+                <androidx.gridlayout.widget.GridLayout
+                    android:id="@+id/gridLayout.clothing"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="50dp"
+                    android:background="@drawable/background_stripe_clothing">
 
                 <ImageView
                     android:id="@+id/imageView.clothing_sub3"
@@ -141,12 +152,12 @@
                     app:layout_row="0" />
             </androidx.gridlayout.widget.GridLayout>
 
-            <androidx.gridlayout.widget.GridLayout
-                android:id="@+id/gridLayout.shoes"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="100dp"
-                android:background="@drawable/background_stripe_shoes">
+                <androidx.gridlayout.widget.GridLayout
+                    android:id="@+id/gridLayout.shoes"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="100dp"
+                    android:background="@drawable/background_stripe_shoes">
 
                 <ImageView
                     android:id="@+id/imageView.shoes_sub3"
@@ -200,59 +211,63 @@
             </androidx.gridlayout.widget.GridLayout>
         </androidx.cardview.widget.CardView>
 
-        <com.splatool.ikastyle.ui.LoadoutDeleteButton
-            android:id="@+id/floatingActionButton.delete"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
-            android:clickable="true"
-            app:layout_constraintBottom_toBottomOf="@+id/cardView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/floatingActionButton.analyse"
-            app:maxImageSize="45dp"
-            app:srcCompat="@drawable/ic_baseline_delete_24"
-            tools:ignore="SpeakableTextPresentCheck" />
+            <com.splatool.ikastyle.ui.LoadoutDeleteButton
+                android:id="@+id/floatingActionButton.delete"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:clickable="true"
+                android:onClick="@{(view) -> viewModel.onDeleteButtonClicked(view)}"
+                app:layout_constraintBottom_toBottomOf="@+id/cardView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/floatingActionButton.analyse"
+                app:maxImageSize="45dp"
+                app:srcCompat="@drawable/ic_baseline_delete_24"
+                app:loadoutId="@{loadout.id}"
+                tools:ignore="SpeakableTextPresentCheck" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton.edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="4dp"
-            android:clickable="true"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toTopOf="@+id/floatingActionButton.delete"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/floatingActionButton.analyse"
-            app:layout_constraintTop_toBottomOf="@+id/floatingActionButton.analyse"
-            app:maxImageSize="45dp"
-            app:srcCompat="@drawable/ic_baseline_edit_24"
-            tools:ignore="SpeakableTextPresentCheck" />
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/floatingActionButton.edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="4dp"
+                android:clickable="true"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toTopOf="@+id/floatingActionButton.delete"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/floatingActionButton.analyse"
+                app:layout_constraintTop_toBottomOf="@+id/floatingActionButton.analyse"
+                app:maxImageSize="45dp"
+                app:srcCompat="@drawable/ic_baseline_edit_24"
+                tools:ignore="SpeakableTextPresentCheck" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton.analyse"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
-            android:clickable="true"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/cardView"
-            app:maxImageSize="45dp"
-            app:srcCompat="@drawable/ic_baseline_analytics_24"
-            tools:ignore="SpeakableTextPresentCheck" />
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/floatingActionButton.analyse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:clickable="true"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/cardView"
+                app:maxImageSize="45dp"
+                app:srcCompat="@drawable/ic_baseline_analytics_24"
+                tools:ignore="SpeakableTextPresentCheck" />
 
-        <TextView
-            android:id="@+id/textView.loadoutName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ellipsize="marquee"
-            android:singleLine="true"
-            android:textAlignment="center"
-            android:textSize="25sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/textView.loadoutName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:singleLine="true"
+                android:textAlignment="center"
+                android:textSize="25sp"
+                android:text = "@{loadout.name}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

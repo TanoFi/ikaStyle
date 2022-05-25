@@ -11,5 +11,7 @@
     </declare-styleable>
     <declare-styleable name="GearListItemLinearLayout">
     </declare-styleable>
-    <declare-styleable name="LoadoutDeleteButton"/>
+    <declare-styleable name="LoadoutDeleteButton">
+        <attr name="loadoutId" format="integer"/>
+    </declare-styleable>
 </resources>

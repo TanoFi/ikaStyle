@@ -3,6 +3,7 @@ package com.splatool.ikastyle.viewModel
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Spinner
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.*
 import com.splatool.ikastyle.R
 import com.splatool.ikastyle.common.Util
@@ -15,22 +16,22 @@ import com.splatool.ikastyle.model.data.repository.CustomizationNameRepository
 import com.splatool.ikastyle.model.data.repository.LoadoutRepository
 import com.splatool.ikastyle.model.data.repository.MainCategoryRepository
 import com.splatool.ikastyle.ui.KeyValueArrayAdapter
+import com.splatool.ikastyle.ui.LoadoutDeleteButton
 import kotlinx.coroutines.launch
 
 class StoreViewModel(private val categoryRepository: MainCategoryRepository,
-                     private val customizationRepository : CustomizationNameRepository) : ViewModel() {
+                     private val customizationRepository : CustomizationNameRepository,
+                     private val loadoutRepository: LoadoutRepository) : ViewModel() {
 
     var categoryPairListLiveData = MutableLiveData<ArrayList<Pair<Int,String>>>()
     var customizationPairListLiveData = MutableLiveData<ArrayList<Pair<Int,String>>>()
-    //var categoryPairList : List<Pair<Int, String>> = listOf()
-    //var customizationPairList : ArrayList<Pair<Int, String>> = arrayListOf()
-    //var customizationMainListLiveData = MutableLiveData<List<CustomizationMain>>()
+    var loadoutListLiveData = MutableLiveData<ArrayList<Loadout>>()
 
     init{
         // LiveDataに初期値を入れる
         categoryPairListLiveData.value = arrayListOf()
         customizationPairListLiveData.value = arrayListOf()
-
+        
         loadCategoryList()
         loadCustomizationList()
     }
@@ -55,8 +56,25 @@ class StoreViewModel(private val categoryRepository: MainCategoryRepository,
             customizationPairListLiveData.postValue(customizationPairList)
         }
     }
+
+    private fun loadLoadoutList(absoluteWeaponId : Int){
+        viewModelScope.launch {
+            val loadoutList = loadoutRepository.getLoadoutList(absoluteWeaponId)
+            loadoutListLiveData.postValue(loadoutList)
+        }
+    }
+
+    private fun deleteLoadout(loadoutId : Int){
+        viewModelScope.launch {
+            loadoutRepository.deleteLoadout(loadoutId)
+
+            // 削除後のLoadoutListをライブデータに入れる
+            val postDeleteLoadoutList = loadoutListLiveData.value!!.filter { it.id !=  loadoutId}.toMutableList() as ArrayList<Loadout>
+            loadoutListLiveData.postValue(postDeleteLoadoutList)
+        }
+    }
     
-    public fun onCategorySelected(adapterView: AdapterView<*>?, view: View?, i: Int, l: Long) {
+    fun onCategorySelected(adapterView: AdapterView<*>?, view: View?, i: Int, l: Long) {
         val spinner = adapterView as Spinner
 
         // 絶対IDからカテゴリーIDを割り出す
@@ -71,10 +89,37 @@ class StoreViewModel(private val categoryRepository: MainCategoryRepository,
         }
     }
 
-    class StoreFactory(private val categoryRepository: MainCategoryRepository, private val customizationRepository: CustomizationNameRepository) : ViewModelProvider.NewInstanceFactory(){
+    fun onCustomizationSelected(adapterView: AdapterView<*>?, view: View?, i: Int, l: Long){
+        val spinner = adapterView as Spinner
+
+        val absoluteWeaponId = (spinner.selectedItem as Pair<*, *>).first as Int
+        loadLoadoutList(absoluteWeaponId)
+    }
+
+    fun onDeleteButtonClicked(view: View){
+        val deleteButton : LoadoutDeleteButton = view as LoadoutDeleteButton
+
+        // 確認ダイアログを表示
+        AlertDialog.Builder(view.context)
+            .setTitle(view.context.getString(R.string.dialogMessage_confirm))
+            .setPositiveButton( // Yesを選んだ時
+                view.context.getString(R.string.buttonNavigation_yes)
+            ) { dialogInterface, i ->
+                deleteLoadout(deleteButton.loadoutId) // 当該のloadoutデータ削除
+            }
+            .setNegativeButton( // Noを選んだ時
+                view.context.getString(R.string.buttonNavigation_no),  // 何もしない
+                null
+            )
+            .show()
+    }
+
+    class StoreFactory(private val categoryRepository: MainCategoryRepository,
+                       private val customizationRepository: CustomizationNameRepository,
+                       private val loadoutRepository: LoadoutRepository) : ViewModelProvider.NewInstanceFactory(){
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return StoreViewModel(categoryRepository, customizationRepository) as T
+            return StoreViewModel(categoryRepository, customizationRepository, loadoutRepository) as T
         }
     }
 }
