@@ -1,15 +1,25 @@
 package com.splatool.ikastyle.common.const
 
+import androidx.databinding.BindingAdapter
+
 /*
- * ギアパワーの場所種別(サブ,アタマメイン,フクメイン,クツメイン)のEnum
+ * ギアパワーの場所種別のEnum
  */
-enum class GearPowerPositionKind(  // クツのメインは3
+enum class GearPowerPositionKind(
     private val id: Int
 ) {
-    SUB(0),  // サブギアは0
-    HEAD(1),  // アタマのメインは1
-    CLOTHING(2),  // フクのメインは2
-    SHOES(3);
+    HEAD_MAIN(10),
+    HEAD_SUB1(11),
+    HEAD_SUB2(12),
+    HEAD_SUB3(13),
+    CLOTHING_MAIN(20),
+    CLOTHING_SUB1(21),
+    CLOTHING_SUB2(22),
+    CLOTHING_SUB3(23),
+    SHOES_MAIN(30),
+    SHOES_SUB1(31),
+    SHOES_SUB2(32),
+    SHOES_SUB3(33);
 
     fun getId(): Int {
         return id

@@ -7,6 +7,9 @@
         <variable
             name="viewModel"
             type="com.splatool.ikastyle.viewModel.NewViewModel" />
+        <variable
+            name="loadout"
+            type="com.splatool.ikastyle.model.data.entity.Loadout" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -67,6 +70,7 @@
             android:hint="@string/plainText_loadoutName"
             android:inputType="textPersonName"
             android:minHeight="48dp"
+            android:text="@{loadout.name}"
             app:layout_constraintBottom_toBottomOf="@+id/floatingActionButton.save"
             app:layout_constraintEnd_toStartOf="@+id/floatingActionButton.save"
             app:layout_constraintStart_toStartOf="parent"
@@ -117,7 +121,7 @@
                     app:layout_column="4"
                     app:layout_columnWeight="2"
                     app:layout_row="0"
-                    app:receptorKind="0" />
+                    app:receptorKind="33" />
 
                 <com.splatool.ikastyle.ui.GearPowerReceptorImageView
                     android:id="@+id/receptorImageView.shoes_sub2"
@@ -128,7 +132,7 @@
                     app:layout_column="3"
                     app:layout_columnWeight="2"
                     app:layout_row="0"
-                    app:receptorKind="0" />
+                    app:receptorKind="32" />
 
                 <com.splatool.ikastyle.ui.GearPowerReceptorImageView
                     android:id="@+id/receptorImageView.shoes_sub1"
@@ -139,7 +143,7 @@
                     app:layout_column="2"
                     app:layout_columnWeight="2"
                     app:layout_row="0"
-                    app:receptorKind="0" />
+                    app:receptorKind="31" />
 
                 <com.splatool.ikastyle.ui.GearPowerReceptorImageView
                     android:id="@+id/receptorImageView.shoes_main"
@@ -149,7 +153,7 @@
                     app:layout_column="1"
                     app:layout_columnWeight="3"
                     app:layout_row="0"
-                    app:receptorKind="3" />
+                    app:receptorKind="30" />
 
                 <com.splatool.ikastyle.ui.GearImageView
                     android:id="@+id/gearImageView.shoes"
@@ -179,7 +183,7 @@
                     app:layout_column="4"
                     app:layout_columnWeight="2"
                     app:layout_row="0"
-                    app:receptorKind="0" />
+                    app:receptorKind="23" />
 
                 <com.splatool.ikastyle.ui.GearPowerReceptorImageView
                     android:id="@+id/receptorImageView.clothing_sub2"
@@ -190,7 +194,7 @@
                     app:layout_column="3"
                     app:layout_columnWeight="2"
                     app:layout_row="0"
-                    app:receptorKind="0" />
+                    app:receptorKind="22" />
 
                 <com.splatool.ikastyle.ui.GearPowerReceptorImageView
                     android:id="@+id/receptorImageView.clothing_sub1"
@@ -202,7 +206,7 @@
                     app:layout_columnWeight="2"
                     app:layout_gravity="bottom"
                     app:layout_row="0"
-                    app:receptorKind="0" />
+                    app:receptorKind="21" />
 
                 <com.splatool.ikastyle.ui.GearPowerReceptorImageView
                     android:id="@+id/receptorImageView.clothing_main"
@@ -212,7 +216,7 @@
                     app:layout_column="1"
                     app:layout_columnWeight="3"
                     app:layout_row="0"
-                    app:receptorKind="2" />
+                    app:receptorKind="20" />
 
                 <com.splatool.ikastyle.ui.GearImageView
                     android:id="@+id/gearImageView.clothing"
@@ -242,7 +246,7 @@
                     app:layout_column="4"
                     app:layout_columnWeight="2"
                     app:layout_row="0"
-                    app:receptorKind="0" />
+                    app:receptorKind="13" />
 
                 <com.splatool.ikastyle.ui.GearPowerReceptorImageView
                     android:id="@+id/receptorImageView.head_sub2"
@@ -253,7 +257,7 @@
                     app:layout_column="3"
                     app:layout_columnWeight="2"
                     app:layout_row="0"
-                    app:receptorKind="0" />
+                    app:receptorKind="12" />
 
                 <com.splatool.ikastyle.ui.GearPowerReceptorImageView
                     android:id="@+id/receptorImageView.head_sub1"
@@ -264,7 +268,7 @@
                     app:layout_column="2"
                     app:layout_columnWeight="2"
                     app:layout_row="0"
-                    app:receptorKind="0" />
+                    app:receptorKind="11" />
 
                 <com.splatool.ikastyle.ui.GearPowerReceptorImageView
                     android:id="@+id/receptorImageView.head_main"
@@ -274,7 +278,7 @@
                     app:layout_column="1"
                     app:layout_columnWeight="3"
                     app:layout_row="0"
-                    app:receptorKind="1" />
+                    app:receptorKind="10" />
 
                 <com.splatool.ikastyle.ui.GearImageView
                     android:id="@+id/gearImageView.head"
