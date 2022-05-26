@@ -351,24 +351,24 @@
             app:layout_row="2" />
 
         <com.splatool.ikastyle.ui.GearPowerImageView
-            android:id="@+id/imageView.thermalInk"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/gear_size"
-            android:padding="1dp"
-            android:src="@drawable/gearpower_thermal_ink"
-            app:gearPowerKind="203"
-            app:layout_column="2"
-            app:layout_columnWeight="1"
-            app:layout_row="2" />
-
-        <com.splatool.ikastyle.ui.GearPowerImageView
             android:id="@+id/imageView.respawnPunisher"
             android:layout_width="0dp"
             android:layout_height="@dimen/gear_size"
             android:padding="1dp"
             android:src="@drawable/gearpower_respawn_punisher"
-            app:gearPowerKind="202"
+            app:gearPowerKind="203"
             app:layout_column="3"
+            app:layout_columnWeight="1"
+            app:layout_row="2" />
+
+        <com.splatool.ikastyle.ui.GearPowerImageView
+            android:id="@+id/imageView.thermalInk"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/gear_size"
+            android:padding="1dp"
+            android:src="@drawable/gearpower_thermal_ink"
+            app:gearPowerKind="202"
+            app:layout_column="2"
             app:layout_columnWeight="1"
             app:layout_row="2" />
 
