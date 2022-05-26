@@ -200,7 +200,7 @@
             </androidx.gridlayout.widget.GridLayout>
         </androidx.cardview.widget.CardView>
 
-        <com.splatool.ikastyle.UI.LoadoutDeleteButton
+        <com.splatool.ikastyle.ui.LoadoutDeleteButton
             android:id="@+id/floatingActionButton.delete"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
