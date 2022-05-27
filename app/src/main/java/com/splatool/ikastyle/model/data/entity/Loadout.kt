@@ -29,6 +29,10 @@ data class Loadout
     @ColumnInfo(name = "shoes_sub3") @NonNull var shoesSub3: Int = 0,
     @ColumnInfo(name = "update_date") @NonNull var updateDate: Long = 0,
 ){
+    @Ignore var headGearResourceId : Int = 0
+        get() {
+            return Util.getHeadGearResourceId(headGearId)
+        }
     @Ignore var headMainResourceId : Int = 0
         get() {
             return Util.getGearPowerResourceId(headMain)
@@ -45,6 +49,10 @@ data class Loadout
         get() {
             return Util.getGearPowerResourceId(headSub3)
         }
+    @Ignore var clothingGearResourceId: Int = 0
+        get() {
+            return Util.getClothingResourceId(clothingGearId)
+        }
     @Ignore var clothingMainResourceId : Int = Util.getGearPowerResourceId(clothingMain)
         get() {
             return Util.getGearPowerResourceId(clothingMain)
@@ -60,6 +68,10 @@ data class Loadout
     @Ignore var clothingSub3ResourceId : Int = Util.getGearPowerResourceId(clothingSub3)
         get() {
             return Util.getGearPowerResourceId(clothingSub3)
+        }
+    @Ignore var shoesGearResourceId: Int = 0
+        get() {
+            return Util.getShoesResourceId(shoesGearId)
         }
     @Ignore var shoesMainResourceId : Int = Util.getGearPowerResourceId(shoesMain)
         get() {

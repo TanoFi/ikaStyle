@@ -12,6 +12,7 @@ import androidx.lifecycle.*
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.splatool.ikastyle.R
 import com.splatool.ikastyle.common.Util
+import com.splatool.ikastyle.common.const.GearKind
 import com.splatool.ikastyle.common.const.GearPowerPositionKind
 import com.splatool.ikastyle.common.const.NumberPlace
 import com.splatool.ikastyle.model.data.database.AppDatabase
@@ -30,7 +31,6 @@ class NewViewModel(private val categoryRepository: MainCategoryRepository,
     private val categoryPairListLiveData = MutableLiveData<ArrayList<Pair<Int,String>>>()
     private val weaponPairListLiveData = MutableLiveData<ArrayList<Pair<Int,String>>>()
     private val loadoutLiveData = MutableLiveData<Loadout>()
-    //var loadout : Loadout = Loadout()
 
     fun getCategoryPairListLiveData() : LiveData<ArrayList<Pair<Int,String>>> = categoryPairListLiveData
     fun getWeaponPairListLiveData() : LiveData<ArrayList<Pair<Int,String>>> = weaponPairListLiveData
@@ -104,6 +104,16 @@ class NewViewModel(private val categoryRepository: MainCategoryRepository,
         if(checkUserInput(view.context)){
             save()
         }
+    }
+
+    fun onPostDialogItemClicked(gearKind: GearKind, gearId: Int){
+        when(gearKind){
+            GearKind.HEAD -> loadoutLiveData.value!!.headGearId = gearId
+            GearKind.CLOTHING -> loadoutLiveData.value!!.clothingGearId = gearId
+            GearKind.SHOES -> loadoutLiveData.value!!.shoesGearId = gearId
+        }
+
+        loadoutLiveData.postValue(loadoutLiveData.value)
     }
 
     /*

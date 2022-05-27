@@ -62,12 +62,6 @@ class NewFragment : Fragment(), GearDialogListener {
         weaponAdapter.setDropDownViewResource(R.layout.spinner_list_dropdown_item)
 
         loadout = newViewModel.getLoadoutLiveData().value ?: Loadout()
-
-        // GearImageViewをクリックした時の処理を定義
-        onClickGearImageView = View.OnClickListener { view ->
-            val gearDialogFragment = GearDialogFragment((view as GearImageView).gearKind)
-            gearDialogFragment.show(childFragmentManager, "gear_dialog")
-        }
     }
 
     override fun onCreateView(
@@ -115,14 +109,18 @@ class NewFragment : Fragment(), GearDialogListener {
 
         val loadoutObserver = Observer<Loadout> {
             it.let{
+                binding.editTextLoadoutName.setText(it.name)
+                binding.gearImageViewHead.setImageResource(it.headGearResourceId)
                 binding.receptorImageViewHeadMain.setImageResource(it.headMainResourceId)
                 binding.receptorImageViewHeadSub1.setImageResource(it.headSub1ResourceId)
                 binding.receptorImageViewHeadSub2.setImageResource(it.headSub2ResourceId)
                 binding.receptorImageViewHeadSub3.setImageResource(it.headSub3ResourceId)
+                binding.gearImageViewClothing.setImageResource(it.clothingGearResourceId)
                 binding.receptorImageViewClothingMain.setImageResource(it.clothingMainResourceId)
                 binding.receptorImageViewClothingSub1.setImageResource(it.clothingSub1ResourceId)
                 binding.receptorImageViewClothingSub2.setImageResource(it.clothingSub2ResourceId)
                 binding.receptorImageViewClothingSub3.setImageResource(it.clothingSub3ResourceId)
+                binding.gearImageViewShoes.setImageResource(it.shoesGearResourceId)
                 binding.receptorImageViewShoesMain.setImageResource(it.shoesMainResourceId)
                 binding.receptorImageViewShoesSub1.setImageResource(it.shoesSub1ResourceId)
                 binding.receptorImageViewShoesSub2.setImageResource(it.shoesSub2ResourceId)
@@ -135,16 +133,8 @@ class NewFragment : Fragment(), GearDialogListener {
         viewModel.getLoadoutLiveData().observe(viewLifecycleOwner, loadoutObserver)
     }
 
-    override fun onListItemClick(
-        dialogFragment: GearDialogFragment,
-        gearKind: GearKind,
-        gearId: Int
-    ) {
-        when (gearKind) {
-            GearKind.HEAD -> binding.gearImageViewHead.gearId = gearId
-            GearKind.CLOTHING -> binding.gearImageViewClothing.gearId = gearId
-            GearKind.SHOES -> binding.gearImageViewShoes.gearId = gearId
-        }
+    override fun onListItemClick(dialogFragment: GearDialogFragment, gearKind: GearKind, gearId: Int) {
+        newViewModel.onPostDialogItemClicked(gearKind, gearId)
     }
 
     /*
@@ -152,7 +142,10 @@ class NewFragment : Fragment(), GearDialogListener {
      */
     private fun setOnClickListener(vararg gearImageViews: GearImageView) {
         for (gearImageView in gearImageViews) {
-            gearImageView.setOnClickListener(onClickGearImageView)
+            gearImageView.setOnClickListener(View.OnClickListener { view ->
+                val gearDialogFragment = GearDialogFragment((view as GearImageView).gearKind)
+                gearDialogFragment.show(childFragmentManager, "gear_dialog")
+            })
         }
     }
 
@@ -160,10 +153,5 @@ class NewFragment : Fragment(), GearDialogListener {
         for(receptorImageView in receptorImageViews){
             receptorImageView.setOnDragListener(newViewModel.onGearPowerDragListener)
         }
-    }
-
-    companion object {
-        // GearImageViewをクリックしたときの処理
-        private var onClickGearImageView: View.OnClickListener? = null
     }
 }

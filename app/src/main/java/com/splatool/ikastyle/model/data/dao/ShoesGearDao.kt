@@ -6,5 +6,5 @@ import androidx.room.*
 @Dao
 interface ShoesGearDao {
     @Query("SELECT * FROM MAST_SHOES_GEAR WHERE language_code = :languageCode ORDER BY name")
-    fun getShoesGearList(languageCode: Int): List<ShoesGear>
+    suspend fun getShoesGearList(languageCode: Int): List<ShoesGear>
 }
