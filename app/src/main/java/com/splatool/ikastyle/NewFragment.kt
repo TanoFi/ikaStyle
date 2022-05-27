@@ -7,6 +7,7 @@ import com.splatool.ikastyle.ui.GearDialogFragment.GearDialogListener
 import android.os.Bundle
 import com.splatool.ikastyle.model.data.database.AppDatabase
 import android.os.AsyncTask
+import android.text.TextWatcher
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.splatool.ikastyle.model.data.entity.Loadout
 import com.splatool.ikastyle.common.const.NumberPlace
@@ -85,13 +86,6 @@ class NewFragment : Fragment(), GearDialogListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.floatingActionButtonSave.setOnClickListener { x: View? ->
-            if (checkUserInput()) { //入力チェック
-                // DBに保存
-                save()
-            }
-        }
-
         // GearImageViewにonClickListenerをまとめてセット
         setOnClickListener(binding.gearImageViewHead, binding.gearImageViewClothing, binding.gearImageViewShoes)
 
@@ -99,6 +93,9 @@ class NewFragment : Fragment(), GearDialogListener {
         setOnDragListener(binding.receptorImageViewHeadMain, binding.receptorImageViewHeadSub1, binding.receptorImageViewHeadSub2, binding.receptorImageViewHeadSub3,
             binding.receptorImageViewClothingMain, binding.receptorImageViewClothingSub1, binding.receptorImageViewClothingSub2, binding.receptorImageViewClothingSub3,
             binding.receptorImageViewShoesMain, binding.receptorImageViewShoesSub1, binding.receptorImageViewShoesSub2, binding.receptorImageViewShoesSub3)
+
+        // editTextLoadoutNameに入力値変更時用のListenerをセット
+        binding.editTextLoadoutName.addTextChangedListener(newViewModel.loadoutNameTextWatcher)
 
         observeViewModel(newViewModel)
     }
@@ -151,49 +148,6 @@ class NewFragment : Fragment(), GearDialogListener {
     }
 
     /*
-     * 入力チェック用のメソッド
-     * 戻り値 true → 問題なし, false → 問題あり
-     */
-    private fun checkUserInput(): Boolean {
-        // ブキSpinnerが未選択状態
-        if ((binding.spinnerCategory.selectedItem as Pair<Int, String>).first == 0) {
-            // Toastでメッセージ表示
-            val toast = Toast.makeText(
-                context,
-                getString(R.string.toastMessage_spinnerNotSelected),
-                Toast.LENGTH_LONG
-            )
-            toast.show()
-            return false
-        }
-
-        // メインギアパワーが設定されていない
-        if (loadout.headMain == 0 || loadout.clothingMain == 0 || loadout.shoesMain == 0) {
-            // Toastでメッセージ表示
-            val toast = Toast.makeText(
-                context,
-                getString(R.string.toastMessage_mainGearPowerNotSet),
-                Toast.LENGTH_LONG
-            )
-            toast.show()
-            return false
-        }
-        return true
-    }
-
-    /*
-     * 入力値をデータベースに保存
-     */
-    private fun save() {
-        // 選択したブキの絶対ID
-        val absoluteId: Int = (binding.spinnerWeapon.selectedItem as Pair<Int, String>).first
-
-        val db: AppDatabase = AppDatabase.getDatabase(requireContext())
-        val task = InsertLoadoutAsyncTask(db, loadout)
-        task.execute()
-    }
-
-    /*
      * GearImageViewにonClickListenerをまとめてセットする
      */
     private fun setOnClickListener(vararg gearImageViews: GearImageView) {
@@ -205,63 +159,6 @@ class NewFragment : Fragment(), GearDialogListener {
     private fun setOnDragListener(vararg receptorImageViews: GearPowerReceptorImageView){
         for(receptorImageView in receptorImageViews){
             receptorImageView.setOnDragListener(newViewModel.onGearPowerDragListener)
-        }
-    }
-
-    // View初期化用メソッド
-    private fun init() {
-//        // Spinner選択項目初期化
-//        binding.spinnerCategory.setSelection(0)
-//        binding.spinnerWeapon.setSelection(0)
-//
-//        // TextView文字入力初期化
-//        binding.editTextLoadoutName.setText("")
-//
-//        // GearImageView選択項目初期化
-//        binding.gearImageViewHead.init()
-//        binding.gearImageViewClothing.init()
-//        binding.gearImageViewShoes.init()
-//
-//        // ReceptorImageView設定ギア初期化
-//        binding.receptorImageViewHeadMain.init()
-//        binding.receptorImageViewHeadSub1.init()
-//        binding.receptorImageViewHeadSub2.init()
-//        binding.receptorImageViewHeadSub3.init()
-//        binding.receptorImageViewClothingMain.init()
-//        binding.receptorImageViewClothingSub1.init()
-//        binding.receptorImageViewClothingSub2.init()
-//        binding.receptorImageViewClothingSub3.init()
-//        binding.receptorImageViewShoesMain.init()
-//        binding.receptorImageViewShoesSub1.init()
-//        binding.receptorImageViewShoesSub2.init()
-//        binding.receptorImageViewShoesSub3.init()
-    }
-
-    /*
-     * 非同期でDBにLoadoutデータをInsert
-     */
-    private inner class InsertLoadoutAsyncTask(
-        private val db: AppDatabase,
-        private val loadout: Loadout
-    ) : AsyncTask<Void?, Void?, Int?>() {
-        override fun doInBackground(vararg params: Void?): Int {
-            //実際にDBにアクセスし結果を取得
-            val loadoutDao = db.loadoutDao()
-            loadoutDao.insertLoadout(loadout)
-            return 0
-        }
-
-        override fun onPostExecute(code: Int?) {
-            // Viewを初期化
-            init()
-
-            // ToastでInsert完了のメッセージ表示
-            val toast = Toast.makeText(
-                context,
-                getString(R.string.toastMessage_insertCompleted),
-                Toast.LENGTH_LONG
-            )
-            toast.show()
         }
     }
 

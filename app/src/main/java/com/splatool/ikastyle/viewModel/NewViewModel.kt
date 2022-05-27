@@ -1,13 +1,20 @@
 package com.splatool.ikastyle.viewModel
 
+import android.content.Context
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.DragEvent
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.lifecycle.*
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.splatool.ikastyle.R
 import com.splatool.ikastyle.common.Util
 import com.splatool.ikastyle.common.const.GearPowerPositionKind
 import com.splatool.ikastyle.common.const.NumberPlace
+import com.splatool.ikastyle.model.data.database.AppDatabase
 import com.splatool.ikastyle.model.data.entity.Loadout
 import com.splatool.ikastyle.model.data.repository.CustomizationMainRepository
 import com.splatool.ikastyle.model.data.repository.LoadoutRepository
@@ -57,6 +64,13 @@ class NewViewModel(private val categoryRepository: MainCategoryRepository,
         }
     }
 
+    private fun saveLoadout(loadout: Loadout){
+        viewModelScope.launch {
+            loadoutRepository.saveLoadout(loadout)
+            initLoadout()
+        }
+    }
+
     private fun initLoadout(){
         loadoutLiveData.postValue(Loadout())
     }
@@ -74,6 +88,61 @@ class NewViewModel(private val categoryRepository: MainCategoryRepository,
             // カテゴリーSpinnerで選択したカテゴリーに属するブキだけをWeaponSpinnerに表示
             loadWeaponListByCategory(categoryId)
         }
+    }
+
+    fun onWeaponSelected(adapterView: AdapterView<*>?, view: View?, i: Int, l: Long) {
+        val spinner = adapterView as Spinner
+        val absoluteWeaponId = (spinner.selectedItem as Pair<*, *>).first as Int
+        loadoutLiveData.value!!.categoryId = Util.getCategoryId(absoluteWeaponId)
+        loadoutLiveData.value!!.mainId = Util.getMainId(absoluteWeaponId)
+        loadoutLiveData.value!!.customizationId = Util.getCustomizationId(absoluteWeaponId)
+    }
+
+    fun onSaveButtonClicked(view : View){
+        loadoutLiveData.value!!.updateDate = System.currentTimeMillis()
+
+        if(checkUserInput(view.context)){
+            save()
+        }
+    }
+
+    /*
+    * 入力チェック用のメソッド
+    * 戻り値 true → 問題なし, false → 問題あり
+    */
+    private fun checkUserInput(context : Context): Boolean {
+        // ブキSpinnerが未選択状態
+        if (loadoutLiveData.value!!.categoryId == 0 && loadoutLiveData.value!!.mainId == 0 && loadoutLiveData.value!!.customizationId == 0) {
+            // Toastでメッセージ表示
+            val toast = Toast.makeText(
+                context,
+                context.getString(R.string.toastMessage_spinnerNotSelected),
+                Toast.LENGTH_LONG
+            )
+            toast.show()
+            return false
+        }
+
+        // メインギアパワーが設定されていない
+        if (loadoutLiveData.value!!.headMain == 0 || loadoutLiveData.value!!.clothingMain == 0 || loadoutLiveData.value!!.shoesMain == 0) {
+            // Toastでメッセージ表示
+            val toast = Toast.makeText(
+                context,
+                context.getString(R.string.toastMessage_mainGearPowerNotSet),
+                Toast.LENGTH_LONG
+            )
+            toast.show()
+            return false
+        }
+        return true
+    }
+
+    /*
+     * 入力値をデータベースに保存
+     */
+    private fun save() {
+        saveLoadout(loadoutLiveData.value!!)
+        initLoadout()
     }
 
     val onGearPowerDragListener : View.OnDragListener = View.OnDragListener { view, dragEvent ->
@@ -107,6 +176,15 @@ class NewViewModel(private val categoryRepository: MainCategoryRepository,
         }
         return@OnDragListener false
     }
+
+    val loadoutNameTextWatcher : TextWatcher = object : TextWatcher{
+        override fun afterTextChanged(p0: Editable?) {
+            loadoutLiveData.value!!.name = p0?.toString() ?: ""
+        }
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+    }
+
 
     class NewFactory(private val categoryRepository: MainCategoryRepository,
                      private val customizationMainRepository: CustomizationMainRepository,

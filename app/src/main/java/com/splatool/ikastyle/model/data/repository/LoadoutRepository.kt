@@ -16,4 +16,8 @@ class LoadoutRepository(private val loadoutDao: LoadoutDao) {
     suspend fun deleteLoadout(loadoutId : Int){
         loadoutDao.deleteLoadout(loadoutId)
     }
+
+    suspend fun saveLoadout(loadout: Loadout){
+        loadoutDao.insertLoadout(loadout)
+    }
 }
