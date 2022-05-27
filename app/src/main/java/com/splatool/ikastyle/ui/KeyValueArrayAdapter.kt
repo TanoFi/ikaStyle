@@ -58,8 +58,10 @@ class KeyValueArrayAdapter(
     }
 
     fun resetKeyValues(keyValues: ArrayList<Pair<Int, String>>){
+        val deepCopiedList = keyValues.toList()
+
         clear()
-        addAll(keyValues)
+        addAll(deepCopiedList)
         notifyDataSetChanged()
     }
 
