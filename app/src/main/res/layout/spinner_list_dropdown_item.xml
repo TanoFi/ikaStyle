@@ -1,26 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/linearLayout.spinnerListDropdownItem"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:clickable="false">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
-        android:id="@+id/imageView.weapon"
-        android:layout_width="0dp"
-        android:layout_height="35dp"
-        android:layout_weight="1" />
+    <data>
 
-    <TextView
-        android:id="@+id/textView.weaponName"
-        android:layout_width="0dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="4dp"
-        android:layout_weight="5"
-        android:ellipsize="marquee"
-        android:gravity="center_vertical"
-        android:singleLine="true"
-        android:textColor="@color/text_primary"
-        android:textSize="20sp" />
-</LinearLayout>
+    </data>
+
+    <LinearLayout
+        android:id="@+id/linearLayout.spinnerListDropdownItem"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="false">
+
+        <ImageView
+            android:id="@+id/imageView.weapon"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/textView.weaponName"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="4dp"
+            android:layout_weight="5"
+            android:ellipsize="marquee"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:textColor="@color/text_primary"
+            android:textSize="20sp" />
+    </LinearLayout>
+</layout>
