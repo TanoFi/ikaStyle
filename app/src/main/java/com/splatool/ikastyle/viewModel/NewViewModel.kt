@@ -100,7 +100,7 @@ class NewViewModel(private val categoryRepository: MainCategoryRepository,
         loadoutLiveData.value!!.updateDate = System.currentTimeMillis()
 
         if(checkUserInput(view.context)){
-            save()
+            save(view.context)
         }
     }
 
@@ -148,8 +148,10 @@ class NewViewModel(private val categoryRepository: MainCategoryRepository,
     /*
      * 入力値をデータベースに保存
      */
-    private fun save() {
+    private fun save(context: Context) {
         saveLoadout(loadoutLiveData.value!!)
+        val toast = Toast.makeText(context, context.getString(R.string.toastMessage_insertCompleted), Toast.LENGTH_LONG)
+        toast.show()
         initLoadout()
     }
 
