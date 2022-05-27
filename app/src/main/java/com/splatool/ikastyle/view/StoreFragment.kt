@@ -86,12 +86,14 @@ class StoreFragment : Fragment() {
     private fun observeViewModel(viewModel: StoreViewModel){
         val categoryObserver = Observer<ArrayList<Pair<Int,String>>>{
             it.let{
+                it.add(0, Pair(0, requireContext().getString(R.string.spinnerItem_categoryUnselected)))
                 categoryAdapter.resetKeyValues(it)
             }
         }
 
         val customizationObserver = Observer<ArrayList<Pair<Int, String>>>{
             it.let{
+                it.add(0, Pair(0, requireContext().getString(R.string.spinnerItem_weaponUnselected)))
                 customizationAdapter.resetKeyValues(it)
             }
         }
