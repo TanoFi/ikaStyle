@@ -1,6 +1,4 @@
-package com.splatool.ikastyle.common.const
-
-import androidx.databinding.BindingAdapter
+package com.splatool.ikastyle.model.common.const
 
 /*
  * ギアパワーの場所種別のEnum

@@ -2,9 +2,9 @@ package com.splatool.ikastyle.viewModel
 
 import android.view.View
 import androidx.lifecycle.*
-import com.splatool.ikastyle.common.const.GearKind
+import com.splatool.ikastyle.model.common.const.GearKind
 import com.splatool.ikastyle.model.data.repository.GearRepository
-import com.splatool.ikastyle.ui.GearListItemLinearLayout
+import com.splatool.ikastyle.view.customizedView.GearListItemLinearLayout
 import kotlinx.coroutines.launch
 
 class GearDialogViewModel(private val gearRepository: GearRepository, gearKind: GearKind) : ViewModel() {

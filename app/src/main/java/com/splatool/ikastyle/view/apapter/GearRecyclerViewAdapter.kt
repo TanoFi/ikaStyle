@@ -1,11 +1,11 @@
-package com.splatool.ikastyle.ui
+package com.splatool.ikastyle.view.apapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.splatool.ikastyle.R
-import com.splatool.ikastyle.common.Util
+import com.splatool.ikastyle.model.common.Util
 import com.splatool.ikastyle.databinding.GearListItemBinding
 import com.splatool.ikastyle.model.data.entity.ClothingGear
 import com.splatool.ikastyle.model.data.entity.HeadGear

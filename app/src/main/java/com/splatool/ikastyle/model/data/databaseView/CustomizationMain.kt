@@ -1,6 +1,6 @@
 package com.splatool.ikastyle.model.data.databaseView
 
-import com.splatool.ikastyle.common.const.NumberPlace
+import com.splatool.ikastyle.model.common.const.NumberPlace
 import androidx.room.ColumnInfo
 import androidx.room.DatabaseView
 

@@ -1,10 +1,11 @@
-package com.splatool.ikastyle
+package com.splatool.ikastyle.view
 
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.navigation.fragment.NavHostFragment
+import com.splatool.ikastyle.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

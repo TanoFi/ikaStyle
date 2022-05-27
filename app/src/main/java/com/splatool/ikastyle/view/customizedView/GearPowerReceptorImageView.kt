@@ -1,10 +1,10 @@
-package com.splatool.ikastyle.ui
+package com.splatool.ikastyle.view.customizedView
 
 import android.content.Context
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageView
 import com.splatool.ikastyle.R
-import com.splatool.ikastyle.common.const.GearPowerPositionKind
+import com.splatool.ikastyle.model.common.const.GearPowerPositionKind
 
 class GearPowerReceptorImageView// カスタム属性receptorKindの値を取得しフィールド変数gearPowerKindに入れる
     (context: Context, attrs: AttributeSet?) : AppCompatImageView(context, attrs) {

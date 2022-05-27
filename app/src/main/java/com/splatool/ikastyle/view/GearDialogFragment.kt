@@ -1,9 +1,9 @@
-package com.splatool.ikastyle.ui
+package com.splatool.ikastyle.view
 
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
-import com.splatool.ikastyle.common.const.GearKind
+import com.splatool.ikastyle.model.common.const.GearKind
 import com.splatool.ikastyle.R
 import androidx.recyclerview.widget.RecyclerView
 import android.os.Bundle
@@ -16,6 +16,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.splatool.ikastyle.databinding.FragmentGearDialogBinding
 import com.splatool.ikastyle.model.data.repository.GearRepository
+import com.splatool.ikastyle.view.apapter.GearRecyclerViewAdapter
 import com.splatool.ikastyle.viewModel.GearDialogViewModel
 import java.lang.ClassCastException
 import java.lang.NullPointerException

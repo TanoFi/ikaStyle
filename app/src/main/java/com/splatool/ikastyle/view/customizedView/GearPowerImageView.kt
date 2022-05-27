@@ -1,4 +1,4 @@
-package com.splatool.ikastyle.ui
+package com.splatool.ikastyle.view.customizedView
 
 import android.content.Context
 import androidx.appcompat.widget.AppCompatImageView

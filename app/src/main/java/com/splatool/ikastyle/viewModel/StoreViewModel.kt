@@ -6,12 +6,12 @@ import android.widget.Spinner
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.*
 import com.splatool.ikastyle.R
-import com.splatool.ikastyle.common.const.NumberPlace
+import com.splatool.ikastyle.model.common.const.NumberPlace
 import com.splatool.ikastyle.model.data.entity.Loadout
 import com.splatool.ikastyle.model.data.repository.CustomizationNameRepository
 import com.splatool.ikastyle.model.data.repository.LoadoutRepository
 import com.splatool.ikastyle.model.data.repository.MainCategoryRepository
-import com.splatool.ikastyle.ui.LoadoutDeleteButton
+import com.splatool.ikastyle.view.customizedView.LoadoutDeleteButton
 import kotlinx.coroutines.launch
 
 class StoreViewModel(private val categoryRepository: MainCategoryRepository,

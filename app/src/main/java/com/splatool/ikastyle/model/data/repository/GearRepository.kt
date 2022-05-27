@@ -1,6 +1,6 @@
 package com.splatool.ikastyle.model.data.repository
 
-import com.splatool.ikastyle.common.Util
+import com.splatool.ikastyle.model.common.Util
 import com.splatool.ikastyle.model.data.dao.ClothingGearDao
 import com.splatool.ikastyle.model.data.dao.HeadGearDao
 import com.splatool.ikastyle.model.data.dao.ShoesGearDao

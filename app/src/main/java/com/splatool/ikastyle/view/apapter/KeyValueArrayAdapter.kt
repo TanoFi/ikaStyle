@@ -1,4 +1,4 @@
-package com.splatool.ikastyle.ui
+package com.splatool.ikastyle.view.apapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import com.splatool.ikastyle.R
-import com.splatool.ikastyle.common.Util
-import com.splatool.ikastyle.common.const.NumberPlace
+import com.splatool.ikastyle.model.common.Util
+import com.splatool.ikastyle.model.common.const.NumberPlace
 import com.splatool.ikastyle.databinding.SpinnerListDropdownItemBinding
 import com.splatool.ikastyle.databinding.SpinnerListItemBinding
 

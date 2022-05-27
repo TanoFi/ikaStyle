@@ -1,6 +1,6 @@
 package com.splatool.ikastyle.model.data.repository
 
-import com.splatool.ikastyle.common.Util
+import com.splatool.ikastyle.model.common.Util
 import com.splatool.ikastyle.model.data.dao.LoadoutDao
 import com.splatool.ikastyle.model.data.entity.Loadout
 

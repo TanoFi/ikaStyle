@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IkaStyle">
         <activity
-            android:name="com.splatool.ikastyle.MainActivity"
+            android:name="com.splatool.ikastyle.view.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>

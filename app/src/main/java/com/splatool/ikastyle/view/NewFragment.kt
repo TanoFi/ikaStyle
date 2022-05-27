@@ -1,4 +1,4 @@
-package com.splatool.ikastyle
+package com.splatool.ikastyle.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,18 +7,18 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.splatool.ikastyle.common.const.GearKind
+import com.splatool.ikastyle.R
+import com.splatool.ikastyle.model.common.const.GearKind
 import com.splatool.ikastyle.databinding.FragmentNewBinding
 import com.splatool.ikastyle.model.data.database.AppDatabase
 import com.splatool.ikastyle.model.data.entity.Loadout
 import com.splatool.ikastyle.model.data.repository.CustomizationMainRepository
 import com.splatool.ikastyle.model.data.repository.LoadoutRepository
 import com.splatool.ikastyle.model.data.repository.MainCategoryRepository
-import com.splatool.ikastyle.ui.GearDialogFragment
-import com.splatool.ikastyle.ui.GearDialogFragment.GearDialogListener
-import com.splatool.ikastyle.ui.GearImageView
-import com.splatool.ikastyle.ui.GearPowerReceptorImageView
-import com.splatool.ikastyle.ui.KeyValueArrayAdapter
+import com.splatool.ikastyle.view.GearDialogFragment.GearDialogListener
+import com.splatool.ikastyle.view.customizedView.GearImageView
+import com.splatool.ikastyle.view.customizedView.GearPowerReceptorImageView
+import com.splatool.ikastyle.view.apapter.KeyValueArrayAdapter
 import com.splatool.ikastyle.viewModel.NewViewModel
 
 class NewFragment : Fragment(), GearDialogListener {
@@ -40,8 +40,10 @@ class NewFragment : Fragment(), GearDialogListener {
         newViewModel = ViewModelProvider(this, NewViewModel.NewFactory(categoryRepository, customizationMainRepository, loadoutRepository))[NewViewModel::class.java]
 
         // spinnerのアダプター作成
-        categoryAdapter = KeyValueArrayAdapter(requireContext(), R.layout.spinner_list_item, newViewModel.getCategoryPairListLiveData().value ?: arrayListOf())
-        weaponAdapter = KeyValueArrayAdapter(requireContext(), R.layout.spinner_list_item, newViewModel.getWeaponPairListLiveData().value ?: arrayListOf())
+        categoryAdapter = KeyValueArrayAdapter(requireContext(),
+            R.layout.spinner_list_item, newViewModel.getCategoryPairListLiveData().value ?: arrayListOf())
+        weaponAdapter = KeyValueArrayAdapter(requireContext(),
+            R.layout.spinner_list_item, newViewModel.getWeaponPairListLiveData().value ?: arrayListOf())
 
         // レイアウトを付与
         categoryAdapter.setDropDownViewResource(R.layout.spinner_list_dropdown_item)

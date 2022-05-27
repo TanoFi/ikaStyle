@@ -1,8 +1,8 @@
-package com.splatool.ikastyle.common
+package com.splatool.ikastyle.model.common
 
 import com.splatool.ikastyle.R
-import com.splatool.ikastyle.common.const.NumberPlace
-import com.splatool.ikastyle.common.const.ResourceIdMap
+import com.splatool.ikastyle.model.common.const.NumberPlace
+import com.splatool.ikastyle.model.common.const.ResourceIdMap
 import android.graphics.Color
 import java.util.*
 

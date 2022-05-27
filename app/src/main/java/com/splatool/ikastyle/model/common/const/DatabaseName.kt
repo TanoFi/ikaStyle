@@ -1,4 +1,4 @@
-package com.splatool.ikastyle.common.const
+package com.splatool.ikastyle.model.common.const
 
 object DatabaseName {
     //DB名

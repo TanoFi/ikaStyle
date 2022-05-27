@@ -8,7 +8,7 @@
             type="com.splatool.ikastyle.viewModel.GearDialogViewModel" />
     </data>
 
-    <com.splatool.ikastyle.ui.GearListItemLinearLayout
+    <com.splatool.ikastyle.view.customizedView.GearListItemLinearLayout
         android:id="@+id/linearLayout.gearListItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,5 +27,5 @@
             android:layout_weight="3"
             android:gravity="center_vertical"
             android:maxLines="1" />
-    </com.splatool.ikastyle.ui.GearListItemLinearLayout>
+    </com.splatool.ikastyle.view.customizedView.GearListItemLinearLayout>
 </layout>

@@ -1,7 +1,7 @@
-package com.splatool.ikastyle.ui
+package com.splatool.ikastyle.view.customizedView
 
 import android.content.Context
-import com.splatool.ikastyle.common.const.GearKind
+import com.splatool.ikastyle.model.common.const.GearKind
 import android.widget.LinearLayout
 import android.util.AttributeSet
 

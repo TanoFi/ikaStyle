@@ -19,7 +19,7 @@ import com.splatool.ikastyle.model.data.dao.MainCategoryDao
 import com.splatool.ikastyle.model.data.dao.CustomizationNameDao
 import com.splatool.ikastyle.model.data.dao.CustomizationMainDao
 import androidx.room.Room
-import com.splatool.ikastyle.common.const.DatabaseName
+import com.splatool.ikastyle.model.common.const.DatabaseName
 
 @Database(
     entities = [MainCategory::class, MainName::class, CustomizationName::class, Loadout::class, HeadGear::class, ClothingGear::class, ShoesGear::class],

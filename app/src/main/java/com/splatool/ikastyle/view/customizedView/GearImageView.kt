@@ -1,11 +1,11 @@
-package com.splatool.ikastyle.ui
+package com.splatool.ikastyle.view.customizedView
 
 import android.content.Context
 import androidx.appcompat.widget.AppCompatImageView
-import com.splatool.ikastyle.common.const.GearKind
+import com.splatool.ikastyle.model.common.const.GearKind
 import com.splatool.ikastyle.R
 import android.util.AttributeSet
-import com.splatool.ikastyle.common.Util
+import com.splatool.ikastyle.model.common.Util
 
 class GearImageView(context: Context, attrs: AttributeSet?) : AppCompatImageView(context, attrs) {
     var gearId = 0

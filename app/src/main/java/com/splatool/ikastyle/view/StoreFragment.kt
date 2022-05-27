@@ -1,4 +1,4 @@
-package com.splatool.ikastyle
+package com.splatool.ikastyle.view
 
 import android.graphics.PorterDuff
 import android.os.Bundle
@@ -10,15 +10,16 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.splatool.ikastyle.common.Util
+import com.splatool.ikastyle.R
+import com.splatool.ikastyle.model.common.Util
 import com.splatool.ikastyle.databinding.FragmentStoreBinding
 import com.splatool.ikastyle.model.data.database.AppDatabase
 import com.splatool.ikastyle.model.data.entity.Loadout
 import com.splatool.ikastyle.model.data.repository.CustomizationNameRepository
 import com.splatool.ikastyle.model.data.repository.LoadoutRepository
 import com.splatool.ikastyle.model.data.repository.MainCategoryRepository
-import com.splatool.ikastyle.ui.KeyValueArrayAdapter
-import com.splatool.ikastyle.ui.LoadoutRecyclerViewAdapter
+import com.splatool.ikastyle.view.apapter.KeyValueArrayAdapter
+import com.splatool.ikastyle.view.apapter.LoadoutRecyclerViewAdapter
 import com.splatool.ikastyle.viewModel.StoreViewModel
 
 class StoreFragment : Fragment() {
@@ -42,8 +43,10 @@ class StoreFragment : Fragment() {
         storeViewModel = ViewModelProvider(this, StoreViewModel.StoreFactory(categoryRepository, customizationRepository, loadoutRepository))[StoreViewModel::class.java]
 
         // spinnerのアダプター作成
-        categoryAdapter = KeyValueArrayAdapter(requireContext(), R.layout.spinner_list_item, storeViewModel.getCategoryPairListLiveData().value ?: arrayListOf())
-        customizationAdapter = KeyValueArrayAdapter(requireContext(), R.layout.spinner_list_item, storeViewModel.getCustomizationPairListLiveData().value ?: arrayListOf())
+        categoryAdapter = KeyValueArrayAdapter(requireContext(),
+            R.layout.spinner_list_item, storeViewModel.getCategoryPairListLiveData().value ?: arrayListOf())
+        customizationAdapter = KeyValueArrayAdapter(requireContext(),
+            R.layout.spinner_list_item, storeViewModel.getCustomizationPairListLiveData().value ?: arrayListOf())
 
         // レイアウトを付与
         categoryAdapter.setDropDownViewResource(R.layout.spinner_list_dropdown_item)

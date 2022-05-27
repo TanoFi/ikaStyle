@@ -10,16 +10,16 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.lifecycle.*
 import com.splatool.ikastyle.R
-import com.splatool.ikastyle.common.Util
-import com.splatool.ikastyle.common.const.GearKind
-import com.splatool.ikastyle.common.const.GearPowerPositionKind
-import com.splatool.ikastyle.common.const.NumberPlace
+import com.splatool.ikastyle.model.common.Util
+import com.splatool.ikastyle.model.common.const.GearKind
+import com.splatool.ikastyle.model.common.const.GearPowerPositionKind
+import com.splatool.ikastyle.model.common.const.NumberPlace
 import com.splatool.ikastyle.model.data.entity.Loadout
 import com.splatool.ikastyle.model.data.repository.CustomizationMainRepository
 import com.splatool.ikastyle.model.data.repository.LoadoutRepository
 import com.splatool.ikastyle.model.data.repository.MainCategoryRepository
-import com.splatool.ikastyle.ui.GearPowerImageView
-import com.splatool.ikastyle.ui.GearPowerReceptorImageView
+import com.splatool.ikastyle.view.customizedView.GearPowerImageView
+import com.splatool.ikastyle.view.customizedView.GearPowerReceptorImageView
 import kotlinx.coroutines.launch
 
 class NewViewModel(private val categoryRepository: MainCategoryRepository,

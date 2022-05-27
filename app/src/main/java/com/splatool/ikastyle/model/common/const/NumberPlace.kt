@@ -1,4 +1,4 @@
-package com.splatool.ikastyle.common.const
+package com.splatool.ikastyle.model.common.const
 
 /*
  * ブキの絶対的なIDを取得するための定数

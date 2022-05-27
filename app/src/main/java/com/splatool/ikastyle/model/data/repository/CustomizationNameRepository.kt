@@ -1,9 +1,8 @@
 package com.splatool.ikastyle.model.data.repository
 
-import com.splatool.ikastyle.common.Util
+import com.splatool.ikastyle.model.common.Util
 import com.splatool.ikastyle.model.data.dao.CustomizationNameDao
 import com.splatool.ikastyle.model.data.entity.CustomizationName
-import com.splatool.ikastyle.model.data.entity.MainCategory
 
 class CustomizationNameRepository(private val customizationDao : CustomizationNameDao) {
     val languageCode = Util.getLanguageCode()

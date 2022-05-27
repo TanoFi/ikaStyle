@@ -8,7 +8,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.splatool.ikastyle.ui.GearDialogFragment">
+        tools:context="com.splatool.ikastyle.view.GearDialogFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView.gear"

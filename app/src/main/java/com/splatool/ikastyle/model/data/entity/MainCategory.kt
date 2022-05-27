@@ -2,7 +2,7 @@ package com.splatool.ikastyle.model.data.entity
 
 import androidx.annotation.NonNull
 import androidx.room.*
-import com.splatool.ikastyle.common.Util
+import com.splatool.ikastyle.model.common.Util
 
 @Entity(tableName = "MAST_MAIN_CATEGORY", primaryKeys = ["id", "language_code"])
 data class MainCategory (
