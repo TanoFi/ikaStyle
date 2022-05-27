@@ -10,23 +10,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.splatool.ikastyle.model.data.database.AppDatabase
-import android.os.AsyncTask
-import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.splatool.ikastyle.common.Util
 import com.splatool.ikastyle.databinding.FragmentGearDialogBinding
-import com.splatool.ikastyle.model.data.entity.ClothingGear
-import com.splatool.ikastyle.model.data.entity.HeadGear
-import com.splatool.ikastyle.model.data.entity.Loadout
-import com.splatool.ikastyle.model.data.entity.ShoesGear
 import com.splatool.ikastyle.model.data.repository.GearRepository
-import com.splatool.ikastyle.model.data.repository.MainCategoryRepository
 import com.splatool.ikastyle.viewModel.GearDialogViewModel
-import com.splatool.ikastyle.viewModel.NewViewModel
-import com.splatool.ikastyle.viewModel.StoreViewModel
 import java.lang.ClassCastException
 import java.lang.NullPointerException
 import java.util.ArrayList
@@ -35,7 +25,7 @@ import java.util.ArrayList
  * ギア一覧を表示するダイアログ
  */
 class GearDialogFragment(private val gearKind: GearKind) : DialogFragment() {
-    lateinit var gearAdapter: GearRecyclerViewAdapter
+    private lateinit var gearAdapter: GearRecyclerViewAdapter
     lateinit var binding : FragmentGearDialogBinding
 
     // このinterfaceを呼び出し元フラグメントで実装することで呼び出し元フラグメントの更新を行う

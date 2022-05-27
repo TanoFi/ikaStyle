@@ -1,35 +1,25 @@
 package com.splatool.ikastyle
 
-import android.app.AlertDialog
-import android.content.Context
-import androidx.recyclerview.widget.RecyclerView
-import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.splatool.ikastyle.model.data.database.AppDatabase
-import android.os.AsyncTask
-import com.splatool.ikastyle.model.data.entity.Loadout
-import com.splatool.ikastyle.ui.LoadoutDeleteButton
-import com.splatool.ikastyle.ui.KeyValueArrayAdapter
-import androidx.constraintlayout.widget.ConstraintLayout
-import com.splatool.ikastyle.ui.LoadoutRecyclerViewAdapter
-import com.splatool.ikastyle.model.data.entity.MainCategory
-import com.splatool.ikastyle.model.data.entity.CustomizationName
-import com.splatool.ikastyle.ui.CategorySpinnerSelectedListener
 import android.graphics.PorterDuff
-import android.view.*
-import android.widget.*
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.splatool.ikastyle.common.Util
 import com.splatool.ikastyle.databinding.FragmentStoreBinding
+import com.splatool.ikastyle.model.data.database.AppDatabase
+import com.splatool.ikastyle.model.data.entity.Loadout
 import com.splatool.ikastyle.model.data.repository.CustomizationNameRepository
 import com.splatool.ikastyle.model.data.repository.LoadoutRepository
 import com.splatool.ikastyle.model.data.repository.MainCategoryRepository
-import com.splatool.ikastyle.ui.CustomizationSpinnerSelectedListener
+import com.splatool.ikastyle.ui.KeyValueArrayAdapter
+import com.splatool.ikastyle.ui.LoadoutRecyclerViewAdapter
 import com.splatool.ikastyle.viewModel.StoreViewModel
-import java.util.ArrayList
-import java.util.function.Consumer
 
 class StoreFragment : Fragment() {
     private lateinit var storeViewModel: StoreViewModel

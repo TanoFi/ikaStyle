@@ -1,39 +1,25 @@
 package com.splatool.ikastyle
 
-import android.content.Context
-import com.splatool.ikastyle.common.const.GearKind
-import com.splatool.ikastyle.ui.GearDialogFragment
-import com.splatool.ikastyle.ui.GearDialogFragment.GearDialogListener
 import android.os.Bundle
-import com.splatool.ikastyle.model.data.database.AppDatabase
-import android.os.AsyncTask
-import android.text.TextWatcher
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.splatool.ikastyle.model.data.entity.Loadout
-import com.splatool.ikastyle.common.const.NumberPlace
-import com.splatool.ikastyle.ui.GearPowerReceptorImageView
-import android.widget.Spinner
-import com.splatool.ikastyle.ui.KeyValueArrayAdapter
-import com.splatool.ikastyle.model.data.entity.MainCategory
-import com.splatool.ikastyle.model.data.databaseView.CustomizationMain
-import android.widget.EditText
-import com.splatool.ikastyle.ui.GearImageView
-import android.widget.Toast
-import com.splatool.ikastyle.ui.CategorySpinnerSelectedListener
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.splatool.ikastyle.common.Util
+import com.splatool.ikastyle.common.const.GearKind
 import com.splatool.ikastyle.databinding.FragmentNewBinding
-import com.splatool.ikastyle.databinding.FragmentStoreBinding
+import com.splatool.ikastyle.model.data.database.AppDatabase
+import com.splatool.ikastyle.model.data.entity.Loadout
 import com.splatool.ikastyle.model.data.repository.CustomizationMainRepository
 import com.splatool.ikastyle.model.data.repository.LoadoutRepository
 import com.splatool.ikastyle.model.data.repository.MainCategoryRepository
+import com.splatool.ikastyle.ui.GearDialogFragment
+import com.splatool.ikastyle.ui.GearDialogFragment.GearDialogListener
+import com.splatool.ikastyle.ui.GearImageView
+import com.splatool.ikastyle.ui.GearPowerReceptorImageView
+import com.splatool.ikastyle.ui.KeyValueArrayAdapter
 import com.splatool.ikastyle.viewModel.NewViewModel
-import androidx.lifecycle.Observer
-import java.util.*
-import java.util.function.Consumer
-import java.util.stream.Collectors
 
 class NewFragment : Fragment(), GearDialogListener {
     private lateinit var newViewModel : NewViewModel
@@ -142,10 +128,10 @@ class NewFragment : Fragment(), GearDialogListener {
      */
     private fun setOnClickListener(vararg gearImageViews: GearImageView) {
         for (gearImageView in gearImageViews) {
-            gearImageView.setOnClickListener(View.OnClickListener { view ->
+            gearImageView.setOnClickListener { view ->
                 val gearDialogFragment = GearDialogFragment((view as GearImageView).gearKind)
                 gearDialogFragment.show(childFragmentManager, "gear_dialog")
-            })
+            }
         }
     }
 

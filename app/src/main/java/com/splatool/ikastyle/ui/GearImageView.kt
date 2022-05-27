@@ -21,17 +21,6 @@ class GearImageView(context: Context, attrs: AttributeSet?) : AppCompatImageView
     }
     val gearKind : GearKind
 
-    // 初期化用メソッド
-    fun init() {
-        // ギアIDを0に設定
-        gearId = 0
-        when (gearKind) {
-            GearKind.HEAD -> setImageResource(Util.getHeadGearResourceId(gearId))
-            GearKind.CLOTHING -> setImageResource(Util.getClothingResourceId(gearId))
-            GearKind.SHOES -> setImageResource(Util.getShoesResourceId(gearId))
-        }
-    }
-
     init {
         // カスタム属性gearKindの値を取得しフィールド変数gearKindに入れる
         val typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.GearImageView, 0, 0)

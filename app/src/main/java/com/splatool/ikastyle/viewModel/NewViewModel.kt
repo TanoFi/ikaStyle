@@ -9,13 +9,11 @@ import android.widget.AdapterView
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.lifecycle.*
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.splatool.ikastyle.R
 import com.splatool.ikastyle.common.Util
 import com.splatool.ikastyle.common.const.GearKind
 import com.splatool.ikastyle.common.const.GearPowerPositionKind
 import com.splatool.ikastyle.common.const.NumberPlace
-import com.splatool.ikastyle.model.data.database.AppDatabase
 import com.splatool.ikastyle.model.data.entity.Loadout
 import com.splatool.ikastyle.model.data.repository.CustomizationMainRepository
 import com.splatool.ikastyle.model.data.repository.LoadoutRepository

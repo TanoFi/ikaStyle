@@ -6,16 +6,11 @@ import android.widget.Spinner
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.*
 import com.splatool.ikastyle.R
-import com.splatool.ikastyle.common.Util
 import com.splatool.ikastyle.common.const.NumberPlace
-import com.splatool.ikastyle.model.data.database.AppDatabase
-import com.splatool.ikastyle.model.data.databaseView.CustomizationMain
 import com.splatool.ikastyle.model.data.entity.Loadout
-import com.splatool.ikastyle.model.data.entity.MainCategory
 import com.splatool.ikastyle.model.data.repository.CustomizationNameRepository
 import com.splatool.ikastyle.model.data.repository.LoadoutRepository
 import com.splatool.ikastyle.model.data.repository.MainCategoryRepository
-import com.splatool.ikastyle.ui.KeyValueArrayAdapter
 import com.splatool.ikastyle.ui.LoadoutDeleteButton
 import kotlinx.coroutines.launch
 
@@ -104,7 +99,7 @@ class StoreViewModel(private val categoryRepository: MainCategoryRepository,
             .setTitle(view.context.getString(R.string.dialogMessage_confirm))
             .setPositiveButton( // Yesを選んだ時
                 view.context.getString(R.string.buttonNavigation_yes)
-            ) { dialogInterface, i ->
+            ) { _, _ ->
                 deleteLoadout(deleteButton.loadoutId) // 当該のloadoutデータ削除
             }
             .setNegativeButton( // Noを選んだ時

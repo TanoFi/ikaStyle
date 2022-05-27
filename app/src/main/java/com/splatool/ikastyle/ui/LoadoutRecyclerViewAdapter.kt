@@ -1,13 +1,13 @@
 package com.splatool.ikastyle.ui
 
-import com.splatool.ikastyle.R
-import androidx.recyclerview.widget.RecyclerView
-import com.splatool.ikastyle.model.data.entity.Loadout
-import android.view.*
-import android.widget.*
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.RecyclerView
+import com.splatool.ikastyle.R
 import com.splatool.ikastyle.common.Util
 import com.splatool.ikastyle.databinding.CardviewLayoutStoreBinding
+import com.splatool.ikastyle.model.data.entity.Loadout
 import com.splatool.ikastyle.viewModel.StoreViewModel
 
 class LoadoutRecyclerViewAdapter(private val storeViewModel: StoreViewModel) : RecyclerView.Adapter<LoadoutRecyclerViewAdapter.ViewHolder?>() {

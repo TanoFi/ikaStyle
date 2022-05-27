@@ -1,11 +1,10 @@
 package com.splatool.ikastyle.ui
 
 import android.content.Context
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.splatool.ikastyle.model.data.entity.Loadout
 import android.util.AttributeSet
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.splatool.ikastyle.R
-import com.splatool.ikastyle.common.const.GearKind
+import com.splatool.ikastyle.model.data.entity.Loadout
 
 class LoadoutDeleteButton(context: Context, attrs: AttributeSet?) :
     FloatingActionButton(context, attrs) {

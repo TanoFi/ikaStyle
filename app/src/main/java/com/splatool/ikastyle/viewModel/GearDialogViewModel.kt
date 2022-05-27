@@ -2,15 +2,8 @@ package com.splatool.ikastyle.viewModel
 
 import android.view.View
 import androidx.lifecycle.*
-import com.splatool.ikastyle.NewFragment
 import com.splatool.ikastyle.common.const.GearKind
-import com.splatool.ikastyle.model.data.entity.ClothingGear
-import com.splatool.ikastyle.model.data.entity.HeadGear
-import com.splatool.ikastyle.model.data.entity.ShoesGear
-import com.splatool.ikastyle.model.data.repository.CustomizationNameRepository
 import com.splatool.ikastyle.model.data.repository.GearRepository
-import com.splatool.ikastyle.model.data.repository.LoadoutRepository
-import com.splatool.ikastyle.model.data.repository.MainCategoryRepository
 import com.splatool.ikastyle.ui.GearListItemLinearLayout
 import kotlinx.coroutines.launch
 

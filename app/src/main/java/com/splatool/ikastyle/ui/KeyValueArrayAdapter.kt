@@ -1,13 +1,10 @@
 package com.splatool.ikastyle.ui
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import com.splatool.ikastyle.R
 import com.splatool.ikastyle.common.Util
@@ -18,7 +15,7 @@ import com.splatool.ikastyle.databinding.SpinnerListItemBinding
 class KeyValueArrayAdapter(
     context: Context,
     layoutResourceId: Int,
-    private val keyValues: ArrayList<Pair<Int, String>>
+    keyValues: ArrayList<Pair<Int, String>>
 ) : ArrayAdapter<Pair<Int, String>>(context, layoutResourceId, keyValues) {
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 

@@ -1,18 +1,15 @@
 package com.splatool.ikastyle.ui
 
-import com.splatool.ikastyle.common.const.GearKind
-import com.splatool.ikastyle.R
-import androidx.recyclerview.widget.RecyclerView
-import com.splatool.ikastyle.model.data.entity.HeadGear
-import com.splatool.ikastyle.model.data.entity.ClothingGear
-import com.splatool.ikastyle.model.data.entity.ShoesGear
-import android.view.*
-import android.widget.*
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.RecyclerView
+import com.splatool.ikastyle.R
 import com.splatool.ikastyle.common.Util
-import com.splatool.ikastyle.databinding.CardviewLayoutStoreBinding
-import com.splatool.ikastyle.databinding.FragmentGearDialogBinding
 import com.splatool.ikastyle.databinding.GearListItemBinding
+import com.splatool.ikastyle.model.data.entity.ClothingGear
+import com.splatool.ikastyle.model.data.entity.HeadGear
+import com.splatool.ikastyle.model.data.entity.ShoesGear
 import com.splatool.ikastyle.viewModel.GearDialogViewModel
 
 class GearRecyclerViewAdapter(private val gearDialogViewModel: GearDialogViewModel) :
