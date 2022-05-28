@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -67,6 +68,8 @@ class NewFragment : Fragment(), GearDialogListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setCategorySelectedListener()
 
         // GearImageViewにonClickListenerをまとめてセット
         setOnClickListener(binding.gearImageViewHead, binding.gearImageViewClothing, binding.gearImageViewShoes)
@@ -142,6 +145,16 @@ class NewFragment : Fragment(), GearDialogListener {
     private fun setOnDragListener(vararg receptorImageViews: GearPowerReceptorImageView){
         for(receptorImageView in receptorImageViews){
             receptorImageView.setOnDragListener(newViewModel.onGearPowerDragListener)
+        }
+    }
+
+    private fun setCategorySelectedListener(){
+        binding.spinnerCategory.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(adapter: AdapterView<*>?, view: View?, i: Int, l: Long) {
+                newViewModel.onCategorySelected(adapter, view, i, l)
+                binding.spinnerWeapon.setSelection(0)
+            }
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
         }
     }
 }

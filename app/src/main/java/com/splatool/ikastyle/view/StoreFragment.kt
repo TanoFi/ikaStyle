@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -72,6 +73,8 @@ class StoreFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setCategorySelectedListener()
+
         binding.recyclerViewLoadouts.setHasFixedSize(true)
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(view.context)
         binding.recyclerViewLoadouts.layoutManager = layoutManager
@@ -114,5 +117,15 @@ class StoreFragment : Fragment() {
         viewModel.getCategoryPairListLiveData().observe(viewLifecycleOwner, categoryObserver)
         viewModel.getCustomizationPairListLiveData().observe(viewLifecycleOwner, customizationObserver)
         viewModel.getLoadoutListLiveData().observe(viewLifecycleOwner, loadoutObserver)
+    }
+
+    private fun setCategorySelectedListener(){
+        binding.spinnerCategory.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(adapter: AdapterView<*>?, view: View?, i: Int, l: Long) {
+                storeViewModel.onCategorySelected(adapter, view, i, l)
+                binding.spinnerWeapon.setSelection(0)
+            }
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
+        }
     }
 }

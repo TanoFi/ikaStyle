@@ -25,7 +25,6 @@
             android:background="@drawable/background_round_corner"
             android:minHeight="48dp"
             android:spinnerMode="dialog"
-            android:onItemSelected="@{(parent, view, position, id) -> viewModel.onCategorySelected(parent, view, position, id)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
