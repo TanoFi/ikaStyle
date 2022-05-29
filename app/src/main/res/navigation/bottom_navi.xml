@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/storeFragment"
-        android:name="com.splatool.ikastyle.StoreFragment"
+        android:name="com.splatool.ikastyle.view.StoreFragment"
         android:label="fragment_store"
         tools:layout="@layout/fragment_store" />
     <fragment
         android:id="@+id/newFragment"
-        android:name="com.splatool.ikastyle.NewFragment"
+        android:name="com.splatool.ikastyle.view.NewFragment"
         android:label="fragment_new"
         tools:layout="@layout/fragment_new" />
 </navigation>
