@@ -1,596 +1,611 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/constraintLayout.fragmentNew"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_row="1"
-    android:layout_column="7"
-    tools:context="com.splatool.ikastyle.NewFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <Spinner
-        android:id="@+id/spinner.category"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/background_round_corner"
-        android:minHeight="48dp"
-        android:spinnerMode="dialog"
-        app:layout_constraintBottom_toTopOf="@+id/spinner.weapon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="SpeakableTextPresentCheck" />
+    <data>
+        <variable
+            name="viewModel"
+            type="com.splatool.ikastyle.viewModel.NewViewModel" />
+        <variable
+            name="loadout"
+            type="com.splatool.ikastyle.model.data.entity.Loadout" />
+    </data>
 
-    <Spinner
-        android:id="@+id/spinner.weapon"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/background_round_corner"
-        android:minHeight="48dp"
-        android:spinnerMode="dialog"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner.category"
-        tools:ignore="SpeakableTextPresentCheck" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout.fragmentNew"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_row="1"
+        android:layout_column="7"
+        tools:context="com.splatool.ikastyle.view.NewFragment">
 
-    <View
-        android:id="@+id/divider2"
-        android:layout_width="391dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="8dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner.weapon" />
+        <Spinner
+            android:id="@+id/spinner.category"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/background_round_corner"
+            android:minHeight="48dp"
+            android:spinnerMode="dialog"
+            app:layout_constraintBottom_toTopOf="@+id/spinner.weapon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="SpeakableTextPresentCheck" />
 
-    <EditText
-        android:id="@+id/editText.loadoutName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/plainText_loadoutName"
-        android:inputType="textPersonName"
-        android:minHeight="48dp"
-        app:layout_constraintBottom_toBottomOf="@+id/floatingActionButton.save"
-        app:layout_constraintEnd_toStartOf="@+id/floatingActionButton.save"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/floatingActionButton.save"
-        tools:text="@string/plainText_loadoutName"
-        android:importantForAutofill="no" />
+        <Spinner
+            android:id="@+id/spinner.weapon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/background_round_corner"
+            android:minHeight="48dp"
+            android:spinnerMode="dialog"
+            android:onItemSelected="@{(parent, view, position, id) -> viewModel.onWeaponSelected(parent, view, position, id)}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinner.category"
+            tools:ignore="SpeakableTextPresentCheck" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton.save"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:src="@drawable/ic_baseline_save_24"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider2"
-        app:maxImageSize="45dp"
-        tools:ignore="SpeakableTextPresentCheck" />
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="391dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinner.weapon" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView.loadout"
-        android:layout_width="0dp"
-        android:layout_height="180dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        app:cardCornerRadius="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/floatingActionButton.save">
+        <EditText
+            android:id="@+id/editText.loadoutName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/plainText_loadoutName"
+            android:inputType="textPersonName"
+            android:minHeight="48dp"
+            android:text="@{loadout.name}"
+            app:layout_constraintBottom_toBottomOf="@+id/floatingActionButton.save"
+            app:layout_constraintEnd_toStartOf="@+id/floatingActionButton.save"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/floatingActionButton.save"
+            tools:text="@string/plainText_loadoutName"
+            android:importantForAutofill="no" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButton.save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/ic_baseline_save_24"
+            android:onClick="@{(view) -> viewModel.onSaveButtonClicked(view)}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider2"
+            app:maxImageSize="45dp"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView.loadout"
+            android:layout_width="0dp"
+            android:layout_height="180dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            app:cardCornerRadius="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/floatingActionButton.save">
+
+            <androidx.gridlayout.widget.GridLayout
+                android:id="@+id/gridLayout.shoes"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="120dp"
+                android:background="@drawable/background_stripe_shoes">
+
+                <com.splatool.ikastyle.view.customizedView.GearPowerReceptorImageView
+                    android:id="@+id/receptorImageView.shoes_sub3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/gearpower_not_set"
+                    app:layout_column="4"
+                    app:layout_columnWeight="2"
+                    app:layout_row="0"
+                    app:receptorKind="33" />
+
+                <com.splatool.ikastyle.view.customizedView.GearPowerReceptorImageView
+                    android:id="@+id/receptorImageView.shoes_sub2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/gearpower_not_set"
+                    app:layout_column="3"
+                    app:layout_columnWeight="2"
+                    app:layout_row="0"
+                    app:receptorKind="32" />
+
+                <com.splatool.ikastyle.view.customizedView.GearPowerReceptorImageView
+                    android:id="@+id/receptorImageView.shoes_sub1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/gearpower_not_set"
+                    app:layout_column="2"
+                    app:layout_columnWeight="2"
+                    app:layout_row="0"
+                    app:receptorKind="31" />
+
+                <com.splatool.ikastyle.view.customizedView.GearPowerReceptorImageView
+                    android:id="@+id/receptorImageView.shoes_main"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/gearpower_not_set"
+                    app:layout_column="1"
+                    app:layout_columnWeight="3"
+                    app:layout_row="0"
+                    app:receptorKind="30" />
+
+                <com.splatool.ikastyle.view.customizedView.GearImageView
+                    android:id="@+id/gearImageView.shoes"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/gear_background"
+                    android:src="@drawable/shoes_gear0"
+                    app:gearKind="3"
+                    app:layout_column="0"
+                    app:layout_columnWeight="6"
+                    app:layout_row="0" />
+            </androidx.gridlayout.widget.GridLayout>
+
+            <androidx.gridlayout.widget.GridLayout
+                android:id="@+id/gridLayout.clothing"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="60dp"
+                android:background="@drawable/background_stripe_clothing">
+
+                <com.splatool.ikastyle.view.customizedView.GearPowerReceptorImageView
+                    android:id="@+id/receptorImageView.clothing_sub3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/gearpower_not_set"
+                    app:layout_column="4"
+                    app:layout_columnWeight="2"
+                    app:layout_row="0"
+                    app:receptorKind="23" />
+
+                <com.splatool.ikastyle.view.customizedView.GearPowerReceptorImageView
+                    android:id="@+id/receptorImageView.clothing_sub2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/gearpower_not_set"
+                    app:layout_column="3"
+                    app:layout_columnWeight="2"
+                    app:layout_row="0"
+                    app:receptorKind="22" />
+
+                <com.splatool.ikastyle.view.customizedView.GearPowerReceptorImageView
+                    android:id="@+id/receptorImageView.clothing_sub1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/gearpower_not_set"
+                    app:layout_column="2"
+                    app:layout_columnWeight="2"
+                    app:layout_gravity="bottom"
+                    app:layout_row="0"
+                    app:receptorKind="21" />
+
+                <com.splatool.ikastyle.view.customizedView.GearPowerReceptorImageView
+                    android:id="@+id/receptorImageView.clothing_main"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/gearpower_not_set"
+                    app:layout_column="1"
+                    app:layout_columnWeight="3"
+                    app:layout_row="0"
+                    app:receptorKind="20" />
+
+                <com.splatool.ikastyle.view.customizedView.GearImageView
+                    android:id="@+id/gearImageView.clothing"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/gear_background"
+                    android:src="@drawable/clothing_gear0"
+                    app:gearKind="2"
+                    app:layout_column="0"
+                    app:layout_columnWeight="6"
+                    app:layout_row="0"
+                    tools:ignore="ImageContrastCheck" />
+            </androidx.gridlayout.widget.GridLayout>
+
+            <androidx.gridlayout.widget.GridLayout
+                android:id="@+id/gridLayout.head"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/background_stripe_head">
+
+                <com.splatool.ikastyle.view.customizedView.GearPowerReceptorImageView
+                    android:id="@+id/receptorImageView.head_sub3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/gearpower_not_set"
+                    app:layout_column="4"
+                    app:layout_columnWeight="2"
+                    app:layout_row="0"
+                    app:receptorKind="13" />
+
+                <com.splatool.ikastyle.view.customizedView.GearPowerReceptorImageView
+                    android:id="@+id/receptorImageView.head_sub2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/gearpower_not_set"
+                    app:layout_column="3"
+                    app:layout_columnWeight="2"
+                    app:layout_row="0"
+                    app:receptorKind="12" />
+
+                <com.splatool.ikastyle.view.customizedView.GearPowerReceptorImageView
+                    android:id="@+id/receptorImageView.head_sub1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/gearpower_not_set"
+                    app:layout_column="2"
+                    app:layout_columnWeight="2"
+                    app:layout_row="0"
+                    app:receptorKind="11" />
+
+                <com.splatool.ikastyle.view.customizedView.GearPowerReceptorImageView
+                    android:id="@+id/receptorImageView.head_main"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/gearpower_not_set"
+                    app:layout_column="1"
+                    app:layout_columnWeight="3"
+                    app:layout_row="0"
+                    app:receptorKind="10" />
+
+                <com.splatool.ikastyle.view.customizedView.GearImageView
+                    android:id="@+id/gearImageView.head"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/gear_background"
+                    android:src="@drawable/headgear0"
+                    app:gearKind="1"
+                    app:layout_column="0"
+                    app:layout_columnWeight="6"
+                    app:layout_row="0" />
+            </androidx.gridlayout.widget.GridLayout>
+        </androidx.cardview.widget.CardView>
 
         <androidx.gridlayout.widget.GridLayout
-            android:id="@+id/gridLayout.shoes"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="120dp"
-            android:background="@drawable/background_stripe_shoes">
+            android:id="@+id/gridLayout.gearPower"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/background_gearpower"
+            app:columnCount="9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView.loadout"
+            app:rowCount="3">
 
-            <com.splatool.ikastyle.ui.GearPowerReceptorImageView
-                android:id="@+id/receptorImageView.shoes_sub3"
+            <com.splatool.ikastyle.view.customizedView.GearPowerImageView
+                android:id="@+id/imageView.notSet"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_height="40dp"
+                android:padding="1dp"
                 android:src="@drawable/gearpower_not_set"
+                app:gearPowerKind="0"
+                app:layout_column="8"
+                app:layout_columnWeight="1"
+                app:layout_row="2" />
+
+            <com.splatool.ikastyle.view.customizedView.GearPowerImageView
+                android:id="@+id/imageView.dropRoller"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/gear_size"
+                android:padding="1dp"
+                android:src="@drawable/gearpower_drop_roller"
+                app:gearPowerKind="302"
+                app:layout_column="7"
+                app:layout_columnWeight="1"
+                app:layout_row="2" />
+
+            <com.splatool.ikastyle.view.customizedView.GearPowerImageView
+                android:id="@+id/imageView.objectShredder"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/gear_size"
+                android:padding="1dp"
+                android:src="@drawable/gearpower_object_shredder"
+                app:gearPowerKind="301"
+                app:layout_column="6"
+                app:layout_columnWeight="1"
+                app:layout_row="2" />
+
+            <com.splatool.ikastyle.view.customizedView.GearPowerImageView
+                android:id="@+id/imageView.stealthJump"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/gear_size"
+                android:padding="1dp"
+                android:src="@drawable/gearpower_stealth_jump"
+                app:gearPowerKind="300"
+                app:layout_column="5"
+                app:layout_columnWeight="1"
+                app:layout_row="2" />
+
+            <com.splatool.ikastyle.view.customizedView.GearPowerImageView
+                android:id="@+id/imageView.abilityDoubler"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/gear_size"
+                android:padding="1dp"
+                android:src="@drawable/gearpower_ability_doubler"
+                app:gearPowerKind="204"
                 app:layout_column="4"
-                app:layout_columnWeight="2"
-                app:layout_row="0"
-                app:receptorKind="0" />
+                app:layout_columnWeight="1"
+                app:layout_row="2" />
 
-            <com.splatool.ikastyle.ui.GearPowerReceptorImageView
-                android:id="@+id/receptorImageView.shoes_sub2"
+            <com.splatool.ikastyle.view.customizedView.GearPowerImageView
+                android:id="@+id/imageView.respawnPunisher"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/gearpower_not_set"
+                android:layout_height="@dimen/gear_size"
+                android:padding="1dp"
+                android:src="@drawable/gearpower_respawn_punisher"
+                app:gearPowerKind="203"
                 app:layout_column="3"
-                app:layout_columnWeight="2"
-                app:layout_row="0"
-                app:receptorKind="0" />
+                app:layout_columnWeight="1"
+                app:layout_row="2" />
 
-            <com.splatool.ikastyle.ui.GearPowerReceptorImageView
-                android:id="@+id/receptorImageView.shoes_sub1"
+            <com.splatool.ikastyle.view.customizedView.GearPowerImageView
+                android:id="@+id/imageView.thermalInk"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/gearpower_not_set"
+                android:layout_height="@dimen/gear_size"
+                android:padding="1dp"
+                android:src="@drawable/gearpower_thermal_ink"
+                app:gearPowerKind="202"
                 app:layout_column="2"
-                app:layout_columnWeight="2"
-                app:layout_row="0"
-                app:receptorKind="0" />
+                app:layout_columnWeight="1"
+                app:layout_row="2" />
 
-            <com.splatool.ikastyle.ui.GearPowerReceptorImageView
-                android:id="@+id/receptorImageView.shoes_main"
+            <com.splatool.ikastyle.view.customizedView.GearPowerImageView
+                android:id="@+id/imageView.haunt"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:src="@drawable/gearpower_not_set"
+                android:layout_height="@dimen/gear_size"
+                android:padding="1dp"
+                android:src="@drawable/gearpower_haunt"
+                app:gearPowerKind="201"
                 app:layout_column="1"
-                app:layout_columnWeight="3"
-                app:layout_row="0"
-                app:receptorKind="3" />
+                app:layout_columnWeight="1"
+                app:layout_row="2" />
 
-            <com.splatool.ikastyle.ui.GearImageView
-                android:id="@+id/gearImageView.shoes"
+            <com.splatool.ikastyle.view.customizedView.GearPowerImageView
+                android:id="@+id/imageView.ninjaSquid"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:background="@color/gear_background"
-                android:src="@drawable/shoes_gear0"
-                app:gearKind="3"
+                android:layout_height="@dimen/gear_size"
+                android:padding="1dp"
+                android:src="@drawable/gearpower_ninja_squid"
+                app:gearPowerKind="200"
                 app:layout_column="0"
-                app:layout_columnWeight="6"
+                app:layout_columnWeight="1"
+                app:layout_row="2" />
+
+            <com.splatool.ikastyle.view.customizedView.GearPowerImageView
+                android:id="@+id/imageView.comeback"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/gear_size"
+                android:padding="1dp"
+                android:src="@drawable/gearpower_comeback"
+                app:gearPowerKind="103"
+                app:layout_column="8"
+                app:layout_columnWeight="1"
+                app:layout_row="1" />
+
+            <com.splatool.ikastyle.view.customizedView.GearPowerImageView
+                android:id="@+id/imageView.tenacity"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/gear_size"
+                android:padding="1dp"
+                android:src="@drawable/gearpower_tenacity"
+                app:gearPowerKind="102"
+                app:layout_column="7"
+                app:layout_columnWeight="1"
+                app:layout_row="1" />
+
+            <com.splatool.ikastyle.view.customizedView.GearPowerImageView
+                android:id="@+id/imageView.lastDitchEffort"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/gear_size"
+                android:padding="1dp"
+                android:src="@drawable/gearpower_last_ditch_effort"
+                app:gearPowerKind="101"
+                app:layout_column="6"
+                app:layout_columnWeight="1"
+                app:layout_row="1" />
+
+            <com.splatool.ikastyle.view.customizedView.GearPowerImageView
+                android:id="@+id/imageView.openingGambit"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/gear_size"
+                android:padding="1dp"
+                android:src="@drawable/gearpower_opening_gambit"
+                app:gearPowerKind="100"
+                app:layout_column="5"
+                app:layout_columnWeight="1"
+                app:layout_row="1" />
+
+            <com.splatool.ikastyle.view.customizedView.GearPowerImageView
+                android:id="@+id/imageView.mainPowerUp"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/gear_size"
+                android:padding="1dp"
+                android:src="@drawable/gearpower_main_power_up"
+                app:gearPowerKind="14"
+                app:layout_column="4"
+                app:layout_columnWeight="1"
+                app:layout_row="1" />
+
+            <com.splatool.ikastyle.view.customizedView.GearPowerImageView
+                android:id="@+id/imageView.bombDefenceUpDx"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/gear_size"
+                android:padding="1dp"
+                android:src="@drawable/gearpower_bomb_defence_up_dx"
+                app:gearPowerKind="13"
+                app:layout_column="3"
+                app:layout_columnWeight="1"
+                app:layout_row="1" />
+
+            <com.splatool.ikastyle.view.customizedView.GearPowerImageView
+                android:id="@+id/imageView.inkResistanceUp"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/gear_size"
+                android:padding="1dp"
+                android:src="@drawable/gearpower_ink_resistance_up"
+                app:gearPowerKind="12"
+                app:layout_column="2"
+                app:layout_columnWeight="1"
+                app:layout_row="1" />
+
+            <com.splatool.ikastyle.view.customizedView.GearPowerImageView
+                android:id="@+id/imageView.subPowerUp"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/gear_size"
+                android:padding="1dp"
+                android:src="@drawable/gearpower_sub_power_up"
+                app:gearPowerKind="11"
+                app:layout_column="1"
+                app:layout_columnWeight="1"
+                app:layout_row="1" />
+
+            <com.splatool.ikastyle.view.customizedView.GearPowerImageView
+                android:id="@+id/imageView.quickSuperJump"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/gear_size"
+                android:padding="1dp"
+                android:src="@drawable/gearpower_quick_super_jump"
+                app:gearPowerKind="10"
+                app:layout_column="0"
+                app:layout_columnWeight="1"
+                app:layout_row="1" />
+
+            <com.splatool.ikastyle.view.customizedView.GearPowerImageView
+                android:id="@+id/imageView.quickRespawn"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/gear_size"
+                android:padding="1dp"
+                android:src="@drawable/gearpower_quick_respawn"
+                app:gearPowerKind="9"
+                app:layout_column="8"
+                app:layout_columnWeight="1"
+                app:layout_row="0" />
+
+            <com.splatool.ikastyle.view.customizedView.GearPowerImageView
+                android:id="@+id/imageView.specialPowerUp"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/gear_size"
+                android:padding="1dp"
+                android:src="@drawable/gearpower_special_power_up"
+                app:gearPowerKind="8"
+                app:layout_column="7"
+                app:layout_columnWeight="1"
+                app:layout_row="0" />
+
+            <com.splatool.ikastyle.view.customizedView.GearPowerImageView
+                android:id="@+id/imageView.specialSaver"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/gear_size"
+                android:padding="1dp"
+                android:src="@drawable/gearpower_special_saver"
+                app:gearPowerKind="7"
+                app:layout_column="6"
+                app:layout_columnWeight="1"
+                app:layout_row="0" />
+
+            <com.splatool.ikastyle.view.customizedView.GearPowerImageView
+                android:id="@+id/imageView.specialChargeUp"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/gear_size"
+                android:padding="1dp"
+                android:src="@drawable/gearpower_special_charge_up"
+                app:gearPowerKind="6"
+                app:layout_column="5"
+                app:layout_columnWeight="1"
+                app:layout_row="0" />
+
+            <com.splatool.ikastyle.view.customizedView.GearPowerImageView
+                android:id="@+id/imageView.swimSpeedUp"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/gear_size"
+                android:padding="1dp"
+                android:src="@drawable/gearpower_swim_speed_up"
+                app:gearPowerKind="5"
+                app:layout_column="4"
+                app:layout_columnWeight="1"
+                app:layout_row="0" />
+
+            <com.splatool.ikastyle.view.customizedView.GearPowerImageView
+                android:id="@+id/imageView.runSpeedUp"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/gear_size"
+                android:padding="1dp"
+                android:src="@drawable/gearpower_run_speed_up"
+                app:gearPowerKind="4"
+                app:layout_column="3"
+                app:layout_columnWeight="1"
+                app:layout_row="0" />
+
+            <com.splatool.ikastyle.view.customizedView.GearPowerImageView
+                android:id="@+id/imageView.inkRecoveryUp"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/gear_size"
+                android:padding="1dp"
+                android:src="@drawable/gearpower_ink_recovery_up"
+                app:gearPowerKind="3"
+                app:layout_column="2"
+                app:layout_columnWeight="1"
+                app:layout_row="0" />
+
+            <com.splatool.ikastyle.view.customizedView.GearPowerImageView
+                android:id="@+id/imageView.inkSaverSub"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/gear_size"
+                android:padding="1dp"
+                android:src="@drawable/gearpower_ink_saver_sub"
+                app:gearPowerKind="2"
+                app:layout_column="1"
+                app:layout_columnWeight="1"
+                app:layout_row="0" />
+
+            <com.splatool.ikastyle.view.customizedView.GearPowerImageView
+                android:id="@+id/imageView.inkSaverMain"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/gear_size"
+                android:padding="1dp"
+                android:src="@drawable/gearpower_ink_saver_main"
+                app:gearPowerKind="1"
+                app:layout_column="0"
+                app:layout_columnWeight="1"
                 app:layout_row="0" />
         </androidx.gridlayout.widget.GridLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
 
-        <androidx.gridlayout.widget.GridLayout
-            android:id="@+id/gridLayout.clothing"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="60dp"
-            android:background="@drawable/background_stripe_clothing">
-
-            <com.splatool.ikastyle.ui.GearPowerReceptorImageView
-                android:id="@+id/receptorImageView.clothing_sub3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/gearpower_not_set"
-                app:layout_column="4"
-                app:layout_columnWeight="2"
-                app:layout_row="0"
-                app:receptorKind="0" />
-
-            <com.splatool.ikastyle.ui.GearPowerReceptorImageView
-                android:id="@+id/receptorImageView.clothing_sub2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/gearpower_not_set"
-                app:layout_column="3"
-                app:layout_columnWeight="2"
-                app:layout_row="0"
-                app:receptorKind="0" />
-
-            <com.splatool.ikastyle.ui.GearPowerReceptorImageView
-                android:id="@+id/receptorImageView.clothing_sub1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/gearpower_not_set"
-                app:layout_column="2"
-                app:layout_columnWeight="2"
-                app:layout_gravity="bottom"
-                app:layout_row="0"
-                app:receptorKind="0" />
-
-            <com.splatool.ikastyle.ui.GearPowerReceptorImageView
-                android:id="@+id/receptorImageView.clothing_main"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:src="@drawable/gearpower_not_set"
-                app:layout_column="1"
-                app:layout_columnWeight="3"
-                app:layout_row="0"
-                app:receptorKind="2" />
-
-            <com.splatool.ikastyle.ui.GearImageView
-                android:id="@+id/gearImageView.clothing"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:background="@color/gear_background"
-                android:src="@drawable/clothing_gear0"
-                app:gearKind="2"
-                app:layout_column="0"
-                app:layout_columnWeight="6"
-                app:layout_row="0"
-                tools:ignore="ImageContrastCheck" />
-        </androidx.gridlayout.widget.GridLayout>
-
-        <androidx.gridlayout.widget.GridLayout
-            android:id="@+id/gridLayout.head"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="@drawable/background_stripe_head">
-
-            <com.splatool.ikastyle.ui.GearPowerReceptorImageView
-                android:id="@+id/receptorImageView.head_sub3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/gearpower_not_set"
-                app:layout_column="4"
-                app:layout_columnWeight="2"
-                app:layout_row="0"
-                app:receptorKind="0" />
-
-            <com.splatool.ikastyle.ui.GearPowerReceptorImageView
-                android:id="@+id/receptorImageView.head_sub2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/gearpower_not_set"
-                app:layout_column="3"
-                app:layout_columnWeight="2"
-                app:layout_row="0"
-                app:receptorKind="0" />
-
-            <com.splatool.ikastyle.ui.GearPowerReceptorImageView
-                android:id="@+id/receptorImageView.head_sub1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/gearpower_not_set"
-                app:layout_column="2"
-                app:layout_columnWeight="2"
-                app:layout_row="0"
-                app:receptorKind="0" />
-
-            <com.splatool.ikastyle.ui.GearPowerReceptorImageView
-                android:id="@+id/receptorImageView.head_main"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:src="@drawable/gearpower_not_set"
-                app:layout_column="1"
-                app:layout_columnWeight="3"
-                app:layout_row="0"
-                app:receptorKind="1" />
-
-            <com.splatool.ikastyle.ui.GearImageView
-                android:id="@+id/gearImageView.head"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:background="@color/gear_background"
-                android:src="@drawable/headgear0"
-                app:gearKind="1"
-                app:layout_column="0"
-                app:layout_columnWeight="6"
-                app:layout_row="0" />
-        </androidx.gridlayout.widget.GridLayout>
-    </androidx.cardview.widget.CardView>
-
-    <androidx.gridlayout.widget.GridLayout
-        android:id="@+id/gridLayout.gearPower"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/background_gearpower"
-        app:columnCount="9"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView.loadout"
-        app:rowCount="3">
-
-        <com.splatool.ikastyle.ui.GearPowerImageView
-            android:id="@+id/imageView.notSet"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:padding="1dp"
-            android:src="@drawable/gearpower_not_set"
-            app:gearPowerKind="0"
-            app:layout_column="8"
-            app:layout_columnWeight="1"
-            app:layout_row="2" />
-
-        <com.splatool.ikastyle.ui.GearPowerImageView
-            android:id="@+id/imageView.dropRoller"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/gear_size"
-            android:padding="1dp"
-            android:src="@drawable/gearpower_drop_roller"
-            app:gearPowerKind="302"
-            app:layout_column="7"
-            app:layout_columnWeight="1"
-            app:layout_row="2" />
-
-        <com.splatool.ikastyle.ui.GearPowerImageView
-            android:id="@+id/imageView.objectShredder"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/gear_size"
-            android:padding="1dp"
-            android:src="@drawable/gearpower_object_shredder"
-            app:gearPowerKind="301"
-            app:layout_column="6"
-            app:layout_columnWeight="1"
-            app:layout_row="2" />
-
-        <com.splatool.ikastyle.ui.GearPowerImageView
-            android:id="@+id/imageView.stealthJump"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/gear_size"
-            android:padding="1dp"
-            android:src="@drawable/gearpower_stealth_jump"
-            app:gearPowerKind="300"
-            app:layout_column="5"
-            app:layout_columnWeight="1"
-            app:layout_row="2" />
-
-        <com.splatool.ikastyle.ui.GearPowerImageView
-            android:id="@+id/imageView.abilityDoubler"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/gear_size"
-            android:padding="1dp"
-            android:src="@drawable/gearpower_ability_doubler"
-            app:gearPowerKind="204"
-            app:layout_column="4"
-            app:layout_columnWeight="1"
-            app:layout_row="2" />
-
-        <com.splatool.ikastyle.ui.GearPowerImageView
-            android:id="@+id/imageView.respawnPunisher"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/gear_size"
-            android:padding="1dp"
-            android:src="@drawable/gearpower_respawn_punisher"
-            app:gearPowerKind="203"
-            app:layout_column="3"
-            app:layout_columnWeight="1"
-            app:layout_row="2" />
-
-        <com.splatool.ikastyle.ui.GearPowerImageView
-            android:id="@+id/imageView.thermalInk"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/gear_size"
-            android:padding="1dp"
-            android:src="@drawable/gearpower_thermal_ink"
-            app:gearPowerKind="202"
-            app:layout_column="2"
-            app:layout_columnWeight="1"
-            app:layout_row="2" />
-
-        <com.splatool.ikastyle.ui.GearPowerImageView
-            android:id="@+id/imageView.haunt"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/gear_size"
-            android:padding="1dp"
-            android:src="@drawable/gearpower_haunt"
-            app:gearPowerKind="201"
-            app:layout_column="1"
-            app:layout_columnWeight="1"
-            app:layout_row="2" />
-
-        <com.splatool.ikastyle.ui.GearPowerImageView
-            android:id="@+id/imageView.ninjaSquid"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/gear_size"
-            android:padding="1dp"
-            android:src="@drawable/gearpower_ninja_squid"
-            app:gearPowerKind="200"
-            app:layout_column="0"
-            app:layout_columnWeight="1"
-            app:layout_row="2" />
-
-        <com.splatool.ikastyle.ui.GearPowerImageView
-            android:id="@+id/imageView.comeback"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/gear_size"
-            android:padding="1dp"
-            android:src="@drawable/gearpower_comeback"
-            app:gearPowerKind="103"
-            app:layout_column="8"
-            app:layout_columnWeight="1"
-            app:layout_row="1" />
-
-        <com.splatool.ikastyle.ui.GearPowerImageView
-            android:id="@+id/imageView.tenacity"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/gear_size"
-            android:padding="1dp"
-            android:src="@drawable/gearpower_tenacity"
-            app:gearPowerKind="102"
-            app:layout_column="7"
-            app:layout_columnWeight="1"
-            app:layout_row="1" />
-
-        <com.splatool.ikastyle.ui.GearPowerImageView
-            android:id="@+id/imageView.lastDitchEffort"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/gear_size"
-            android:padding="1dp"
-            android:src="@drawable/gearpower_last_ditch_effort"
-            app:gearPowerKind="101"
-            app:layout_column="6"
-            app:layout_columnWeight="1"
-            app:layout_row="1" />
-
-        <com.splatool.ikastyle.ui.GearPowerImageView
-            android:id="@+id/imageView.openingGambit"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/gear_size"
-            android:padding="1dp"
-            android:src="@drawable/gearpower_opening_gambit"
-            app:gearPowerKind="100"
-            app:layout_column="5"
-            app:layout_columnWeight="1"
-            app:layout_row="1" />
-
-        <com.splatool.ikastyle.ui.GearPowerImageView
-            android:id="@+id/imageView.mainPowerUp"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/gear_size"
-            android:padding="1dp"
-            android:src="@drawable/gearpower_main_power_up"
-            app:gearPowerKind="14"
-            app:layout_column="4"
-            app:layout_columnWeight="1"
-            app:layout_row="1" />
-
-        <com.splatool.ikastyle.ui.GearPowerImageView
-            android:id="@+id/imageView.bombDefenceUpDx"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/gear_size"
-            android:padding="1dp"
-            android:src="@drawable/gearpower_bomb_defence_up_dx"
-            app:gearPowerKind="13"
-            app:layout_column="3"
-            app:layout_columnWeight="1"
-            app:layout_row="1" />
-
-        <com.splatool.ikastyle.ui.GearPowerImageView
-            android:id="@+id/imageView.inkResistanceUp"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/gear_size"
-            android:padding="1dp"
-            android:src="@drawable/gearpower_ink_resistance_up"
-            app:gearPowerKind="12"
-            app:layout_column="2"
-            app:layout_columnWeight="1"
-            app:layout_row="1" />
-
-        <com.splatool.ikastyle.ui.GearPowerImageView
-            android:id="@+id/imageView.subPowerUp"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/gear_size"
-            android:padding="1dp"
-            android:src="@drawable/gearpower_sub_power_up"
-            app:gearPowerKind="11"
-            app:layout_column="1"
-            app:layout_columnWeight="1"
-            app:layout_row="1" />
-
-        <com.splatool.ikastyle.ui.GearPowerImageView
-            android:id="@+id/imageView.quickSuperJump"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/gear_size"
-            android:padding="1dp"
-            android:src="@drawable/gearpower_quick_super_jump"
-            app:gearPowerKind="10"
-            app:layout_column="0"
-            app:layout_columnWeight="1"
-            app:layout_row="1" />
-
-        <com.splatool.ikastyle.ui.GearPowerImageView
-            android:id="@+id/imageView.quickRespawn"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/gear_size"
-            android:padding="1dp"
-            android:src="@drawable/gearpower_quick_respawn"
-            app:gearPowerKind="9"
-            app:layout_column="8"
-            app:layout_columnWeight="1"
-            app:layout_row="0" />
-
-        <com.splatool.ikastyle.ui.GearPowerImageView
-            android:id="@+id/imageView.specialPowerUp"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/gear_size"
-            android:padding="1dp"
-            android:src="@drawable/gearpower_special_power_up"
-            app:gearPowerKind="8"
-            app:layout_column="7"
-            app:layout_columnWeight="1"
-            app:layout_row="0" />
-
-        <com.splatool.ikastyle.ui.GearPowerImageView
-            android:id="@+id/imageView.specialSaver"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/gear_size"
-            android:padding="1dp"
-            android:src="@drawable/gearpower_special_saver"
-            app:gearPowerKind="7"
-            app:layout_column="6"
-            app:layout_columnWeight="1"
-            app:layout_row="0" />
-
-        <com.splatool.ikastyle.ui.GearPowerImageView
-            android:id="@+id/imageView.specialChargeUp"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/gear_size"
-            android:padding="1dp"
-            android:src="@drawable/gearpower_special_charge_up"
-            app:gearPowerKind="6"
-            app:layout_column="5"
-            app:layout_columnWeight="1"
-            app:layout_row="0" />
-
-        <com.splatool.ikastyle.ui.GearPowerImageView
-            android:id="@+id/imageView.swimSpeedUp"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/gear_size"
-            android:padding="1dp"
-            android:src="@drawable/gearpower_swim_speed_up"
-            app:gearPowerKind="5"
-            app:layout_column="4"
-            app:layout_columnWeight="1"
-            app:layout_row="0" />
-
-        <com.splatool.ikastyle.ui.GearPowerImageView
-            android:id="@+id/imageView.runSpeedUp"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/gear_size"
-            android:padding="1dp"
-            android:src="@drawable/gearpower_run_speed_up"
-            app:gearPowerKind="4"
-            app:layout_column="3"
-            app:layout_columnWeight="1"
-            app:layout_row="0" />
-
-        <com.splatool.ikastyle.ui.GearPowerImageView
-            android:id="@+id/imageView.inkRecoveryUp"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/gear_size"
-            android:padding="1dp"
-            android:src="@drawable/gearpower_ink_recovery_up"
-            app:gearPowerKind="3"
-            app:layout_column="2"
-            app:layout_columnWeight="1"
-            app:layout_row="0" />
-
-        <com.splatool.ikastyle.ui.GearPowerImageView
-            android:id="@+id/imageView.inkSaverSub"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/gear_size"
-            android:padding="1dp"
-            android:src="@drawable/gearpower_ink_saver_sub"
-            app:gearPowerKind="2"
-            app:layout_column="1"
-            app:layout_columnWeight="1"
-            app:layout_row="0" />
-
-        <com.splatool.ikastyle.ui.GearPowerImageView
-            android:id="@+id/imageView.inkSaverMain"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/gear_size"
-            android:padding="1dp"
-            android:src="@drawable/gearpower_ink_saver_main"
-            app:gearPowerKind="1"
-            app:layout_column="0"
-            app:layout_columnWeight="1"
-            app:layout_row="0" />
-    </androidx.gridlayout.widget.GridLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
