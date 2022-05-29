@@ -79,39 +79,51 @@ class StoreFragment : Fragment() {
         // spinnerにonItemSelectedListenerを付与
         setCategorySelectedListener()
 
-        binding.recyclerViewLoadouts.setHasFixedSize(true)
-        val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(view.context)
-        binding.recyclerViewLoadouts.layoutManager = layoutManager
+        // recyclerViewにレイアウト設定
+        binding.recyclerViewLoadouts.apply {
+            binding.recyclerViewLoadouts.setHasFixedSize(true)
+            binding.recyclerViewLoadouts.layoutManager = LinearLayoutManager(view.context)
+        }
 
         // ギアセット未登録時に表示する画像にランダム色を設定
         binding.imageViewInkMark.setColorFilter(colorNum, PorterDuff.Mode.SRC_ATOP)
 
+        // LiveDataにObserver設定
         observeViewModel(storeViewModel)
     }
 
+    /*
+     * LiveDataにObserverを設定
+     */
     private fun observeViewModel(viewModel: StoreViewModel){
         val categoryObserver = Observer<ArrayList<Pair<Int,String>>>{
             it.let{
+                // CategorySpinnerの初期選択値が設定されていなければ設定
                 if(it[0].first != 0) {
                     it.add(0, Pair(0, requireContext().getString(R.string.spinnerItem_categoryUnselected)))
                 }
+                // CategorySpinnerの表示更新
                 categoryAdapter.resetKeyValues(it)
             }
         }
 
         val customizationObserver = Observer<ArrayList<Pair<Int, String>>>{
             it.let{
+                // WeaponSpinnerの初期選択値が設定されていなければ設定
                 if(it[0].first != 0) {
                     it.add(0, Pair(0, requireContext().getString(R.string.spinnerItem_weaponUnselected)))
                 }
+                // WeaponSpinnerの表示更新
                 customizationAdapter.resetKeyValues(it)
             }
         }
 
         val loadoutObserver = Observer<ArrayList<Loadout>> {
             it.let{
+                // LoadoutAdapterの表示更新
                 loadoutAdapter.setLoadoutList(it)
 
+                // 表示する項目がなければEmptyView表示、あれば非表示
                 if(it.size == 0){
                     binding.constrainLayoutEmptyInfo.visibility = View.VISIBLE
                 }
@@ -126,11 +138,17 @@ class StoreFragment : Fragment() {
         viewModel.getLoadoutListLiveData().observe(viewLifecycleOwner, loadoutObserver)
     }
 
+    /*
+     * SpinnerのisFocusableをfalseに設定
+     */
     private fun setSpinnerFocusableFalse(){
         binding.spinnerCategory.isFocusable = false
         binding.spinnerWeapon.isFocusable = false
     }
 
+    /*
+     * CategorySpinnerにonItemSelectedListenerを設定
+     */
     private fun setCategorySelectedListener(){
         binding.spinnerCategory.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
             override fun onItemSelected(adapter: AdapterView<*>?, view: View?, i: Int, l: Long) {

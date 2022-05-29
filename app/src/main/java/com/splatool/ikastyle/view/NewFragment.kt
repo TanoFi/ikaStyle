@@ -69,10 +69,8 @@ class NewFragment : Fragment(), GearDialogListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         // 表示時にonItemSelected()内の処理を流させないための対応
         setSpinnerFocusableFalse()
-
         // spinnerにonItemSelectedListenerを付与
         setCategorySelectedListener()
 
@@ -87,30 +85,46 @@ class NewFragment : Fragment(), GearDialogListener {
         // editTextLoadoutNameに入力値変更時用のListenerをセット
         binding.editTextLoadoutName.addTextChangedListener(newViewModel.loadoutNameTextWatcher)
 
+        // LiveDataにObserverを設定
         observeViewModel(newViewModel)
     }
 
+    /*
+     * DialofFragmentのItemでGearを選択した時の処理
+     */
+    override fun onListItemClick(dialogFragment: GearDialogFragment, gearKind: GearKind, gearId: Int) {
+        newViewModel.onPostDialogItemClicked(gearKind, gearId)
+    }
+
+    /*
+     * LiveDataにObserverを設定
+     */
     private fun observeViewModel(viewModel: NewViewModel){
         val categoryObserver = Observer<ArrayList<Pair<Int, String>>>{
             it.let{
+                // CategorySpinnerの初期選択値が設定されていなければ設定
                 if(it[0].first != 0) {
                     it.add(0, Pair(0, requireContext().getString(R.string.spinnerItem_categoryUnselected)))
                 }
+                // CategorySpinnerの表示更新
                 categoryAdapter.resetKeyValues(it)
             }
         }
 
         val weaponObserver = Observer<ArrayList<Pair<Int, String>>>{
             it.let{
+                // WeaponSpinnerの初期選択値が設定されていなければ設定
                 if(it[0].first != 0) {
                     it.add(0, Pair(0, requireContext().getString(R.string.spinnerItem_weaponUnselected)))
                 }
+                // WeaponSpinnerの表示更新
                 weaponAdapter.resetKeyValues(it)
             }
         }
 
         val loadoutObserver = Observer<Loadout> {
             it.let{
+                // Loadoutの入力項目更新
                 binding.editTextLoadoutName.setText(it.name)
                 binding.gearImageViewHead.setImageResource(it.headGearResourceId)
                 binding.receptorImageViewHeadMain.setImageResource(it.headMainResourceId)
@@ -135,10 +149,6 @@ class NewFragment : Fragment(), GearDialogListener {
         viewModel.getLoadoutLiveData().observe(viewLifecycleOwner, loadoutObserver)
     }
 
-    override fun onListItemClick(dialogFragment: GearDialogFragment, gearKind: GearKind, gearId: Int) {
-        newViewModel.onPostDialogItemClicked(gearKind, gearId)
-    }
-
     /*
      * GearImageViewにonClickListenerをまとめてセットする
      */
@@ -151,18 +161,27 @@ class NewFragment : Fragment(), GearDialogListener {
         }
     }
 
+
+    /*
+     * GearPowerReceptorImageViewにonDragListenerをまとめてセットする
+     */
     private fun setOnDragListener(vararg receptorImageViews: GearPowerReceptorImageView){
         for(receptorImageView in receptorImageViews){
             receptorImageView.setOnDragListener(newViewModel.onGearPowerDragListener)
         }
     }
 
-    // spinnerのisFocusableをfalseにする
+    /*
+     * spinnerのisFocusableをfalseにする
+     */
     private fun setSpinnerFocusableFalse(){
         binding.spinnerCategory.isFocusable = false
         binding.spinnerWeapon.isFocusable = false
     }
 
+    /*
+     * CategorySpinnerにonItemSelectedListenerを設定
+     */
     private fun setCategorySelectedListener(){
         binding.spinnerCategory.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
             override fun onItemSelected(adapter: AdapterView<*>?, view: View?, i: Int, l: Long) {
