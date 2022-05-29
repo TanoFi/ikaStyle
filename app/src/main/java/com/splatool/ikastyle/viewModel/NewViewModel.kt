@@ -30,6 +30,9 @@ class NewViewModel(private val categoryRepository: MainCategoryRepository,
     private val weaponPairListLiveData = MutableLiveData<ArrayList<Pair<Int,String>>>()
     private val loadoutLiveData = MutableLiveData<Loadout>()
 
+    var categorySpinnerSelectedId : Int = 0
+    var weaponSpinnerSelectedId : Int = 0
+
     fun getCategoryPairListLiveData() : LiveData<ArrayList<Pair<Int,String>>> = categoryPairListLiveData
     fun getWeaponPairListLiveData() : LiveData<ArrayList<Pair<Int,String>>> = weaponPairListLiveData
     fun getLoadoutLiveData() : LiveData<Loadout> = loadoutLiveData
@@ -76,8 +79,15 @@ class NewViewModel(private val categoryRepository: MainCategoryRepository,
     fun onCategorySelected(adapterView: AdapterView<*>?, view: View?, i: Int, l: Long) {
         val spinner = adapterView as Spinner
 
+        // 初回表示時は処理を呼ばない
+        if(spinner.isFocusable.not()){
+            spinner.isFocusable = true
+            return
+        }
+
         // 絶対IDからカテゴリーIDを割り出す
-        val categoryId = ((spinner.selectedItem as Pair<*, *>).first as Int) / NumberPlace.CATEGORY_PLACE
+        categorySpinnerSelectedId = (spinner.selectedItem as Pair<*, *>).first as Int
+        val categoryId = categorySpinnerSelectedId / NumberPlace.CATEGORY_PLACE
 
         if (categoryId == 0) { // カテゴリーSpinnerで未選択項目が選ばれているとき
             //ブキSpinnerの項目を全表示
@@ -91,6 +101,7 @@ class NewViewModel(private val categoryRepository: MainCategoryRepository,
     fun onWeaponSelected(adapterView: AdapterView<*>?, view: View?, i: Int, l: Long) {
         val spinner = adapterView as Spinner
         val absoluteWeaponId = (spinner.selectedItem as Pair<*, *>).first as Int
+        weaponSpinnerSelectedId = absoluteWeaponId
         loadoutLiveData.value!!.categoryId = Util.getCategoryId(absoluteWeaponId)
         loadoutLiveData.value!!.mainId = Util.getMainId(absoluteWeaponId)
         loadoutLiveData.value!!.customizationId = Util.getCustomizationId(absoluteWeaponId)

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -73,6 +74,9 @@ class StoreFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // 表示時にonItemSelected()内の処理を流させないための対応
+        setSpinnerFocusableFalse()
+        // spinnerにonItemSelectedListenerを付与
         setCategorySelectedListener()
 
         binding.recyclerViewLoadouts.setHasFixedSize(true)
@@ -82,21 +86,24 @@ class StoreFragment : Fragment() {
         // ギアセット未登録時に表示する画像にランダム色を設定
         binding.imageViewInkMark.setColorFilter(colorNum, PorterDuff.Mode.SRC_ATOP)
 
-
         observeViewModel(storeViewModel)
     }
 
     private fun observeViewModel(viewModel: StoreViewModel){
         val categoryObserver = Observer<ArrayList<Pair<Int,String>>>{
             it.let{
-                it.add(0, Pair(0, requireContext().getString(R.string.spinnerItem_categoryUnselected)))
+                if(it[0].first != 0) {
+                    it.add(0, Pair(0, requireContext().getString(R.string.spinnerItem_categoryUnselected)))
+                }
                 categoryAdapter.resetKeyValues(it)
             }
         }
 
         val customizationObserver = Observer<ArrayList<Pair<Int, String>>>{
             it.let{
-                it.add(0, Pair(0, requireContext().getString(R.string.spinnerItem_weaponUnselected)))
+                if(it[0].first != 0) {
+                    it.add(0, Pair(0, requireContext().getString(R.string.spinnerItem_weaponUnselected)))
+                }
                 customizationAdapter.resetKeyValues(it)
             }
         }
@@ -119,11 +126,27 @@ class StoreFragment : Fragment() {
         viewModel.getLoadoutListLiveData().observe(viewLifecycleOwner, loadoutObserver)
     }
 
+    private fun setSpinnerFocusableFalse(){
+        binding.spinnerCategory.isFocusable = false
+        binding.spinnerWeapon.isFocusable = false
+    }
+
     private fun setCategorySelectedListener(){
         binding.spinnerCategory.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
             override fun onItemSelected(adapter: AdapterView<*>?, view: View?, i: Int, l: Long) {
-                storeViewModel.onCategorySelected(adapter, view, i, l)
-                binding.spinnerWeapon.setSelection(0)
+                val spinner = adapter as Spinner
+                val selectedCategorySpinnerId = (spinner.selectedItem as Pair<*,*>).first as Int
+                val selectedWeaponSpinnerId = (binding.spinnerWeapon.selectedItem as Pair<*, *>).first as Int
+
+                // 初回表示時は処理を呼ばない
+                if((spinner.isFocusable.not() || selectedWeaponSpinnerId == storeViewModel.weaponSpinnerSelectedId) && selectedCategorySpinnerId == storeViewModel.categorySpinnerSelectedId){
+                    spinner.isFocusable = true
+                    return
+                }
+                else{
+                    storeViewModel.onCategorySelected(adapter, view, i, l)
+                    binding.spinnerWeapon.setSelection(0)
+                }
             }
             override fun onNothingSelected(p0: AdapterView<*>?) {}
         }

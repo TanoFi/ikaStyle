@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -69,6 +70,10 @@ class NewFragment : Fragment(), GearDialogListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // 表示時にonItemSelected()内の処理を流させないための対応
+        setSpinnerFocusableFalse()
+
+        // spinnerにonItemSelectedListenerを付与
         setCategorySelectedListener()
 
         // GearImageViewにonClickListenerをまとめてセット
@@ -88,14 +93,18 @@ class NewFragment : Fragment(), GearDialogListener {
     private fun observeViewModel(viewModel: NewViewModel){
         val categoryObserver = Observer<ArrayList<Pair<Int, String>>>{
             it.let{
-                it.add(0, Pair(0, requireContext().getString(R.string.spinnerItem_categoryUnselected)))
+                if(it[0].first != 0) {
+                    it.add(0, Pair(0, requireContext().getString(R.string.spinnerItem_categoryUnselected)))
+                }
                 categoryAdapter.resetKeyValues(it)
             }
         }
 
         val weaponObserver = Observer<ArrayList<Pair<Int, String>>>{
             it.let{
-                it.add(0, Pair(0, requireContext().getString(R.string.spinnerItem_weaponUnselected)))
+                if(it[0].first != 0) {
+                    it.add(0, Pair(0, requireContext().getString(R.string.spinnerItem_weaponUnselected)))
+                }
                 weaponAdapter.resetKeyValues(it)
             }
         }
@@ -148,11 +157,28 @@ class NewFragment : Fragment(), GearDialogListener {
         }
     }
 
+    // spinnerのisFocusableをfalseにする
+    private fun setSpinnerFocusableFalse(){
+        binding.spinnerCategory.isFocusable = false
+        binding.spinnerWeapon.isFocusable = false
+    }
+
     private fun setCategorySelectedListener(){
         binding.spinnerCategory.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
             override fun onItemSelected(adapter: AdapterView<*>?, view: View?, i: Int, l: Long) {
-                newViewModel.onCategorySelected(adapter, view, i, l)
-                binding.spinnerWeapon.setSelection(0)
+                val spinner = adapter as Spinner
+                val selectedCategorySpinnerId = (spinner.selectedItem as Pair<*,*>).first as Int
+                val selectedWeaponSpinnerId = (binding.spinnerWeapon.selectedItem as Pair<*, *>).first as Int
+
+                // 初回表示時は処理を呼ばない
+                if((spinner.isFocusable.not() || selectedWeaponSpinnerId == newViewModel.weaponSpinnerSelectedId) && selectedCategorySpinnerId == newViewModel.categorySpinnerSelectedId){
+                    spinner.isFocusable = true
+                    return
+                }
+                else{
+                    newViewModel.onCategorySelected(adapter, view, i, l)
+                    binding.spinnerWeapon.setSelection(0)
+                }
             }
             override fun onNothingSelected(p0: AdapterView<*>?) {}
         }

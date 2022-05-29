@@ -22,6 +22,9 @@ class StoreViewModel(private val categoryRepository: MainCategoryRepository,
     private val customizationPairListLiveData = MutableLiveData<ArrayList<Pair<Int,String>>>()
     private val loadoutListLiveData = MutableLiveData<ArrayList<Loadout>>()
 
+    var categorySpinnerSelectedId : Int = 0
+    var weaponSpinnerSelectedId : Int = 0
+
     fun getCategoryPairListLiveData() : LiveData<ArrayList<Pair<Int,String>>> = categoryPairListLiveData
     fun getCustomizationPairListLiveData() : LiveData<ArrayList<Pair<Int,String>>> = customizationPairListLiveData
     fun getLoadoutListLiveData() : LiveData<ArrayList<Loadout>> = loadoutListLiveData
@@ -73,7 +76,8 @@ class StoreViewModel(private val categoryRepository: MainCategoryRepository,
         val spinner = adapterView as Spinner
 
         // 絶対IDからカテゴリーIDを割り出す
-        val categoryId = ((spinner.selectedItem as Pair<*, *>).first as Int) / NumberPlace.CATEGORY_PLACE
+        categorySpinnerSelectedId = (spinner.selectedItem as Pair<*, *>).first as Int
+        val categoryId = categorySpinnerSelectedId / NumberPlace.CATEGORY_PLACE
 
         if (categoryId == 0) { // カテゴリーSpinnerで未選択項目が選ばれているとき
             //ブキSpinnerの項目を全表示
@@ -87,7 +91,14 @@ class StoreViewModel(private val categoryRepository: MainCategoryRepository,
     fun onCustomizationSelected(adapterView: AdapterView<*>?, view: View?, i: Int, l: Long){
         val spinner = adapterView as Spinner
 
+        // 初回表示時は処理を呼ばない
+        if(spinner.isFocusable.not()){
+            spinner.isFocusable = true
+            return
+        }
+
         val absoluteWeaponId = (spinner.selectedItem as Pair<*, *>).first as Int
+        weaponSpinnerSelectedId = absoluteWeaponId
         loadLoadoutList(absoluteWeaponId)
     }
 
